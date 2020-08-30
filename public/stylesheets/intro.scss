@@ -1,4 +1,10 @@
 
+  body {
+    background-image: url('../images/DSCF4395.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
   .containerIntro {
     background-color: #F5F5F5;
     padding: .75rem 1.25rem;
@@ -22,6 +28,11 @@
     border: 1px solid transparent;
     border-radius: 1.25rem;
     width: 80%;
+    animation: fadeIn ease 4s;
+    -webkit-animation: fadeIn ease 4s;
+    -moz-animation: fadeIn ease 4s;
+    -o-animation: fadeIn ease 4s;
+    -ms-animation: fadeIn ease 4s;
   }
 
   .footer4introduce {
@@ -57,3 +68,27 @@
     border: 1px solid transparent;
     border-radius: 1.25rem;
 }
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+  }
+  
+  @-moz-keyframes fadeIn {
+  0% {opacity:0;}
+  80% {opacity:1;}
+  }
+  
+  @-webkit-keyframes fadeIn {
+  0% {opacity:0;}
+  80% {opacity:1;}
+  }
+  
+  @-o-keyframes fadeIn {
+  0% {opacity:0;}
+  80% {opacity:1;}
+  }
+  
+  @-ms-keyframes fadeIn {
+  0% {opacity:0;}
+  80% {opacity:1;}
+  }
