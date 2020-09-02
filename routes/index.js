@@ -19,6 +19,8 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+//demo
+
 //store userID and load first activity
 router.post('/activity', function(req,res,next){
 
