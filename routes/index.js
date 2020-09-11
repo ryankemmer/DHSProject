@@ -46,21 +46,21 @@ router.post('/activity', function(req,res,next){
     const db = client.db(datab)
     let usersCol = db.collection('users')
 
-    check = yield usersCol.findOne({"user" : user.id})
+    check = yield usersCol.findOne({"user" : currentUser.id})
               
     //check to see if user exists in database
-    if(check === null && user.id != null){
+    if(check === null && currentUser.id != null){
               
       //insert new user if user does not exist
       var item = { 
-        "user": user.id,
+        "user": currentUser.id,
         "key2pay": null,
         "surveyResults": null,
       };
                 
       yield usersCol.insertOne(item);
 
-      res.render('activity', {user: user.id})
+      res.render('activity', {userID: currentUser.id, question: currentUser.question})
               
     } 
 

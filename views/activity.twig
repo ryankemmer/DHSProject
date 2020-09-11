@@ -6,20 +6,37 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
 </head>
 
 <body>
+<div class = "activitypage">
 <div class="container text-center mt-4">
     <div class="d-flex justify-content-center py-2" id="userID">UserID:   <div name= "userID" style="display:inline" id="userID">{{ userID }}</div></div>
-    <h1 class= "py-2">Exercise {{ id }} of 4</h1>
-
-
+    <h1 class= "py-2">Exercise {{ question }} of 14</h1>
+    <p>Is this bat in the image below?</p>
+    <div class = "activity"></div>
+<form autocomplete="off" method="POST" action="/activity/{{id}}/{{userID}}">
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary">Yes</button>
+        <button type="button" class="btn btn-secondary">No</button>
+    </div>
+    <p class="py-2 text-danger"> {{ error }} </p>
+    <button type="submit" class="btn btn-success nextBtn">Next</button>
+</form>
+</div>
 </div>
 
 <script>
     var userID = '{{ userID }}';
-    let currentUser = getUserInstance(userID);
-    console.log(currentUser)
+    var question = '{{ question }}';
+
+    $('.btn').click(function(e) {
+        e.preventDefault();
+        $(this).addClass('active');
+    })
+
+    renderQuestion(userID, question);
 </script>
 
 </body>
