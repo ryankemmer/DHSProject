@@ -3,4 +3,8 @@ module.exports = class User {
         this.id = id;
         this.question = 1;
     }
+
+    nextquestion(){
+        this.id = this.id + 1
+    }
 };

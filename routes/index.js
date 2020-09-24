@@ -70,4 +70,19 @@ router.post('/activity', function(req,res,next){
   });
 });
 
+//store userID and load first activity
+router.post('/activity/:userID/', function(req,res,next){
+
+  //Fetch current user
+  let currentUser = getUserInstance(req.params.userID);
+  currentUser.nextquestion()
+
+  res.render('activity', {userID: currentUser.id, question: currentUser.question})
+
+});
+
+
+
+
+
 module.exports = router;
