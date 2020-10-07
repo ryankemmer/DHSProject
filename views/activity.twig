@@ -16,7 +16,7 @@
 <div class = "activitypage">
 <div class="container text-center mt-4">
     <div class="d-flex justify-content-center py-2" id="userID">UserID:   <div name= "userID" style="display:inline" id="userID">{{ userID }}</div></div>
-    <h1 class= "py-2">Exercise {{ question }} of 14</h1>
+    <h1 class= "py-2">Exercise {{ sequence }} of 14</h1>
     <p><b>Can you find a bat in the image?</b></p>
     <div class = "d-flex bat"></div>
     <div class = "container">
@@ -24,9 +24,13 @@
             <div class= "col-sm imageactivity"></div>
             <div class= "col-sm answeractivity">
             <p>Do you think the bat is in the image?</p>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary">Yes</button>
-                <button type="button" class="btn btn-secondary">No</button>
+            <div class="btn-group" data-toggle="buttons">
+                <label for= "" class = "btn btn-secondary">
+                    <input type = "radio" name = "q1"> Yes
+                </label>
+                <label for= "" class = "btn btn-secondary">
+                    <input type = "radio" name = "q1"> No
+                </label>
             </div>
             <br>
             <p>Please rate the confidence in your decision.</p>
@@ -34,25 +38,29 @@
             <div id="slider-simple"></div>
             <br>
             <p>Do you think the majority of people found the bat?</p>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary">Yes</button>
-                <button type="button" class="btn btn-secondary">No</button>
+            <div class="btn-group" data-toggle="buttons">
+                <label for= "" class = "btn btn-secondary">
+                    <input type = "radio" name = "q3"> Yes
+                </label>
+                <label for= "" class = "btn btn-secondary">
+                    <input type = "radio" name = "q3"> No
+                </label>
             </div>
-            
             </div>
         </div>
     </div>
 
-<form autocomplete="off" method="POST" action="/activity/{{userID}}/">
+<form action="/activity/{{userID}}" method="POST">
     <p class="py-2 text-danger"> {{ error }} </p>
-    <button type="submit" class="btn btn-success nextBtn">Next</button>
+    <input type="submit" class = "subButton" value="Submit">
 </form>
+
 </div>
 </div>
 
 <script>
     var userID = '{{ userID }}';
-    var question = '{{ question }}';
+    var sequence = '{{ sequence }}';
 
     $('.btn').click(function(e) {
         $('.btn').not(this).removeClass('active');    
@@ -61,7 +69,7 @@
     });
 
 
-    renderQuestion(userID, question);
+    renderQuestion(userID, sequence);
 </script>
 
 </body>

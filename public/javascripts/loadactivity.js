@@ -83,33 +83,69 @@ function renderQuestion(userID, question){
     //Button
     //
 
-    d3.select(".btn.btn-success.nextBtn").on("click", function () {
+    d3.select(".subButton").on("click", function () {
+
+        var time 
+        var q1
+        var q2
+        var q3
+
+        //
+        //Get time
+        //
+
         var endTime = new Date().getTime();
         var timeSpent = endTime - startTime;
-        nextPage(userID);
-        //rating = document.getElementById("rating").value
-        //sendData(userID, picture, timeSpent, rating)
+
+        //
+        //Question 1
+        //
+
+        var radio1 = document.getElementsByName('q1')
+
+        if  (radio1[0].checked){
+            q1 = 1
+        } else{
+            q1 = 0
+        }
+
+        //
+        //Question 2
+        //
+
+
+        q2 = document.getElementById("value-simple")
+        
+
+
+
+        //
+        //Question 3
+        //
+
+        var radio3 = document.getElementsByName('q3')
+
+        if  (radio3[0].checked){
+            q3 = 1
+        } else{
+            q3 = 0
+        }
+
+
+        console.log('ckckckckckc')
+        sendData(userID, time, q1,q2,q3);
+
+
+
     })
 }
 
 
-function nextPage(userID, question){
-
-    new Promise((resolve, reject) => {
-        $.ajax({
-            url: 'activity/' + userID,
-            type: "POST",
-            success: resolve
-        });
-    });
-
-}
-
-function sendData(userID, picture, time, rating){
-    //console.log("sending data")
+function sendData(userID, time, q1,q2,q3){
+    console.log("sending data")
     
-    //url2go =  id + "/rankings"
-    data2send = [time, rating]
+    url2go =  userID + "/data" 
+    data2send = [time, q1, q2, q3]
             
     //add ajax function
     new Promise((resolve, reject) => {

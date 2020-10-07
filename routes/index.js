@@ -11,6 +11,7 @@ var datab = 'test'
 
 var userID = null
 const User = require('../User');
+const { currentId } = require('async_hooks');
 let users = [];
 let getUserInstance = uid => users.find(user => user.id === uid);
 
@@ -22,7 +23,7 @@ router.get('/', function(req, res, next) {
 //demo
 
 //store userID and load first activity
-router.post('/activity', function(req,res,next){
+router.post('/activity/', function(req,res,next){
 
   //prompt to enter username if null
   if (!req.body.userID) {
@@ -38,6 +39,9 @@ router.post('/activity', function(req,res,next){
     users.push(new User(req.body.userID));
     currentUser = getUserInstance(req.body.userID);
   }
+
+  questionNum = currentUser.selectQuestion()
+  console.log(questionNum)
 
   //store user in db
   co(function* () {
@@ -60,7 +64,7 @@ router.post('/activity', function(req,res,next){
                 
       yield usersCol.insertOne(item);
 
-      res.render('activity', {userID: currentUser.id, question: currentUser.question})
+      res.render('activity', {userID: currentUser.id, question: questionNum, sequence: currentUser.question})
               
     } 
 
@@ -70,17 +74,35 @@ router.post('/activity', function(req,res,next){
   });
 });
 
-//store userID and load first activity
-router.post('/activity/:userID/', function(req,res,next){
+//load every other activity
+router.post('/activity/:userID', function(req,res,next){
 
   //Fetch current user
   let currentUser = getUserInstance(req.params.userID);
   currentUser.nextquestion()
+  
+  questionNum = currentUser.selectQuestion()
+  console.log(currentUser)
 
-  res.render('activity', {userID: currentUser.id, question: currentUser.question})
+  if (currentUser.question < 15){
+    res.render('activity', {userID: currentUser.id, question: questionNum, sequence: currentUser.question})
+  }
+  else{
+    res.render('activity'
+  }
 
 });
 
+//Store data
+
+router.post('activity/:userID/data', function(req,res,next){
+  
+  userID = req.params.userID;
+  let group = Object.keys(req.body)
+  group = JSON.parse(group)
+  console.log(group)
+
+});
 
 
 
