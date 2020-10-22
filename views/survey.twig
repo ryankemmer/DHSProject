@@ -1,0 +1,41 @@
+<meta charset="utf-8">
+<html lang="en">
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+        
+    <script src="https://unpkg.com/jquery"></script>
+    <script src="https://surveyjs.azureedge.net/1.1.13/survey.jquery.js"></script>
+    <link href="https://surveyjs.azureedge.net/1.1.13/survey.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="../javascripts/survey.js"></script>
+
+</head>
+<body>
+    <div class="d-flex justify-content-center py-2">UserID: <div name= "userID" style="display:inline" id="userID">{{ userID }}</div></div>
+    <div class="demograpyPage">
+        <div class="intro">
+            <h1 class="d-flex justify-content-center">Post Study Demographic Survery</h1>
+            <p class="d-flex justify-content-center">
+                Please answer the following to the best of your ability.  
+                All answers will be kept confidential and will only be reported 
+                statistically (grouped with others’ responses).  
+            </p>
+        </div>
+        <div id="surveyElement"></div>
+        <div id="surveyResult" hidden></div>
+        <h1 class="text-center" id = "key2show" ></h1>
+        <h1 class="text-success text-center" id = "key"></h1>
+        <br>
+        <br>
+        <div id="debrief" class ="text-center"></div>
+    </div>
+    <script>
+        userID = '{{ userID }}'
+        startFromSurvey(userID)
+    </script>
+</body>
+</html>

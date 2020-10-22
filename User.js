@@ -3,6 +3,11 @@ module.exports = class User {
         this.id = id;
         this.question = 1;
         this.questionArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        this.currentQuestion = 0;
+    }
+
+    currentQ(){
+        return this.currentQuestion
     }
 
     nextquestion(){
@@ -24,6 +29,8 @@ module.exports = class User {
         var questionNumber = candidates[Math.floor(Math.random() * candidates.length)]
 
         this.questionArray[questionNumber] = 1
+
+        this.currentQuestion = questionNumber
 
         return questionNumber
     }

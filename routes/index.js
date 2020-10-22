@@ -78,29 +78,62 @@ router.post('/activity/', function(req,res,next){
 router.post('/activity/:userID', function(req,res,next){
 
   //Fetch current user
+
+  console.log(req.body)
+
   let currentUser = getUserInstance(req.params.userID);
   currentUser.nextquestion()
   
   questionNum = currentUser.selectQuestion()
-  console.log(currentUser)
+  console.log(questionNum)
+
 
   if (currentUser.question < 15){
     res.render('activity', {userID: currentUser.id, question: questionNum, sequence: currentUser.question})
   }
   else{
-    res.render('activity'
+    res.render('survey', {userID: currentUser.id})
   }
 
 });
 
 //Store data
 
-router.post('activity/:userID/data', function(req,res,next){
+router.post('/activity/:userID/data', function(req,res,next){
   
   userID = req.params.userID;
+
+  let currentUser = getUserInstance(userID);
+
+  question = currentUser.currentQ()
+
   let group = Object.keys(req.body)
   group = JSON.parse(group)
+
+  group[2] = group[2].substring(0, group[2].length - 1);
+  group[2] = parseInt(group[2])
   console.log(group)
+
+  //store response in db
+  co(function* () {
+
+    let client = yield MongoClient.connect(url);
+    const db = client.db(datab)
+    let responseCol = db.collection('responses')
+
+    var item = { 
+      "user": userID,
+      "question": question,
+      "time": group[0],
+      "q1": group[1],
+      "q2": group[2],
+      "q3": group[3]
+    };
+
+    yield responseCol.insertOne(item);
+    console.log('posted to db!')
+  
+  });
 
 });
 

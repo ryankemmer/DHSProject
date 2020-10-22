@@ -1,60 +1,36 @@
+var timeText
+
 function renderQuestion(userID, question){
 
-    var startTime = new Date().getTime(); 
+    var startTime = new Date().getTime();
 
-    d3.select(".activitypage .imageactivity").append('div').attr("class", "image2")
+    document.getElementById("myImg").src = "/images/activity/bat-" + sequence + ".png";
 
-    let svgimagewidth = "100%"
-    let divWidth = d3.select('.imageactivity').node().offsetWidth
-    let batdivWidth = d3.select('.bat').node().offsetWidth
-    let sliderWidth = d3.select('#slider-simple').node().offsetWidth
+    document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
 
-    image1width = batdivWidth / 12
-    image1height = batdivWidth / 12
-    image2width = divWidth
-    image2height = divWidth/2
+    document.getElementById("img2find").width = "100"
 
-    //
-    //IMAGE 1
-    //
-    
-    let svg4image1 = d3.select('.bat').append('svg')
-        .attr("width", svgimagewidth)
-        .attr("height", image1height +10) 
 
-        let g4image1 = svg4image1.append("g")
-            .attr("class", "g4image1")
 
-        let img1 = g4image1.append("image")
-            .attr('xlink:href', "/images/activity/bat-" + question + ".gif")
-            .attr("x", (batdivWidth/ 2))
-            .attr("y", 2)
-            .attr("width", image1width)
-            .attr("height", image1height)
-    
-    //
-    //IMAGE 2
-    //
+    var modal = document.getElementById("myModal");
+    var img = document.getElementById("myImg");
+    var modalImg = document.getElementById("img01");
+    img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+      }
+    var span = document.getElementsByClassName("close")[0];
 
-    let svg4image2 = d3.select('.image2').append('svg')
-        .attr("width", svgimagewidth)
-        .attr("height", image2height+10 )
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 
-        let g4image2 = svg4image2.append("g")
-            .attr("class", "g4image2")
-        
-
-        let img2 = g4image2.append("image")
-            .attr('xlink:href', "/images/activity/bat-" + question + ".png")
-            .attr("x", 0)
-            .attr("y", 2)
-            .attr("width", image2width)
-            .attr("height", image2height)
 
     //
     //Slider
     //
-
+    let sliderWidth = d3.select('#slider-simple').node().offsetWidth
     var data = [0, .25, .50, .75, 1];
 
     var sliderSimple = d3
@@ -63,7 +39,8 @@ function renderQuestion(userID, question){
         .max(d3.max(data))
         .width(sliderWidth/1.2)
         .tickFormat(d3.format('.0%'))
-        .ticks(3)
+        .ticks(9)
+        .step(.1)
         .default(.5)
         .on('onchange', val => {
       d3.select('p#value-simple').text(d3.format('.0%')(val));
@@ -95,7 +72,7 @@ function renderQuestion(userID, question){
         //
 
         var endTime = new Date().getTime();
-        var timeSpent = endTime - startTime;
+        var time = endTime - startTime;
 
         //
         //Question 1
@@ -114,11 +91,8 @@ function renderQuestion(userID, question){
         //
 
 
-        q2 = document.getElementById("value-simple")
+        q2 = document.getElementById("value-simple").innerHTML
         
-
-
-
         //
         //Question 3
         //
@@ -131,11 +105,7 @@ function renderQuestion(userID, question){
             q3 = 0
         }
 
-
-        console.log('ckckckckckc')
         sendData(userID, time, q1,q2,q3);
-
-
 
     })
 }
@@ -146,6 +116,7 @@ function sendData(userID, time, q1,q2,q3){
     
     url2go =  userID + "/data" 
     data2send = [time, q1, q2, q3]
+    console.log(data2send)
             
     //add ajax function
     new Promise((resolve, reject) => {
@@ -158,3 +129,22 @@ function sendData(userID, time, q1,q2,q3){
         });
     });
 }
+
+function startTimer(duration, display, captionText, userID){
+    var timer = duration, minutes, seconds;
+    setInterval(function(){
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer %60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+        captionText.innerHTML = "Time remaning: " + timeText;
+        timeText = minutes + ":" + seconds;
+        if (--timer < 0) {
+            sendData(userID, 60000, -1,"-1%",-1)
+            document.forms.item(0).submit()
+            return
+        }
+    }, 1000);
+
+} 
