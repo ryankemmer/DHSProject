@@ -5,9 +5,7 @@ function renderQuestion(userID, question){
     var startTime = new Date().getTime();
 
     document.getElementById("myImg").src = "/images/activity/bat-" + sequence + ".png";
-
     document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
-
     document.getElementById("img2find").width = "100"
 
 
@@ -15,12 +13,18 @@ function renderQuestion(userID, question){
     var modal = document.getElementById("myModal");
     var img = document.getElementById("myImg");
     var modalImg = document.getElementById("img01");
+
+    var w = window.innerWidth;
+
+    console.log('width: ', w)
     img.onclick = function(){
         modal.style.display = "block";
         modalImg.src = this.src;
+        modalImg.width = w/2.5
+
       }
     var span = document.getElementsByClassName("close")[0];
-
+    span.width = w/2
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
@@ -82,8 +86,10 @@ function renderQuestion(userID, question){
 
         if  (radio1[0].checked){
             q1 = 1
-        } else{
+        } else if (radio1[0].checked){
             q1 = 0
+        } else{
+            q1 = -1
         }
 
         //
@@ -101,11 +107,15 @@ function renderQuestion(userID, question){
 
         if  (radio3[0].checked){
             q3 = 1
-        } else{
+        } else if (radio3[1].checked){
             q3 = 0
+        } else{
+            q1 = -1
         }
 
-        sendData(userID, time, q1,q2,q3);
+        if (q1 != -1 && q3 != -1){
+            sendData(userID, time, q1,q2,q3);
+        }
 
     })
 }

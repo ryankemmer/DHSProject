@@ -3,26 +3,43 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 const co = require('co');
+const User = require('../User');
 
 //var url = 'mongodb://localhost:27017/';
 var url = 'mongodb://34.125.41.169:27017/';
 
 var datab = 'test'
-
 var userID = null
-const User = require('../User');
-const { currentId } = require('async_hooks');
 let users = [];
+
+
+//get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
 
-/* GET home page. */
+//snooze function 
+const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+
+
+//
+//Get home page
+//
+
+
 router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-//demo
 
-//store userID and load first activity
+
+
+//
+//Create user and load first activity
+//
+
+
+
+
 router.post('/activity/', function(req,res,next){
 
   //prompt to enter username if null
@@ -71,33 +88,68 @@ router.post('/activity/', function(req,res,next){
     else{
       res.render('index', {error: "ERROR: Username already exists"})
     }
+
   });
 });
 
-//load every other activity
+
+
+//
+//load activity
+//
+
+
+
 router.post('/activity/:userID', function(req,res,next){
 
   //Fetch current user
-
   console.log(req.body)
 
+
   let currentUser = getUserInstance(req.params.userID);
-  currentUser.nextquestion()
+
+  //check to ensure previous response was posted
+  co(function* () {
+
+    yield snooze(500)
+
+    let client = yield MongoClient.connect(url);
+    const db = client.db(datab)
+    let responseCol = db.collection('responses')
+
+    check = yield responseCol.findOne({"user" : currentUser.id, "question" : currentUser.currentQ()})
+
+    if (check == null){
+
+      res.render('activity', {userID: currentUser.id, question: currentUser.currentQ(), sequence: currentUser.question, error: "ERROR: Please answer all questions!"})
+
+    }else{
+
+      currentUser.nextquestion()
   
-  questionNum = currentUser.selectQuestion()
-  console.log(questionNum)
+      questionNum = currentUser.selectQuestion()
+      console.log(questionNum)
 
 
-  if (currentUser.question < 15){
-    res.render('activity', {userID: currentUser.id, question: questionNum, sequence: currentUser.question})
-  }
-  else{
-    res.render('survey', {userID: currentUser.id})
-  }
+      if (currentUser.question < 15){
+        res.render('activity', {userID: currentUser.id, question: questionNum, sequence: currentUser.question})
+      }
+      else{
+        res.render('survey', {userID: currentUser.id})
+      }
+
+    }
+  });
 
 });
 
+
+
+//
 //Store data
+//
+
+
 
 router.post('/activity/:userID/data', function(req,res,next){
   
@@ -136,6 +188,33 @@ router.post('/activity/:userID/data', function(req,res,next){
   });
 
 });
+
+
+//
+//Store questions
+//
+
+
+router.post('/:userID/sendSurvey', function(req,res,next){
+
+  //collect variables from front end
+  userID = req.params.userID;
+  key = req.body.key;
+  userDemographic = req.body.userDemographic;
+  userDemographic = JSON.parse(userDemographic);
+
+  //storesurvey results
+  storeQuestion.storeSurvey(userID, userDemographic, key)
+
+  //give a response to load next page
+  res.send("{}");
+
+})
+
+
+
+
+
 
 
 
