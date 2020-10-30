@@ -2,7 +2,7 @@ var timeText
 
 function renderQuestion(userID, question){
 
-    var startTime = new Date().getTime();
+    //var startTime = new Date().getTime();
 
     document.getElementById("myImg").src = "/images/activity/bat-" + sequence + ".png";
     document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
@@ -20,7 +20,7 @@ function renderQuestion(userID, question){
     img.onclick = function(){
         modal.style.display = "block";
         modalImg.src = this.src;
-        modalImg.width = w/2.5
+        modalImg.width = w/2.5;
 
       }
     var span = document.getElementsByClassName("close")[0];
@@ -64,9 +64,8 @@ function renderQuestion(userID, question){
     //Button
     //
 
-    d3.select(".subButton").on("click", function () {
+    d3.select(".btn-outline-success").on("click", function () {
 
-        var time 
         var q1
         var q2
         var q3
@@ -75,21 +74,29 @@ function renderQuestion(userID, question){
         //Get time
         //
 
-        var endTime = new Date().getTime();
-        var time = endTime - startTime;
+        var timeLeft = document.getElementById("time").innerHTML
+        console.log(timeLeft)
+
+        timeLeft = timeLeft.substring(timeLeft.length - 2)
+        timeLeft = parseInt(timeLeft)
+        console.log(timeLeft)
+
+        //var endTime = new Date().getTime();
+        //var time = endTime - startTime;
 
         //
         //Question 1
         //
 
-        var radio1 = document.getElementsByName('q1')
+        var radio11 = document.getElementById('option11')
+        var radio12 = document.getElementById('option12')
 
-        if  (radio1[0].checked){
+        if  (radio11.classList.contains('active')){
             q1 = 1
-        } else if (radio1[0].checked){
+        } else if (radio12.classList.contains('active')){
             q1 = 0
         } else{
-            q1 = -1
+            q1 = -2
         }
 
         //
@@ -103,19 +110,19 @@ function renderQuestion(userID, question){
         //Question 3
         //
 
-        var radio3 = document.getElementsByName('q3')
+        var radio21 = document.getElementById('option21')
+        var radio22 = document.getElementById('option22')
 
-        if  (radio3[0].checked){
+        if  (radio21.classList.contains('active')){
             q3 = 1
-        } else if (radio3[1].checked){
+        } else if (radio22.classList.contains('active')){
             q3 = 0
         } else{
-            q1 = -1
+            q3 = -2
         }
 
-        if (q1 != -1 && q3 != -1){
-            sendData(userID, time, q1,q2,q3);
-        }
+
+        sendData(userID, timeLeft, q1,q2,q3);
 
     })
 }
@@ -142,7 +149,7 @@ function sendData(userID, time, q1,q2,q3){
 
 function startTimer(duration, display, captionText, userID){
     var timer = duration, minutes, seconds;
-    setInterval(function(){
+    var timeChange = setInterval(function(){
         minutes = parseInt(timer / 60, 10)
         seconds = parseInt(timer %60, 10);
         minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -151,10 +158,20 @@ function startTimer(duration, display, captionText, userID){
         captionText.innerHTML = "Time remaning: " + timeText;
         timeText = minutes + ":" + seconds;
         if (--timer < 0) {
-            sendData(userID, 60000, -1,"-1%",-1)
-            document.forms.item(0).submit()
+            document.getElementById("submitButton").style.visibility = "hidden";
+            document.getElementById("errorText1").innerHTML = "Time is out! Changing to next question...";
+            document.getElementById("errorText2").innerHTML = "Time is out! Changing to next question...";
+            clearInterval(timeChange)
+
+            setTimeout(sendFunc, 1000)
+
+            function sendFunc(){
+                sendData(userID, 0, -1,"-1%",-1)
+                document.forms.item(0).submit()
+            }
             return
         }
     }, 1000);
+
 
 } 

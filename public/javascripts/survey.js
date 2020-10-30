@@ -168,7 +168,7 @@ let json = {
             isRequired: false,
             name: "estimation",
             colCount: 1,
-            title: "Have you previously participated on estimation tasks on MTurk?",
+            title: "Have you previously participated on object detection tasks on MTurk?",
             //otherText: 'If Yes, please specify the activity.',
             choices: [{
                     value: "Yes",
@@ -232,7 +232,7 @@ function startFromSurvey(userID) {
                 type: "POST",
                 data: {'userDemographic': userDemographic, 'key': key},
                 success: function(){
-                    d3.select('#debrief').html("The experiment that you have just participated in is part of an Arizona State University project that seeks to understand how ranking estimates and numerical estimates from multiple users can be aggregated to perform challenging estimation tasks. If you have any questions, comments, or concerns regarding this experiment please do not hesitate to contact us at o.are.lab@gmail.com. Thank you for your participation and for your patience.")
+                    d3.select('#debrief').html("The experiment that you have just participated in is part of an Arizona State University project that seeks to better understand how independent visual screening judgments from multiple participants can be aggregated to perform challenging shape and object detection tasks.If you have any questions, comments, or concerns regarding this experiment please do not hesitate to contact us at o.are.lab@gmail.com. Thank you for your participation and for your patience.")
                     d3.select("#key2show").html("Code for MTurk: ")
                     d3.select('#key').html(key)
                     resolve

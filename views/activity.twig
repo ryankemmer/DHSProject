@@ -17,10 +17,10 @@
 <div class="container text-center mt-4">
     <div class="d-flex justify-content-center py-2" id="userID">UserID:   <div name= "userID" style="display:inline" id="userID">{{ userID }}</div></div>
     <h1 class= "py-2">Exercise {{ sequence }} of 14</h1>
-    <p class="py-2 text-danger"> {{ error }} </p>
+    <p class="py-2 text-danger" id = "errorText1"> {{ error }} </p>
     <p><b>Can you find this bat in the image below?</b></p>
     <img id = "img2find">
-    <p class = "text-danger">Time remaining:  <span id="time"> 00: '{{ time }}'</span></p>
+    <p class = "text-danger">Time remaining:  <span id="time"> 00:{{ time }}</span></p>
     <div class = "container mainContainer">
         <div class = "row">
 
@@ -28,16 +28,15 @@
                 <img id="myImg" style="width:100%;">
                 <p>Click image to enlarge</p>
             </div>
-
             <div class= "col-sm answeractivity">
             <p>Is the bat in this image?</p>
 
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class = "btn btn-secondary">
-                    <input type="radio" name="q1" id="option1" autocomplete="off"> Yes
+                <label class = "btn btn-secondary" id="option11">
+                    <input type="radio" name="q1" autocomplete="off"> Yes
                 </label>
-                <label class = "btn btn-secondary">
-                    <input type="radio" name="q1" id="option2" autocomplete="off"> No
+                <label class = "btn btn-secondary" id="option12">
+                    <input type="radio" name="q1" autocomplete="off"> No
                 </label>
             </div>
 
@@ -50,20 +49,20 @@
             <p>What do you think the majority of people responded?</p>
 
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class = "btn btn-secondary">
-                    <input type="radio" name="q3" id="option1" autocomplete="off"> Yes
+                <label class = "btn btn-secondary" id="option21">
+                    <input type="radio" name="q3" autocomplete="off"> Yes
                 </label>
-                <label class = "btn btn-secondary">
-                    <input type="radio" name="q3" id="option2" autocomplete="off"> No
+                <label class = "btn btn-secondary" id="option22">
+                    <input type="radio" name="q3" autocomplete="off"> No
                 </label>
             </div>
 
         </div>
-        <form id="subForm" action="/activity/{{userID}}" method="POST">
-            <p class="py-2 text-danger"> {{ error }} </p>
-        <input type="submit" class = "btn btn-outline-success" value="Submit">
-</form>
     </div>
+    <form id="subForm" action="/activity/{{userID}}/" method="POST">
+            <p class="py-2 text-danger" id = "errorText2"> {{ error }} </p>
+        <input type="submit" class = "btn btn-outline-success" id = "submitButton" value="Submit">
+    </form>
     </div>
 
 </div>
@@ -77,6 +76,7 @@
 
 <script>
     var duration = '{{ time }}'
+    duration = duration - 1
     var userID = '{{ userID }}';
     var sequence = '{{ sequence }}';
     //var duration = 59

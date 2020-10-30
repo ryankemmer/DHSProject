@@ -4,6 +4,7 @@ module.exports = class User {
         this.question = 1;
         this.questionArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         this.currentQuestion = 0;
+        this.prevTime = 60
     }
 
     currentQ(){
@@ -12,6 +13,14 @@ module.exports = class User {
 
     nextquestion(){
         this.question = this.question + 1
+    }
+
+    setPrevTime(time){
+        this.prevTime = time
+    }
+
+    getPrevTime(){
+        return this.prevTime
     }
 
     selectQuestion(){
