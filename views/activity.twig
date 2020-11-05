@@ -25,8 +25,8 @@
         <div class = "row">
 
             <div class = "col-sm">
-                <img id="myImg" style="width:100%;">
-                <p>Click image to enlarge</p>
+                <img id="myImg" style="width:75%;">
+                <p id= "imgText">Click image to enlarge</p>
             </div>
             <div class= "col-sm answeractivity">
             <p>Is the bat in this image?</p>
@@ -79,14 +79,19 @@
     duration = duration - 1
     var userID = '{{ userID }}';
     var sequence = '{{ sequence }}';
-    //var duration = 59
     display = document.querySelector('#time')
     capText = document.getElementById("caption");
 
     window.onload = function() {
 
-        renderQuestion(userID, sequence);
-        startTimer(duration, display, capText, userID);
+        if (duration <= 0){
+            duration = 0
+            renderQuestion(userID, sequence, duration);
+        } 
+        else{
+            renderQuestion(userID, sequence, duration);
+            startTimer(duration, display, capText, userID);
+        }
     }
 
 </script>

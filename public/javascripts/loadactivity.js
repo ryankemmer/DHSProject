@@ -1,14 +1,18 @@
 var timeText
 
-function renderQuestion(userID, question){
+function renderQuestion(userID, question, duration){
 
     //var startTime = new Date().getTime();
 
-    document.getElementById("myImg").src = "/images/activity/bat-" + sequence + ".png";
-    document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
-    document.getElementById("img2find").width = "100"
-
-
+    if (duration > 0){
+        document.getElementById("myImg").src = "/images/activity/bat-" + sequence + ".png";
+        document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
+        document.getElementById("img2find").width = "100"
+    } else{
+        document.getElementById("myImg").style.visibility = "hidden";
+        document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
+        display.textContent = " 00:00";
+    }
 
     var modal = document.getElementById("myModal");
     var img = document.getElementById("myImg");
@@ -20,7 +24,7 @@ function renderQuestion(userID, question){
     img.onclick = function(){
         modal.style.display = "block";
         modalImg.src = this.src;
-        modalImg.width = w/2.5;
+        modalImg.width = '75%';
 
       }
     var span = document.getElementsByClassName("close")[0];
@@ -150,27 +154,38 @@ function sendData(userID, time, q1,q2,q3){
 function startTimer(duration, display, captionText, userID){
     var timer = duration, minutes, seconds;
     var timeChange = setInterval(function(){
-        minutes = parseInt(timer / 60, 10)
-        seconds = parseInt(timer %60, 10);
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        display.textContent = minutes + ":" + seconds;
-        captionText.innerHTML = "Time remaning: " + timeText;
-        timeText = minutes + ":" + seconds;
         if (--timer < 0) {
-            document.getElementById("submitButton").style.visibility = "hidden";
-            document.getElementById("errorText1").innerHTML = "Time is out! Changing to next question...";
-            document.getElementById("errorText2").innerHTML = "Time is out! Changing to next question...";
+            //document.getElementById("submitButton").style.visibility = "hidden";
+            //document.getElementById("errorText1").innerHTML = "Time is out! Changing to next question...";
+            //document.getElementById("errorText2").innerHTML = "Time is out! Changing to next question...";
+
             clearInterval(timeChange)
 
-            setTimeout(sendFunc, 1000)
+            //setTimeout(sendFunc, 1000)
 
-            function sendFunc(){
-                sendData(userID, 0, -1,"-1%",-1)
-                document.forms.item(0).submit()
-            }
+            document.getElementById("myImg").style.visibility = "hidden";
+            document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
+            display.textContent = " 00:00";
+
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+
+
+            //function sendFunc(){
+            //    sendData(userID, 0, -1,"-1%",-1)
+            //    document.forms.item(0).submit()
+            //}
             return
+        } else{
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer %60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.textContent = minutes + ":" + seconds;
+            captionText.innerHTML = "Time remaning: " + timeText;
+            timeText = minutes + ":" + seconds;
         }
+
     }, 1000);
 
 
