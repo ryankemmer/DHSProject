@@ -4,8 +4,8 @@ import time
 import datetime
 import sys
 
-url = 'mongodb://localhost:27017/'
-#url = 'mongodb://localhost:27014/'
+#url = 'mongodb://localhost:27017/'
+url = 'mongodb://localhost:27014/'
 
 dbase = sys.argv[1]
 print("database: " + str(dbase))

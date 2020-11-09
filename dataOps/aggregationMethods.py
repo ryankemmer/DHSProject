@@ -84,7 +84,7 @@ def suprisinglyPopularVote(predictions, crowdPredictions):
 
 
 
-with open('11-03-2020Test1.json') as f:
+with open('11-06-2020Test1.json') as f:
     data = json.load(f)
 
 groundtruth = [0,0,0,0,0,0,0,1,1,1,1,1,1,1]
