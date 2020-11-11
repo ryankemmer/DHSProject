@@ -1,3 +1,9 @@
+#
+# Aggregation Models Test
+#
+# Author: Ryan Kemmer
+
+
 import json
 
 def tieCheck(x):
@@ -8,18 +14,28 @@ def tieCheck(x):
 
 def majorityVote(predictions):
 
-    choices = [0,1]
+    #specify binary decisions(1 for yes and 0 for no)
+    choices = [1,0]
+    #list to count majority votes
     choiceCounts = [0] * len(choices)
 
+    #count each vote
     for i in range(len(choices)):
         for p in predictions:
             if p == choices[i]:
                 choiceCounts[i] +=1
 
     print(choiceCounts)
+
+    #check to see if there is a tie
     tie = tieCheck(choiceCounts)
+    #return winner (0 for No, 1 for yes, -1 for tie)
     if tie == False:
-        winner = choiceCounts.index(max(choiceCounts))
+        ind = choiceCounts.index(max(choiceCounts))
+        if ind == 0:
+            winner = 1
+        elif ind == 1:
+            winner = 0
     else:
         winner = -1
     return winner
@@ -27,9 +43,12 @@ def majorityVote(predictions):
 
 def confidenceWeightedVote(predictions, confidence):
 
-    choices = [0,1]
+    #specify binary decisions(1 for yes and 0 for no)
+    choices = [1,0]
+    #list to count confidence-weighted votes
     choiceCounts = [0] * len(choices)
 
+    #count each vote and multiply confidence weights
     for i in range(len(choices)):
         for p in predictions:
             if p == choices[i]:
@@ -38,9 +57,16 @@ def confidenceWeightedVote(predictions, confidence):
                 choiceCounts[i] += value
 
     print(choiceCounts)
+
+    #check to see if there is a tie
     tie = tieCheck(choiceCounts)
+    #return winner (0 for No, 1 for yes, -1 for tie)
     if tie == False:
-        winner = choiceCounts.index(max(choiceCounts))
+        ind = choiceCounts.index(max(choiceCounts))
+        if ind == 0:
+            winner = 1
+        elif ind == 1:
+            winner = 0
     else:
         winner = -1
     return winner
@@ -48,47 +74,62 @@ def confidenceWeightedVote(predictions, confidence):
 
 def suprisinglyPopularVote(predictions, crowdPredictions):
 
-    choices = [0,1]
+    #specify binary decisions(1 for yes and 0 for no)
+    choices = [1,0]
+    #list to count majority votes
     choiceCounts = [0] * len(choices)
+    #list to count majority of what people believed the majority to predict
     choiceCountsCrowd = [0] * len(choices)
 
+    #count each vote to q1
     for i in range(len(choices)):
         for p in predictions:
             if p == choices[i]:
                 choiceCounts[i] += 1
 
+    #count each vote to q3
     for i in range(len(choices)):
         for p in crowdPredictions:
             if p == choices[i]:
                  choiceCountsCrowd[i] += 1
 
-
+    print(choiceCountsCrowd)
     #convert to percentages
     choiceCounts = [x/ len(predictions) for x in choiceCounts]
     choiceCountsCrowd = [x/ len(predictions) for x in choiceCountsCrowd]
+    #find the percentage difference between the majority votes, 
+    #and what the crowd believed the majority woulf predict
     differences = [m - n for m,n in zip(choiceCounts,choiceCountsCrowd)]
 
-
+    
     print(differences)
+    #check to see if there is a tie
     tie = tieCheck(differences)
+    #return winner (0 for No, 1 for yes, -1 for tie)
     if tie == False:
-        winner = differences.index(max(differences))
+        ind = differences.index(max(differences))
+        if ind == 0:
+            winner = 1
+        elif ind == 1:
+            winner = 0
     else:
         winner = -1
     return winner
+
 
 
 #
 #main
 # 
 
-
-
-with open('11-06-2020Test1.json') as f:
+#load json file
+with open('11-09-2020Test1.json') as f:
     data = json.load(f)
 
-groundtruth = [0,0,0,0,0,0,0,1,1,1,1,1,1,1]
+#specify ground truth for each question
+groundtruth = [1,1,1,1,1,1,1,0,0,0,0,0,0,0]
 
+#iterate through responses and calculate the results for each question
 for i in range(14):
 
     predictions = []

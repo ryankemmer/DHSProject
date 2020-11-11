@@ -28,14 +28,24 @@ for user in usersCol.find():
     userResponse["name"] = userName
     userResponse["demographic"] = demographic
 
-    for i in range(14):
-        response = responsesCol.find_one({"user": userName, "question": i})
-        userResponse[i] = {
+    counter = 0
+    for response in responsesCol.find({"user": userName}):
+        userResponse[counter] = {
             "q1": response["q1"],
             "q2": response["q2"],
             "q3": response["q3"],
             "time": response["time"]
         }
+        counter += 1 
+
+    #for i in range(14):
+        #response = responsesCol.find_one({"user": userName, "question": i})
+        #userResponse[i] = {
+            #"q1": response["q1"],
+            #"q2": response["q2"],
+            #"q3": response["q3"],
+            #"time": response["time"]
+        #}
 
     dataArray.append(userResponse)
 
