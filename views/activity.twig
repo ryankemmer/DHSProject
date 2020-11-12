@@ -70,7 +70,7 @@
 
 <div id="myModal" class="modal">
     <span class="close">&times;</span>
-    <img class="modal-content" id="img01">
+    <img class="modal-content img-fluid" id="img01">
     <div id="caption"></div>
 </div>
 
@@ -78,7 +78,8 @@
     var duration = '{{ time }}'
     duration = duration - 1
     var userID = '{{ userID }}';
-    var sequence = '{{ sequence }}';
+    var question = '{{ question }}';
+
     display = document.querySelector('#time')
     capText = document.getElementById("caption");
 
@@ -86,10 +87,10 @@
 
         if (duration <= 0){
             duration = 0
-            renderQuestion(userID, sequence, duration);
+            renderQuestion(userID, question, duration);
         } 
         else{
-            renderQuestion(userID, sequence, duration);
+            renderQuestion(userID, question, duration);
             startTimer(duration, display, capText, userID);
         }
     }

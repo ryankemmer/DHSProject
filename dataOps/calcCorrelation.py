@@ -4,7 +4,7 @@ from sklearn import linear_model
 import numpy as np
 from scipy.stats.stats import pearsonr   
 
-with open('11-09-2020Test1.json') as f:
+with open('11-11-2020Test1.json') as f:
     data = json.load(f)
 
 #specify ground truth for each question

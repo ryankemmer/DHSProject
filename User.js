@@ -1,7 +1,7 @@
 module.exports = class User {
     constructor(id) {
         this.id = id;
-        this.question = 1;
+        this.index = 1;
         this.questionArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         this.currentQuestion = 0;
         this.prevTime = 60
@@ -12,7 +12,7 @@ module.exports = class User {
     }
 
     nextquestion(){
-        this.question = this.question + 1
+        this.index = this.index + 1
     }
 
     setPrevTime(time){
@@ -32,15 +32,12 @@ module.exports = class User {
                 candidates.push(i)
             }
         }
-
         console.log(candidates)
 
         var questionNumber = candidates[Math.floor(Math.random() * candidates.length)]
-
         this.questionArray[questionNumber] = 1
-
+        questionNumber = questionNumber + 1
         this.currentQuestion = questionNumber
-
         return questionNumber
     }
 };
