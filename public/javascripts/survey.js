@@ -4,12 +4,12 @@ Survey
     .applyTheme("default");
 let json = {
     questions: [{
-            name: "age",
-            type: "text",
-            title: "What is your age?",
-            placeHolder: "",
-            isRequired: false
-        },
+        name: "age",
+        type: "text",
+        title: "What is your age?",
+        placeHolder: "",
+        isRequired: false
+    },
         {
             type: "radiogroup",
             hasOther: false,
@@ -18,9 +18,9 @@ let json = {
             colCount: 1,
             title: "What is your gender?",
             choices: [{
-                    value: "Male",
-                    text: "Male"
-                },
+                value: "Male",
+                text: "Male"
+            },
                 {
                     value: "Female",
                     text: "Female"
@@ -39,9 +39,9 @@ let json = {
             colCount: 1,
             title: "What is your current level of education?",
             choices: [{
-                    value: "Less than High School",
-                    text: "Less than High School"
-                },
+                value: "Less than High School",
+                text: "Less than High School"
+            },
                 {
                     value: "High School/GED",
                     text: "High School/GED"
@@ -87,9 +87,9 @@ let json = {
             colCount: 1,
             title: "Are you currently employed?",
             choices: [{
-                    value: "Yes",
-                    text: "Yes"
-                },
+                value: "Yes",
+                text: "Yes"
+            },
                 {
                     value: "No",
                     text: "No"
@@ -111,11 +111,13 @@ let json = {
             colCount: 1,
             title: "Are you a native English speaker?",
             choices: [{
-                    value: "Yes",
-                    text: "Yes"
+                value: "Yes",
+                text: "Yes"
+            },
+                {
+                    value: "No",
+                    text: "No"
                 },
-                { value: "No", 
-                text: "No" },
             ]
         },
         {
@@ -133,9 +135,9 @@ let json = {
             colCount: 1,
             title: "How long have you lived in the United States?",
             choices: [{
-                    value: "Native (all my life)",
-                    text: "Native (all my life)"
-                },
+                value: "Native (all my life)",
+                text: "Native (all my life)"
+            },
                 {
                     value: "Less than 1 year",
                     text: "0 - 1 years"
@@ -171,11 +173,13 @@ let json = {
             title: "Have you previously participated on object detection tasks on MTurk?",
             //otherText: 'If Yes, please specify the activity.',
             choices: [{
-                    value: "Yes",
-                    text: "Yes"
+                value: "Yes",
+                text: "Yes"
+            },
+                {
+                    value: "No",
+                    text: "No"
                 },
-                { value: "No", 
-                text: "No" },
             ]
         },
         {
@@ -231,7 +235,7 @@ function startFromSurvey(userID) {
                 url: url2go,
                 type: "POST",
                 data: {'userDemographic': userDemographic, 'key': key},
-                success: function(){
+                success: function () {
                     d3.select('#debrief').html("The experiment that you have just participated in is part of an Arizona State University project that seeks to better understand how independent visual screening judgments from multiple participants can be aggregated to perform challenging shape and object detection tasks.If you have any questions, comments, or concerns regarding this experiment please do not hesitate to contact us at o.are.lab@gmail.com. Thank you for your participation and for your patience.")
                     d3.select("#key2show").html("Code for MTurk: ")
                     d3.select('#key').html(key)

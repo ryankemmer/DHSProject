@@ -1,14 +1,14 @@
 var timeText
 
-function renderQuestion(userID, question, duration){
+function renderQuestion(userID, question, duration) {
 
     //var startTime = new Date().getTime();
 
-    if (duration > 0){
+    if (duration > 0) {
         document.getElementById("myImg").src = "/images/activity/bat-" + sequence + ".png";
         document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
         document.getElementById("img2find").width = "100"
-    } else{
+    } else {
         document.getElementById("myImg").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
         display.textContent = " 00:00";
@@ -21,16 +21,16 @@ function renderQuestion(userID, question, duration){
     var w = window.innerWidth;
 
     console.log('width: ', w)
-    img.onclick = function(){
+    img.onclick = function () {
         modal.style.display = "block";
         modalImg.src = this.src;
         modalImg.width = '75%';
 
-      }
+    }
     var span = document.getElementsByClassName("close")[0];
-    span.width = w/2
+    span.width = w / 2
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
+    span.onclick = function () {
         modal.style.display = "none";
     }
 
@@ -45,14 +45,14 @@ function renderQuestion(userID, question, duration){
         .sliderHorizontal()
         .min(d3.min(data))
         .max(d3.max(data))
-        .width(sliderWidth/1.2)
+        .width(sliderWidth / 1.2)
         .tickFormat(d3.format('.0%'))
         .ticks(9)
         .step(.1)
         .default(.5)
         .on('onchange', val => {
-      d3.select('p#value-simple').text(d3.format('.0%')(val));
-    });
+            d3.select('p#value-simple').text(d3.format('.0%')(val));
+        });
 
     d3.select('div#slider-simple')
         .append('svg')
@@ -63,7 +63,7 @@ function renderQuestion(userID, question, duration){
         .call(sliderSimple);
 
     d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
-    
+
     //
     //Button
     //
@@ -95,11 +95,11 @@ function renderQuestion(userID, question, duration){
         var radio11 = document.getElementById('option11')
         var radio12 = document.getElementById('option12')
 
-        if  (radio11.classList.contains('active')){
+        if (radio11.classList.contains('active')) {
             q1 = 1
-        } else if (radio12.classList.contains('active')){
+        } else if (radio12.classList.contains('active')) {
             q1 = 0
-        } else{
+        } else {
             q1 = -2
         }
 
@@ -109,7 +109,7 @@ function renderQuestion(userID, question, duration){
 
 
         q2 = document.getElementById("value-simple").innerHTML
-        
+
         //
         //Question 3
         //
@@ -117,28 +117,28 @@ function renderQuestion(userID, question, duration){
         var radio21 = document.getElementById('option21')
         var radio22 = document.getElementById('option22')
 
-        if  (radio21.classList.contains('active')){
+        if (radio21.classList.contains('active')) {
             q3 = 1
-        } else if (radio22.classList.contains('active')){
+        } else if (radio22.classList.contains('active')) {
             q3 = 0
-        } else{
+        } else {
             q3 = -2
         }
 
 
-        sendData(userID, timeLeft, q1,q2,q3);
+        sendData(userID, timeLeft, q1, q2, q3);
 
     })
 }
 
 
-function sendData(userID, time, q1,q2,q3){
+function sendData(userID, time, q1, q2, q3) {
     console.log("sending data")
-    
-    url2go =  userID + "/data" 
+
+    url2go = userID + "/data"
     data2send = [time, q1, q2, q3]
     console.log(data2send)
-            
+
     //add ajax function
     new Promise((resolve, reject) => {
         $.ajax({
@@ -151,9 +151,9 @@ function sendData(userID, time, q1,q2,q3){
     });
 }
 
-function startTimer(duration, display, captionText, userID){
+function startTimer(duration, display, captionText, userID) {
     var timer = duration, minutes, seconds;
-    var timeChange = setInterval(function(){
+    var timeChange = setInterval(function () {
         if (--timer < 0) {
             //document.getElementById("submitButton").style.visibility = "hidden";
             //document.getElementById("errorText1").innerHTML = "Time is out! Changing to next question...";
@@ -176,9 +176,9 @@ function startTimer(duration, display, captionText, userID){
             //    document.forms.item(0).submit()
             //}
             return
-        } else{
+        } else {
             minutes = parseInt(timer / 60, 10)
-            seconds = parseInt(timer %60, 10);
+            seconds = parseInt(timer % 60, 10);
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
             display.textContent = minutes + ":" + seconds;
