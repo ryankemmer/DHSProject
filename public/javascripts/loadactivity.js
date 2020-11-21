@@ -12,8 +12,8 @@ function drawCanvas(imageSource) {
 }
 
 function mouseDown(e) {
-    rect.startX = e.pageX - this.offsetLeft;
-    rect.startY = e.pageY - this.offsetTop;
+    rect.startX = e.offsetX;
+    rect.startY = e.offsetY;
     drag = true;
 }
 
@@ -22,8 +22,8 @@ function mouseUp() {
 }
 
 function mouseMove(e) {
-    mousex = e.pageX - this.offsetLeft;
-    mousey = e.pageY - this.offsetTop;
+    mousex = e.offsetX;
+    mousey = e.offsetY;
     if (drag) {
         ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
         ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
@@ -34,7 +34,7 @@ function mouseMove(e) {
         ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
     }
     //Output
-    $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
+    $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w);
 }
 
 
