@@ -1,11 +1,49 @@
 var timeText
 
+function drawCanvas(imageSource) {
+    imageObj = new Image();
+    imageObj.onload = function () {
+        ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
+    };
+    imageObj.src = imageSource;
+    canvas.addEventListener('mousedown', mouseDown, false);
+    canvas.addEventListener('mouseup', mouseUp, false);
+    canvas.addEventListener('mousemove', mouseMove, false);
+}
+
+function mouseDown(e) {
+    rect.startX = e.pageX - this.offsetLeft;
+    rect.startY = e.pageY - this.offsetTop;
+    drag = true;
+}
+
+function mouseUp() {
+    drag = false;
+}
+
+function mouseMove(e) {
+    mousex = e.pageX - this.offsetLeft;
+    mousey = e.pageY - this.offsetTop;
+    if (drag) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
+        ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
+        ctx.beginPath();
+        rect.w = mousex - rect.startX;
+        rect.h = mousey - rect.startY;
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+    }
+    //Output
+    $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
+}
+
+
 function renderQuestion(userID, question, duration) {
 
     //var startTime = new Date().getTime();
 
     if (duration > 0) {
-        document.getElementById("myImg").src = "/images/activity/bat-" + sequence + ".png";
+        drawCanvas("/images/activity/bat-" + sequence + ".png");
         document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
         document.getElementById("img2find").width = "100"
     } else {
@@ -15,18 +53,19 @@ function renderQuestion(userID, question, duration) {
     }
 
     var modal = document.getElementById("myModal");
-    var img = document.getElementById("myImg");
+    // var img = document.getElementById("myImg");
     var modalImg = document.getElementById("img01");
 
     var w = window.innerWidth;
 
-    console.log('width: ', w)
-    img.onclick = function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-        modalImg.width = '75%';
-
-    }
+    console.log('width: ', w);
+    console.log('bounding box: X:', rect.startX, ', Y:', rect.startY);
+    // img.onclick = function () {
+    //     modal.style.display = "block";
+    //     modalImg.src = this.src;
+    //     modalImg.width = '75%';
+    //
+    // }
     var span = document.getElementsByClassName("close")[0];
     span.width = w / 2
     // When the user clicks on <span> (x), close the modal

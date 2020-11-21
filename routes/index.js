@@ -5,8 +5,9 @@ var assert = require('assert');
 const co = require('co');
 const User = require('../User');
 
-var url = 'mongodb://localhost:27014/';
-//var url = 'mongodb://localhost:27017/';
+// TODO: Remove hardcoded link
+// var url = 'mongodb://localhost:27014/';
+var url = 'mongodb://localhost:27017/';
 
 var datab = 'Test1'
 var userID = null
