@@ -33,15 +33,12 @@ function mouseMove(e) {
         ctx.strokeStyle = 'red';
         ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
     }
-    //Output
-    $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w);
+    //Output (debug code)
+    // $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w);
 }
 
 
 function renderQuestion(userID, question, duration) {
-
-    //var startTime = new Date().getTime();
-
     if (duration > 0) {
         drawCanvas("/images/activity/bat-" + sequence + ".png");
         document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
@@ -53,13 +50,14 @@ function renderQuestion(userID, question, duration) {
     }
 
     var modal = document.getElementById("myModal");
-    // var img = document.getElementById("myImg");
     var modalImg = document.getElementById("img01");
 
     var w = window.innerWidth;
 
     console.log('width: ', w);
     console.log('bounding box: X:', rect.startX, ', Y:', rect.startY);
+
+    // TODO: Add canvas in zoomed-in image
     // img.onclick = function () {
     //     modal.style.display = "block";
     //     modalImg.src = this.src;
@@ -134,7 +132,7 @@ function renderQuestion(userID, question, duration) {
         var radio11 = document.getElementById('option11')
         var radio12 = document.getElementById('option12')
 
-        if (radio11.classList.contains('active')) {
+        if (radio11.classList.contains('active') && rect.w != null && rect.h != null) {
             q1 = 1
         } else if (radio12.classList.contains('active')) {
             q1 = 0
@@ -165,18 +163,18 @@ function renderQuestion(userID, question, duration) {
         }
 
 
-        sendData(userID, timeLeft, q1, q2, q3);
+        sendData(userID, timeLeft, q1, q2, q3, rect);
 
     })
 }
 
 
-function sendData(userID, time, q1, q2, q3) {
+function sendData(userID, time, q1, q2, q3, bb) {
     console.log("sending data")
 
     url2go = userID + "/data"
-    data2send = [time, q1, q2, q3]
-    console.log(data2send)
+    data2send = [time, q1, q2, q3, bb]
+    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " rectangle: {" + bb.startX + ", " + bb.startX + ", " + bb.w + ", " + bb.h + "}");
 
     //add ajax function
     new Promise((resolve, reject) => {
