@@ -54,9 +54,6 @@ function renderQuestion(userID, question, duration) {
 
     var w = window.innerWidth;
 
-    console.log('width: ', w);
-    console.log('bounding box: X:', rect.startX, ', Y:', rect.startY);
-
     // TODO: Add canvas in zoomed-in image
     // img.onclick = function () {
     //     modal.style.display = "block";
