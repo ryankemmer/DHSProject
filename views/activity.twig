@@ -1,73 +1,85 @@
 <meta charset="utf-8">
 <html lang="en">
 <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script src="https://d3js.org/d3.v6.js"></script>
-        <script src="https://unpkg.com/d3-simple-slider"></script>
-        <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
-        <link rel="stylesheet" href="/stylesheets/activity.scss">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://unpkg.com/d3-simple-slider"></script>
+    <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
+    <link rel="stylesheet" href="/stylesheets/activity.scss">
 </head>
 
 <body>
-<div class = "activitypage">
-<div class="container text-center mt-4">
-    <div class="d-flex justify-content-center py-2" id="userID">UserID:   <div name= "userID" style="display:inline" id="userID">{{ userID }}</div></div>
-    <h1 class= "py-2">Exercise {{ sequence }} of 14</h1>
-    <p class="py-2 text-danger" id = "errorText1"> {{ error }} </p>
-    <p><b>Can you find this bat in the image below?</b></p>
-    <img id = "img2find">
-    <p class = "text-danger">Time remaining:  <span id="time"> 00:{{ time }}</span></p>
-    <div class = "container mainContainer">
-        <div class = "row">
-
-            <div class = "col-sm">
-                <img id="myImg" style="width:60%;">
-                <p id= "imgText">Click image to enlarge</p>
-                <button type= "button" class="rotatebutton btn btn-primary" onclick="rotateElem()"> Rotate by 90 degrees </button>
-                <br>
-            </div>
-            <div class= "col-sm answeractivity">
-            <p>Is the bat in this image?</p>
-
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class = "btn btn-secondary" id="option11">
-                    <input type="radio" name="q1" autocomplete="off"> Yes
-                </label>
-                <label class = "btn btn-secondary" id="option12">
-                    <input type="radio" name="q1" autocomplete="off"> No
-                </label>
-            </div>
-
-            <br>
-            <br>
-            <p>Please rate the confidence in your decision.</p>
-            <p id="value-simple"></p>
-            <div id="slider-simple"></div>
-            <br>
-            <p>What do you think the majority of people responded?</p>
-
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class = "btn btn-secondary" id="option21">
-                    <input type="radio" name="q3" autocomplete="off"> Yes
-                </label>
-                <label class = "btn btn-secondary" id="option22">
-                    <input type="radio" name="q3" autocomplete="off"> No
-                </label>
-            </div>
-
+<div class="activitypage">
+    <div class="container text-center mt-4">
+        <div class="d-flex justify-content-center py-2" id="userID">UserID:
+            <div name="userID" style="display:inline" id="userID">{{ userID }}</div>
         </div>
-    </div>
-    <form id="subForm" action="/activity/{{userID}}/" method="POST">
-            <p class="py-2 text-danger" id = "errorText2"> {{ error }} </p>
-        <input type="submit" class = "btn btn-outline-success" id = "submitButton" value="Submit">
-    </form>
-    </div>
+        <h1 class="py-2">Exercise {{ sequence }} of 14</h1>
+        <p class="py-2 text-danger" id="errorText1"> {{ error }} </p>
+        <p><b>Can you find this bat in the image below?</b></p>
+        <img id="img2find">
+        <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
+        <div class="container mainContainer">
+            <div class="row">
 
-</div>
+                <div class="col-sm">
+                    <canvas id="canvas" style="cursor: crosshair;
+                         border: 1px solid #000000;"></canvas>
+                    <p id="imgText">Click image to enlarge</p>
+                </div>
+                <div class="col-sm answeractivity">
+                    <p>Is the bat in this image?</p>
+
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary" id="option11">
+                            <input type="radio" name="q1" autocomplete="off"> Yes
+                        </label>
+                        <label class="btn btn-secondary" id="option12">
+                            <input type="radio" name="q1" autocomplete="off"> No
+                        </label>
+                    </div>
+
+                    <br>
+                    <br>
+                    <p>Please rate the confidence in your decision.</p>
+                    <p id="value-simple"></p>
+                    <div id="slider-simple"></div>
+                    <br>
+                    <p>What do you think the majority of people responded?</p>
+
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary" id="option21">
+                            <input type="radio" name="q3" autocomplete="off"> Yes
+                        </label>
+                        <label class="btn btn-secondary" id="option22">
+                            <input type="radio" name="q3" autocomplete="off"> No
+                        </label>
+                    </div>
+
+                    <br>
+                    <br>
+                    <p> Please draw a bounding box on the image around the bat (if exists)</p>
+                    {# <div id="output"></div> #}
+
+                </div>
+            </div>
+            <form id="subForm" action="/activity/{{ userID }}/" method="POST">
+                <p class="py-2 text-danger" id="errorText2"> {{ error }} </p>
+                <input type="submit" class="btn btn-outline-success" id="submitButton" value="Submit">
+            </form>
+        </div>
+
+    </div>
 </div>
 
 <div id="myModal" class="modal">
@@ -87,14 +99,35 @@
     display = document.querySelector('#time')
     capText = document.getElementById("caption");
 
-    window.onload = function() {
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var imgWidth = 500;
+    var imgHeight = 500;
 
-        if (duration <= 0){
+    ctx.canvas.width = imgWidth;
+    ctx.canvas.height = imgHeight;
+    var rect = {}; // Properties: startX, startY, w, h
+    rect.startX = null;
+    rect.startY = null;
+    rect.w = null;
+    rect.h = null;
+    var drag = false;
+    var imageObj = null;
+
+    window.onload = function () {
+
+        if (duration <= 0) {
             duration = 0
+<<<<<<< HEAD
             renderQuestion(userID, question, duration);
         } 
         else{
             renderQuestion(userID, question, duration);
+=======
+            renderQuestion(userID, sequence, duration);
+        } else {
+            renderQuestion(userID, sequence, duration);
+>>>>>>> acc0bd3fba24c1b89eb5f2eb5e9d666f5515aeb6
             startTimer(duration, display, capText, userID);
         }
     }
