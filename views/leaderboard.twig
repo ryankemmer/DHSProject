@@ -9,7 +9,7 @@
         <script src="https://d3js.org/d3.v6.js"></script>
         <script src="https://unpkg.com/d3-simple-slider"></script>
         <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
-        <link rel="stylesheet" href="/stylesheets/activity.scss">
+        <link rel="stylesheet" href="/stylesheets/leaderboard.scss">
 </head>
 
 <body>
@@ -24,16 +24,33 @@
             </div>
             <div class= "col-sm">
                 <h1>Leaderboard</h1>
-                <ul>
-                    {% for user in leaderboard %}
-                        <li> {{user.user}} : {{ user.score }}</li>
-                    {% endfor %}
-                </ul>
+                
+                <div class= "wrapper">
+
+                    <table>
+                        <thead>
+						    <tr>
+							    <th>Rank</th>
+							    <th>User</th>
+							    <th>Score</th>
+						    </tr>
+					    </thead>
+                        <tbody>
+                            {% for user in leaderboard %}
+                                <tr>
+                                    <td class="rank"> {{ loop.index }} </td>
+                                    <td class="user"> {{user.user}} </td>
+                                    <td class="score"> {{user.score}} / 14 </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
-    <form id="subForm" action="/activity/{{userID}}/" method="POST">
-        <p class="py-2 text-danger" id = "errorText2"> {{ error }} </p>
-        <input type="submit" class = "btn btn-outline-success" id = "submitButton" value="Submit">
+    <form id="subForm" action="/survey/{{userID}}/" method="POST">
+        <input type="submit" class = "btn btn-outline-success" id = "submitButton" value="Continue to Survey">
     </form>
     </div>
 </div>

@@ -30,12 +30,13 @@
     max-width: 600px;
 }
   
-/* Add Animation - Zoom in the Modal */
-  .modal-content, #caption {
+/* Add Animation - Zoom in the Modal 
+.modal-content, #caption {
     animation-name: zoom;
-    animation-duration: 0.6s;
-}
-  
+    animation-duration: 0.2s;
+} 
+*/
+
 @keyframes zoom {
     from {transform:scale(0)}
     to {transform:scale(1)}
@@ -104,4 +105,9 @@
 
 span {
     display: inline-block ;
+}
+
+.rotatebutton{
+    margin:0 auto;
+    display:block;
 }

@@ -151,14 +151,11 @@ router.post('/activity/:userID/', function(req,res,next){
           }
         }
 
-        console.log(correct)
-
         var sum = 0
         //save score of user
         for(i = 0; i < 14; i++){
           sum = sum + correct[i]
         }
-        console.log(sum)
 
         newItem = {"score" : sum}
         usersCol.updateOne({"user": currentUser.id}, { $set: newItem });
@@ -166,6 +163,7 @@ router.post('/activity/:userID/', function(req,res,next){
         //get leaderboard
         leaders = usersCol.find().sort({score: -1}).toArray(function(err, leaderboard) {
           if (err) throw err;
+          leaderboard = leaderboard.slice(0,5)
           res.render('leaderboard', {userID: currentUser.id, total: sum, leaderboard})
         });
       }
@@ -287,11 +285,29 @@ router.post('/activity/:use/:userID/data', function(req,res,next){
 
 
 //
+//Load survey page
+//
+
+
+router.post('/survey/:userID', function(req,res,next){
+
+  //Fetch current user
+  let currentUser = getUserInstance(req.params.userID);
+  res.render('survey', {userID: currentUser.id})
+
+});
+
+
+
+
+
+
+//
 //Store survery response
 //
 
 
-router.post('/activity/:use/:userID/sendSurvey', function(req,res,next){
+router.post('/survey/:user/:userID/sendSurvey', function(req,res,next){
 
   //collect variables from front end
   userID = req.params.userID;
@@ -318,17 +334,5 @@ router.post('/activity/:use/:userID/sendSurvey', function(req,res,next){
   res.send("{}");
 
 })
-
-
-//
-//evaluate responses
-//
-
-
-
-
-
-
-
 
 module.exports = router;

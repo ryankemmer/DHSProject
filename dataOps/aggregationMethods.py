@@ -5,6 +5,8 @@
 
 
 import json
+from itertools import combinations 
+from statistics import mean
 
 def tieCheck(x):
     if x.count(x[0]) == len(x):
@@ -24,8 +26,6 @@ def majorityVote(predictions):
         for p in predictions:
             if p == choices[i]:
                 choiceCounts[i] +=1
-
-    print(choiceCounts)
 
     #check to see if there is a tie
     tie = tieCheck(choiceCounts)
@@ -55,8 +55,6 @@ def confidenceWeightedVote(predictions, confidence):
                 conf = confidence[i]
                 value = conf * .01
                 choiceCounts[i] += value
-
-    print(choiceCounts)
 
     #check to see if there is a tie
     tie = tieCheck(choiceCounts)
@@ -93,7 +91,6 @@ def suprisinglyPopularVote(predictions, crowdPredictions):
             if p == choices[i]:
                  choiceCountsCrowd[i] += 1
 
-    print(choiceCountsCrowd)
     #convert to percentages
     choiceCounts = [x/ len(predictions) for x in choiceCounts]
     choiceCountsCrowd = [x/ len(predictions) for x in choiceCountsCrowd]
@@ -101,8 +98,6 @@ def suprisinglyPopularVote(predictions, crowdPredictions):
     #and what the crowd believed the majority woulf predict
     differences = [m - n for m,n in zip(choiceCounts,choiceCountsCrowd)]
 
-    
-    print(differences)
     #check to see if there is a tie
     tie = tieCheck(differences)
     #return winner (0 for No, 1 for yes, -1 for tie)
@@ -129,23 +124,63 @@ with open('11-11-2020Test1.json') as f:
 #specify ground truth for each question
 groundtruth = [1,1,1,1,1,1,1,0,0,0,0,0,0,0]
 
+num_samples = 2
+
 #iterate through responses and calculate the results for each question
+maj = []
+conf = []
+sup = []
+
 for i in range(14):
 
-    predictions = []
-    confidence = []
-    crowdPredictions = []   
+    predictionTuple = [] 
 
     for userResponse in data:
         response = userResponse[str(i)]
-        predictions.append(response["q1"])
-        confidence.append(response["q2"])
-        crowdPredictions.append(response["q3"])
+        predictionTuple.append([response["q1"],response["q2"],response["q3"]])
+
+    combinations_array = list(combinations(predictionTuple, num_samples))
 
 
-    print('Question: ' + str(i))
-    print('Majority Winner: ' + str(majorityVote(predictions)))
-    print('Confidence-Weighted Winner: ' + str(confidenceWeightedVote(predictions, confidence)))
-    print('SP Winner: ' + str(suprisinglyPopularVote(predictions, crowdPredictions)))
-    print('Ground truth: ' + str(groundtruth[i]))
-    print()
+    majresults = []
+    confresults = []
+    supresults = []
+
+    for comb in combinations_array:
+            
+        predictions = [c[0] for c in comb]
+        confidence = [c[1] for c in comb]
+        crowdPredictions = [c[2] for c in comb]
+
+        majanswer = majorityVote()
+
+        #TODO: Fix this
+
+            if (answer == groundtruth[i]):
+                result[j] = 1
+            else:
+                result[j] = 0
+            
+        results.append(result)
+
+    maj.append(mean(c[0] for c in results))
+    conf.append(mean(c[1] for c in results))
+    sup.append(mean(c[2] for c in results))
+
+
+
+
+print(mean(maj))
+print(mean(conf))
+print(mean(sup))
+
+
+
+'''
+print('Question: ' + str(i))
+print('Majority Winner: ' + str(majorityVote(predictions)))
+print('Confidence-Weighted Winner: ' + str(confidenceWeightedVote(predictions, confidence)))
+print('SP Winner: ' + str(suprisinglyPopularVote(predictions, crowdPredictions)))
+print('Ground truth: ' + str(groundtruth[i]))
+print()
+'''

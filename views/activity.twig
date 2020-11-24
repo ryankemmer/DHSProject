@@ -25,8 +25,10 @@
         <div class = "row">
 
             <div class = "col-sm">
-                <img id="myImg" style="width:75%;">
+                <img id="myImg" style="width:60%;">
                 <p id= "imgText">Click image to enlarge</p>
+                <button type= "button" class="rotatebutton btn btn-primary" onclick="rotateElem()"> Rotate by 90 degrees </button>
+                <br>
             </div>
             <div class= "col-sm answeractivity">
             <p>Is the bat in this image?</p>
@@ -70,6 +72,8 @@
 
 <div id="myModal" class="modal">
     <span class="close">&times;</span>
+    <button type= "button" class="rotatebutton btn btn-primary" onclick="rotateElem()"> Rotate by 90 degrees </button>
+    <br>
     <img class="modal-content img-fluid" id="img01">
     <div id="caption"></div>
 </div>
@@ -94,6 +98,8 @@
             startTimer(duration, display, capText, userID);
         }
     }
+
+
 
 </script>
 

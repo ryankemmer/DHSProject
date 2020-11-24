@@ -1,4 +1,17 @@
 var timeText
+var rotations = 0
+
+function rotateElem(){
+
+    var angle = ($('#myImg').data('angle') + 90) || 90;
+    $('#myImg').css({'transform': 'rotate(' + angle + 'deg)'});
+    $('#myImg').data('angle', angle);
+
+    var angle = ($('#img01').data('angle') + 90) || 90;
+    $('#img01').css({'transform': 'rotate(' + angle + 'deg)'});
+    $('#img01').data('angle', angle);
+
+}
 
 function renderQuestion(userID, question, duration){
 

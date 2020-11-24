@@ -2,7 +2,8 @@ import json
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 import numpy as np
-from scipy.stats.stats import pearsonr   
+from scipy.stats.stats import pearsonr 
+import seaborn as sns
 
 with open('11-11-2020Test1.json') as f:
     data = json.load(f)
@@ -32,15 +33,7 @@ for i in range(14):
 #calculate correlation
 plt.scatter(times, correctAnswer)
 
-print(pearsonr(times,correctAnswer))
-
-# Fit the classifier
-clf = linear_model.LogisticRegression(C=1e5)
-times = np.array(times)
-times= times.reshape(-1, 1)
-
-correctAnswer = np.array(correctAnswer)
-clf.fit(times, correctAnswer)
+sns.regplot(x=times, y=correctAnswer, data=data, logistic=True)
 
 #plt.clf()
 plt.xlabel("Time (seconds)")
