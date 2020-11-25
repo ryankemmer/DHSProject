@@ -9,7 +9,7 @@ const { response } = require('express');
 //var url = 'mongodb://localhost:27014/';
 var url = 'mongodb://localhost:27017/';
 
-var datab = 'Test1'
+var datab = 'Test2-1'
 var userID = null
 let users = [];
 
@@ -129,16 +129,16 @@ router.post('/activity/:userID/', function(req,res,next){
       questionNum = currentUser.selectQuestion()
       console.log(questionNum)
 
-      if (currentUser.index < 15){
+      if (currentUser.index < 25){
         res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
       }
       else{
 
-        var truth = [0,0,0,0,0,0,0,1,1,1,1,1,1,1]
+        var truth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
         var correct = []
         
         //get results
-        for(i = 1; i < 15; i++){
+        for(i = 1; i < 25; i++){
           var response = yield responseCol.findOne({"user": currentUser.id, "question" : i})
           console.log(response)
           if (response == null){
@@ -153,7 +153,7 @@ router.post('/activity/:userID/', function(req,res,next){
 
         var sum = 0
         //save score of user
-        for(i = 0; i < 14; i++){
+        for(i = 0; i < 24; i++){
           sum = sum + correct[i]
         }
 

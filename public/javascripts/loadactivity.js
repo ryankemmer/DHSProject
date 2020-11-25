@@ -18,8 +18,8 @@ function renderQuestion(userID, question, duration){
     //var startTime = new Date().getTime();
 
     if (duration > 0){
-        document.getElementById("myImg").src = "/images/activity/bat-" + question + ".png";
-        document.getElementById("img2find").src = "/images/activity/bat-" + question + ".gif";
+        document.getElementById("myImg").src = "/images/activity/turtle-" + question + ".png";
+        document.getElementById("img2find").src = "/images/activity/turtle-" + question + ".gif";
         document.getElementById("img2find").width = "100"
     } else{
         document.getElementById("myImg").style.visibility = "hidden";
