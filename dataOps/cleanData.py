@@ -25,7 +25,8 @@ for user in usersCol.find():
     responseCount = responsesCol.count_documents({'user' : userName})
 
     print(userName + ": " + str(responseCount))
-    if(responseCount == 14):
+    print
+    if(responseCount == 24):
         completed_users.append(userName)
     else:
         userRemove += 1
