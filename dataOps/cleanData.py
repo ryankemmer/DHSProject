@@ -22,10 +22,12 @@ for user in usersCol.find():
 
     key2pay = user["key2pay"]
     userName = user["user"]
+    nCorrect = user["score"]
+
     responseCount = responsesCol.count_documents({'user' : userName})
 
-    print(userName + ": " + str(responseCount))
-    print
+    print(userName + ": " + str(responseCount) + "  correct: " + str(nCorrect))
+
     if(responseCount == 24):
         completed_users.append(userName)
     else:
