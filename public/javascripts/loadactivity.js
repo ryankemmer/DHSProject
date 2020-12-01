@@ -99,7 +99,7 @@ function renderQuestion(userID, question, duration){
         console.log(timeLeft)
 
         //var endTime = new Date().getTime();
-        //var time = endTime - startTime;
+        //var totalime = endTime - startTime;
 
         //
         //Question 1
