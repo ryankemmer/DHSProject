@@ -118,11 +118,11 @@ def suprisinglyPopularVote(predictions, crowdPredictions):
 # 
 
 #load json file
-with open('11-11-2020Test1.json') as f:
+with open("12-02-2020Test2-1.json") as f:
     data = json.load(f)
 
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,0,0,0,0,0,0,0]
+groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
 
 num_samples = 2
 
@@ -131,7 +131,7 @@ maj = []
 conf = []
 sup = []
 
-for i in range(14):
+for i in range(24):
 
     predictionTuple = [] 
 
