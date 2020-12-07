@@ -2,8 +2,8 @@ from mlxtend.plotting import plot_confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
 
-binary1 = np.array([[2, 8],
-                   [2, 8]])
+binary1 = np.array([[9, 1],
+                   [1, 9]])
 
 class_names = ['yes', 'no']
 

@@ -229,6 +229,26 @@ honeypots = [0,11,12,23]
 
 trap_true = [0]*48
 trap_false = [0]*48
+
+
+for i in range(24):
+
+    predictions = []
+    confidence = []
+    crowdPredictions = []  
+
+    for userResponse in data:
+        response = userResponse[str(i + 1)]
+        predictions.append(response["q1"])
+        confidence.append(response["q2"])
+        crowdPredictions.append(response["q3"])
+
+    if i in honeypots:
+        for j in range(len(predictions)):
+            if predictions[j] == groundtruth[i]:
+                trap_true[j] +=1
+            else:
+                trap_false[j] +=1
                 
 for i in range(24):
 
@@ -241,14 +261,6 @@ for i in range(24):
         predictions.append(response["q1"])
         confidence.append(response["q2"])
         crowdPredictions.append(response["q3"])
-    
-    # assume the first three questions --> trapping questions
-    if i in honeypots:
-        for j in range(len(predictions)):
-            if predictions[j] == groundtruth[i]:
-                trap_true[j] +=1
-            else:
-                trap_false[j] +=1
 
     print('************ Question: ' + str(i+1) + ' ===> Ground Truth: ' + str(groundtruth[i]) + '**************')
 #    print('==================================')
