@@ -5,16 +5,16 @@ import numpy as np
 from scipy.stats.stats import pearsonr 
 import seaborn as sns
 
-with open('11-11-2020Test1.json') as f:
+with open('12-03-2020Test2-2.json') as f:
     data = json.load(f)
 
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,0,0,0,0,0,0,0]
+groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 times = []
 correctAnswer = []
 
-for i in range(14):
+for i in range(1,25):
 
     for userResponse in data:
         response = userResponse[str(i)]
@@ -31,6 +31,10 @@ for i in range(14):
         correctAnswer.append(correct)
 
 #calculate correlation
+
+corr, _ = pearsonr(times, correctAnswer)
+print(corr)
+
 plt.scatter(times, correctAnswer)
 
 sns.regplot(x=times, y=correctAnswer, data=data, logistic=True)
