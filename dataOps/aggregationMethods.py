@@ -3,7 +3,7 @@
 #
 # Author: Ryan Kemmer, Yeawon Yoo
 #
-# v2__ updated on Nov 11 15:43
+# v3__ updated on Dec 7 09:04
 
 
 import json
@@ -229,17 +229,14 @@ honeypots = [2,3,14,15]
 trap_true = [0]*48
 trap_false = [0]*48
 
+#fill values in trap_true and trap_false arrays
 for i in range(24):
 
     predictions = []
-    confidence = []
-    crowdPredictions = []   
 
     for userResponse in data:
         response = userResponse[str(i + 1)]
         predictions.append(response["q1"])
-        confidence.append(response["q2"])
-        crowdPredictions.append(response["q3"])
 
     if i in honeypots:
         for j in range(len(predictions)):
