@@ -15,6 +15,24 @@ def tieCheck(x):
     else:
         return False
 
+def checkAnswer(x,gtruth):
+
+    #if x is a tie, change the value to be incorrect
+    if x == -1:
+        if gtruth == 0:
+            x = 1
+        else:
+            x = 0
+
+    if x == 1 and gtruth == 0:
+        return 'FP'
+    if x == 0 and gtruth == 0:
+        return 'TN'
+    if x == 1 and gtruth == 1:
+        return 'TP'
+    if x == 0 and gtruth == 1:
+        return 'FN'
+
 def majorityVote(predictions):
 
     #specify binary decisions(1 for yes and 0 for no)
@@ -41,12 +59,12 @@ def majorityVote(predictions):
             winner = 0
     else:
         winner = -1
+
     return winner
 
 
 def confidenceWeightedVote(predictions, confidence):
 
-    #spammers = [groundtruth.index(y) for x, y in zip(predictions, groundtruth) if y != x]
     #specify binary decisions(1 for yes and 0 for no)
     choices = [1,0]
     #list to count confidence-weighted votes
@@ -61,6 +79,37 @@ def confidenceWeightedVote(predictions, confidence):
                 choiceCounts[i] += value
 
     #print("vote outcome:", choiceCounts)
+
+    #check to see if there is a tie
+    tie = tieCheck(choiceCounts)
+    #return winner (0 for No, 1 for yes, -1 for tie)
+    if tie == False:
+        ind = choiceCounts.index(max(choiceCounts))
+        if ind == 0:
+            winner = 1
+        elif ind == 1:
+            winner = 0
+    else:
+        winner = -1
+    return winner
+
+def highConfidenceWeightedVote(predictions, confidence):
+
+    #specify binary decisions(1 for yes and 0 for no)
+    choices = [1,0]
+    #list to count confidence-weighted votes
+    choiceCounts = [0] * len(choices)
+
+    #count each vote and multiply confidence weights
+    for i in range(len(choices)):
+        for j in range(len(predictions)):
+            if predictions[j] == choices[i]:
+                conf = confidence[j]
+                if conf > 80:
+                    value = conf * .01
+                    choiceCounts[i] += value
+
+    print("vote outcome:", choiceCounts)
 
     #check to see if there is a tie
     tie = tieCheck(choiceCounts)
@@ -122,6 +171,7 @@ def surprisinglyPopularVote(predictions, crowdPredictions):
             winner = 0
     else:
         winner = -1
+
     return winner
 
 def honeypot(predictions, trap):
@@ -245,6 +295,17 @@ for i in range(24):
             else:
                 trap_false[j] +=1
 
+
+#aggregation method totals 
+majTotals = []
+confTotals = []
+hconfTotals = []
+spTotals = []
+hpTotals = []
+whTotals = []
+eTotals = []
+
+#calculate results
 for i in range(24):
 
     predictions = []
@@ -263,12 +324,47 @@ for i in range(24):
 #    print('==================================')
     print('Confidence-Weighted Winner: ' + str(confidenceWeightedVote(predictions, confidence)))
 #    print('==================================')
+    print('High Confidence Winner: ' + str(highConfidenceWeightedVote(predictions, confidence)))
+#    print('==================================')
     print('SP Winner: ' + str(surprisinglyPopularVote(predictions, crowdPredictions)))
 #    print('==================================')
     
     if i not in honeypots:
+
         print('Honeypot Winner: ' + str(honeypot(predictions, trap_true)))
         print('Weighted Honeypot Winner: ' + str(weighted_honeypot(predictions, trap_true)))
         print('ELICE: ' + str(ELICE(predictions, groundtruth[i], trap_true, trap_false)))
+        
+        #add to array of predictions
+        majTotals.append(checkAnswer(majorityVote(predictions),groundtruth[i]))
+        confTotals.append(checkAnswer(confidenceWeightedVote(predictions, confidence),groundtruth[i]))
+        hconfTotals.append(checkAnswer(highConfidenceWeightedVote(predictions, confidence),groundtruth[i]))
+        spTotals.append(checkAnswer(surprisinglyPopularVote(predictions, confidence),groundtruth[i]))
+        hpTotals.append(checkAnswer(honeypot(predictions, trap_true),groundtruth[i]))
+        whTotals.append(checkAnswer(weighted_honeypot(predictions, trap_true),groundtruth[i]))
+        eTotals.append(checkAnswer(ELICE(predictions, groundtruth[i], trap_true, trap_false),groundtruth[i]))
+
+print(str("---------------------- Totals ------------------------"))
+
+print('Majority Vote Totals: ' + )
+
+print('Confidence-Weighted Winner: ' + )
+
+print('High Confidence Winner: ' + )
+
+print('SP Winner: ' + )
+
+print('Honeypot Winner: ' + )
+
+print('Weighted Honeypot Winner: ' + )
+
+print('ELICE: ' + )
+
+
+
+         
+
+
+
 
 

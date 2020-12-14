@@ -8,24 +8,24 @@ with open('12-02-2020Test2-1.json') as f:
 
 groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
 
-correctDist = []
+timeDist = []
 
 #iterate through users
 for i in range(len(data)):
-    correct = 0
+    times = []
     for j in range(1,25):
         response = data[i][str(j)]
-        useRes = response["q1"]
-        if useRes == groundtruth[j-1]:
-            correct += 1
-            
-    correctDist.append(correct)
+        time = response["time"]
+        times.append(time)
 
-correctDist.sort()
-print(correctDist)
+    avgTime = sum(times) / len(times)
+    timeDist.append(avgTime)
 
-x_pos = x_pos = [i for i, _ in enumerate(correctDist, 1)]
-scatter = sns.scatterplot(x = x_pos, y = correctDist)
-plt.ylabel('Number Correct')
+timeDist.sort()
+print(timeDist)
+
+x_pos = x_pos = [i for i, _ in enumerate(timeDist, 1)]
+scatter = sns.scatterplot(x = x_pos, y = timeDist)
+plt.ylabel('Average Time Spent')
 plt.xlabel('User ID')
 plt.show()
