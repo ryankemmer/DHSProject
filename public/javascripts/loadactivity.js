@@ -51,16 +51,17 @@ function renderQuestion(userID, question, duration) {
 
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("img01");
+    var canvas = document.getElementById("canvas");
 
     var w = window.innerWidth;
 
     // TODO: Add canvas in zoomed-in image
-    // img.onclick = function () {
-    //     modal.style.display = "block";
-    //     modalImg.src = this.src;
-    //     modalImg.width = '75%';
-    //
-    // }
+    canvas.ondblclick = function () {
+        modal.style.display = "block";
+        modalImg.src = "/images/activity/bat-" + sequence + ".png";
+        modalImg.width = '75%';
+    }
+
     var span = document.getElementsByClassName("close")[0];
     span.width = w / 2
     // When the user clicks on <span> (x), close the modal
