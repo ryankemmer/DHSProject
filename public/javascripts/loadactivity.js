@@ -157,12 +157,12 @@ function renderQuestion(userID, question, duration) {
 }
 
 
-function sendData(userID, time, q1, q2, q3, bb) {
+function sendData(userID, time, q1, q2, q3, x, y) {
     console.log("sending data")
 
     url2go = userID + "/data"
-    data2send = [time, q1, q2, q3, bb]
-    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " object_loc: {" + mouse_x + ", " + mouse_y + "}");
+    data2send = [time, q1, q2, q3, x, y]
+    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " object_loc: {" + x + ", " + y + "}");
 
     //add ajax function
     new Promise((resolve, reject) => {
