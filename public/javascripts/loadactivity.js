@@ -19,12 +19,18 @@ function mouseDown(e) {
     rect_width = 10;
     ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
     ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
-    ctx.beginPath();
-    ctx.strokeStyle = 'red';
+    // ctx.beginPath();
+    // ctx.strokeStyle = 'red';
     // ctx.strokeRect(mouse_x - rect_width, mouse_y - rect_width, rect_width, rect_width);
     ctx.beginPath();
     ctx.arc(mouse_x, mouse_y, 10, 0, 2 * Math.PI);
+    // Turn transparency on
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.fill();
     ctx.stroke();
+    ctx.globalAlpha = 1.0;
     //Output (debug code)
     $('#output').html('Object Location (x, y): (' + mouse_x + ', ' + mouse_y + ')');
 }
