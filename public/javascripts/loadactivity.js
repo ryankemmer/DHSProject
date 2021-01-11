@@ -1,5 +1,9 @@
 var timeText
 
+// Mouse pointer location
+var mouse_x = null;
+var mouse_y = null;
+
 function drawCanvas(imageSource) {
     imageObj = new Image();
     imageObj.onload = function () {
@@ -7,40 +11,35 @@ function drawCanvas(imageSource) {
     };
     imageObj.src = imageSource;
     canvas.addEventListener('mousedown', mouseDown, false);
-    canvas.addEventListener('mouseup', mouseUp, false);
-    canvas.addEventListener('mousemove', mouseMove, false);
 }
 
 function mouseDown(e) {
-    rect.startX = e.offsetX;
-    rect.startY = e.offsetY;
-    drag = true;
-}
-
-function mouseUp() {
-    drag = false;
-}
-
-function mouseMove(e) {
-    mousex = e.offsetX;
-    mousey = e.offsetY;
-    if (drag) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
-        ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
-        ctx.beginPath();
-        rect.w = mousex - rect.startX;
-        rect.h = mousey - rect.startY;
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
-    }
+    mouse_x = e.offsetX;
+    mouse_y = e.offsetY;
+    rect_width = 10;
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
+    ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
+    // ctx.beginPath();
+    // ctx.strokeStyle = 'red';
+    // ctx.strokeRect(mouse_x - rect_width, mouse_y - rect_width, rect_width, rect_width);
+    ctx.beginPath();
+    ctx.arc(mouse_x, mouse_y, 10, 0, 2 * Math.PI);
+    // Turn transparency on
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.fill();
+    ctx.stroke();
+    ctx.globalAlpha = 1.0;
     //Output (debug code)
-    // $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w);
+    $('#output').html('Object Location (x, y): (' + mouse_x + ', ' + mouse_y + ')');
 }
 
 
 function renderQuestion(userID, question, duration) {
+    exercise_img_src = "/images/activity/bat-" + sequence + ".png";
     if (duration > 0) {
-        drawCanvas("/images/activity/bat-" + sequence + ".png");
+        drawCanvas(exercise_img_src);
         document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
         document.getElementById("img2find").width = "100"
     } else {
@@ -51,16 +50,17 @@ function renderQuestion(userID, question, duration) {
 
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("img01");
+    var canvas = document.getElementById("canvas");
 
     var w = window.innerWidth;
 
     // TODO: Add canvas in zoomed-in image
-    // img.onclick = function () {
-    //     modal.style.display = "block";
-    //     modalImg.src = this.src;
-    //     modalImg.width = '75%';
-    //
-    // }
+    canvas.ondblclick = function () {
+        modal.style.display = "block";
+        modalImg.src = exercise_img_src;
+        modalImg.width = '75%';
+    }
+
     var span = document.getElementsByClassName("close")[0];
     span.width = w / 2
     // When the user clicks on <span> (x), close the modal
@@ -129,7 +129,7 @@ function renderQuestion(userID, question, duration) {
         var radio11 = document.getElementById('option11')
         var radio12 = document.getElementById('option12')
 
-        if (radio11.classList.contains('active') && rect.w != null && rect.h != null) {
+        if (radio11.classList.contains('active') && mouse_x != null && mouse_y != null) {
             q1 = 1
         } else if (radio12.classList.contains('active')) {
             q1 = 0
@@ -160,18 +160,18 @@ function renderQuestion(userID, question, duration) {
         }
 
 
-        sendData(userID, timeLeft, q1, q2, q3, rect);
+        sendData(userID, timeLeft, q1, q2, q3, mouse_x, mouse_y);
 
     })
 }
 
 
-function sendData(userID, time, q1, q2, q3, bb) {
+function sendData(userID, time, q1, q2, q3, x, y) {
     console.log("sending data")
 
     url2go = userID + "/data"
-    data2send = [time, q1, q2, q3, bb]
-    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " rectangle: {" + bb.startX + ", " + bb.startX + ", " + bb.w + ", " + bb.h + "}");
+    data2send = [time, q1, q2, q3, x, y]
+    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " object_loc: {" + x + ", " + y + "}");
 
     //add ajax function
     new Promise((resolve, reject) => {
