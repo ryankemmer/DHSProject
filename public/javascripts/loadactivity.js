@@ -67,13 +67,15 @@ function renderQuestion(userID, question, duration){
       d3.select('p#value-simple').text(d3.format('.0%')(val));
     });
 
-    d3.select('div#slider-simple')
+    var slide = d3
+        .select('div#slider-simple')
         .append('svg')
         .attr('width', sliderWidth)
         .attr('height', 70)
         .append('g')
         .attr('transform', 'translate(30,30)')
-        .call(sliderSimple);
+    
+    slide.call(sliderSimple);
 
     d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
     
