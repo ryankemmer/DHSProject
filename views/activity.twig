@@ -35,7 +35,7 @@
                 <div class="col-sm">
                     <canvas id="canvas" style="cursor: crosshair;
                          border: 1px solid #000000;"></canvas>
-                    <p id="imgText">Click image to enlarge</p>
+                    <p id="imgText">Double click on the image to enlarge</p>
                 </div>
                 <div class="col-sm answeractivity">
                     <p>Is the bat in this image?</p>
@@ -48,8 +48,7 @@
                             <input type="radio" name="q1" autocomplete="off"> No
                         </label>
                     </div>
-
-                    <br>
+                    <div id="popup" style="color: red;"> </div>
                     <br>
                     <p>Please rate the confidence in your decision.</p>
                     <p id="value-simple"></p>
@@ -68,8 +67,8 @@
 
                     <br>
                     <br>
-                    <p> Please draw a bounding box on the image around the bat (if exists)</p>
-                    {# <div id="output"></div> #}
+                    <p> Please click on the image where the object is.</p>
+                     <div id="output"></div>
 
                 </div>
             </div>
@@ -113,6 +112,18 @@
     rect.h = null;
     var drag = false;
     var imageObj = null;
+
+    // Popup text when "Yes" selected
+    var yesButon = document.getElementById("option11");
+    var noButton = document.getElementById("option12");
+
+    yesButon.onclick = function (){
+        document.getElementById("popup").innerText = "Please identify the object on the image.";
+    }
+
+    noButton.onclick = function () {
+        document.getElementById("popup").innerText = "";
+    }
 
     window.onload = function () {
 
