@@ -11,8 +11,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://unpkg.com/d3-simple-slider"></script>
     <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
     <link rel="stylesheet" href="/stylesheets/activity.scss">
@@ -129,16 +129,9 @@
 
         if (duration <= 0) {
             duration = 0
-<<<<<<< HEAD
-            renderQuestion(userID, question, duration);
-        } 
-        else{
-            renderQuestion(userID, question, duration);
-=======
             renderQuestion(userID, sequence, duration);
         } else {
             renderQuestion(userID, sequence, duration);
->>>>>>> acc0bd3fba24c1b89eb5f2eb5e9d666f5515aeb6
             startTimer(duration, display, capText, userID);
         }
     }
