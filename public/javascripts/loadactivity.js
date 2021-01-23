@@ -146,6 +146,11 @@ function renderQuestion(userID, sequence, duration) {
             q1 = 1
         } else if (radio12.classList.contains('active')) {
             q1 = 0
+
+            //if answer is no, dont send x y data
+            mouse_x = null
+            mouse_y = null
+
         } else {
             q1 = -2
         }
