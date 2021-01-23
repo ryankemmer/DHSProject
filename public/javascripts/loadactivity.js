@@ -49,14 +49,14 @@ function mouseDown(e) {
 }
 
 
-function renderQuestion(userID, question, duration) {
+function renderQuestion(userID, sequence, duration) {
     exercise_img_src = "/images/activity/bat-" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
         document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
         document.getElementById("img2find").width = "100"
     } else {
-        document.getElementById("myImg").style.visibility = "hidden";
+        document.getElementById("canvas").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
         display.textContent = " 00:00";
     }
@@ -210,7 +210,7 @@ function startTimer(duration, display, captionText, userID) {
 
             //setTimeout(sendFunc, 1000)
 
-            document.getElementById("myImg").style.visibility = "hidden";
+            document.getElementById("canvas").style.visibility = "hidden";
             document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
             display.textContent = " 00:00";
 

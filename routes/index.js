@@ -39,6 +39,22 @@ router.get('/', function (req, res, next) {
 
 router.post('/activity/', function(req,res,next){
 
+    //prompt to enter username if null
+    if (!req.body.userID) {
+        res.render('index', {error: "ERROR: Please enter a username"});
+        return;
+    }
+
+    //Fetch current user
+    let currentUser = getUserInstance(req.body.userID);
+  
+    //add new user if not already exists based on id
+    if (!currentUser) {
+        users.push(new User(req.body.userID));
+        currentUser = getUserInstance(req.body.userID);
+    }
+
+
     questionNum = currentUser.selectQuestion()
     console.log(questionNum)
 
@@ -175,7 +191,9 @@ router.post('/activity/:userID/data', function (req, res, next) {
             "time": time,
             "q1": group[1],
             "q2": group[2],
-            "q3": group[3]
+            "q3": group[3],
+            "x": group[4],
+            "y": group[5]
         };
 
         if (group[1] != -2 && group[3] != -2) {
@@ -226,7 +244,9 @@ router.post('/activity/:use/:userID/data', function (req, res, next) {
             "time": time,
             "q1": group[1],
             "q2": group[2],
-            "q3": group[3]
+            "q3": group[3],
+            "x": group[4],
+            "y": group[5]
         };
 
         if (group[1] != -2 && group[3] != -2) {

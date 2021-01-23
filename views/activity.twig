@@ -49,6 +49,7 @@
                         </label>
                     </div>
                     <div id="popup" style="color: red;"> </div>
+                    <div id="output" class="text-info"></div>
                     <br>
                     <p>Please rate the confidence in your decision.</p>
                     <p id="value-simple"></p>
@@ -68,7 +69,6 @@
                     <br>
                     <br>
                     <p> Please click on the image where the object is.</p>
-                     <div id="output"></div>
 
                 </div>
             </div>
@@ -129,9 +129,9 @@
 
         if (duration <= 0) {
             duration = 0
-            renderQuestion(userID, sequence, duration);
+            renderQuestion(userID, question, duration);
         } else {
-            renderQuestion(userID, sequence, duration);
+            renderQuestion(userID, question, duration);
             startTimer(duration, display, capText, userID);
         }
     }
