@@ -346,6 +346,7 @@ for i in range(24):
 
 print(str("---------------------- Totals ------------------------"))
 
+'''
 print('Majority Vote Totals: ' + sum())
 
 print('Confidence-Weighted Winner: ' + )
@@ -359,7 +360,7 @@ print('Honeypot Winner: ' + )
 print('Weighted Honeypot Winner: ' + )
 
 print('ELICE: ' + )
-
+'''
 
 
          
