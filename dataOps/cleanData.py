@@ -1,4 +1,3 @@
-
 import pymongo
 import json
 import sys
@@ -22,10 +21,13 @@ for user in usersCol.find():
 
     key2pay = user["key2pay"]
     userName = user["user"]
+    nCorrect = user["score"]
+
     responseCount = responsesCol.count_documents({'user' : userName})
 
-    print(userName + ": " + str(responseCount))
-    if(responseCount == 14):
+    print(userName + ": " + str(responseCount) + "  correct: " + str(nCorrect))
+
+    if(responseCount == 24):
         completed_users.append(userName)
     else:
         userRemove += 1
@@ -37,7 +39,4 @@ for user in usersCol.find():
 
 print("Completed Users: " + str(len(completed_users)))
 print("Users Removed: " + str(userRemove))
-
-
-
 
