@@ -1,34 +1,34 @@
 module.exports = class User {
     constructor(id) {
         this.id = id;
-        this.question = 1;
-        this.questionArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        this.index = 1;
+        this.questionArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         this.currentQuestion = 0;
         this.prevTime = 60
     }
 
-    currentQ() {
+    currentQ(){
         return this.currentQuestion
     }
 
-    nextquestion() {
-        this.question = this.question + 1
+    nextquestion(){
+        this.index = this.index + 1
     }
 
-    setPrevTime(time) {
+    setPrevTime(time){
         this.prevTime = time
     }
 
-    getPrevTime() {
+    getPrevTime(){
         return this.prevTime
     }
 
-    selectQuestion() {
+    selectQuestion(){
 
         var candidates = []
 
-        for (var i = 0, length = this.questionArray.length; i < length; i++) {
-            if (this.questionArray[i] == 0) {
+        for(var i = 0, length = this.questionArray.length; i < length; i++){
+            if (this.questionArray[i] == 0){
                 candidates.push(i)
             }
         }
