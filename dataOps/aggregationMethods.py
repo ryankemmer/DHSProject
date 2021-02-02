@@ -14,6 +14,7 @@ def tieCheck(x):
         return True
     else:
         return False
+        
 
 def checkAnswer(x,gtruth):
     if x == -1: #if x is a tie, change the value to be incorrect
