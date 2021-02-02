@@ -16,22 +16,41 @@ def tieCheck(x):
         return False
 
 def checkAnswer(x,gtruth):
-
-    #if x is a tie, change the value to be incorrect
-    if x == -1:
+    if x == -1: #if x is a tie, change the value to be incorrect
         if gtruth == 0:
             x = 1
         else:
             x = 0
-
-    if x == 1 and gtruth == 0:
-        return 'FP'
-    if x == 0 and gtruth == 0:
+    if gtruth == 0 and x == 0:
         return 'TN'
-    if x == 1 and gtruth == 1:
-        return 'TP'
-    if x == 0 and gtruth == 1:
+    elif gtruth == 0 and x == 1:
+        return 'FP'
+    elif gtruth == 1 and x == 0:
         return 'FN'
+    else:
+        return 'TP'
+
+def countAnswer(array):
+    tnCount = 0
+    fnCount = 0
+    fpCount = 0
+    tpCount = 0
+    for i in range(len(array)):
+        if(array[i] == 'TN'):
+            tnCount+=1;
+        elif(array[i] == 'FN'):
+            fnCount+=1;
+        elif(array[i] == 'FP'):
+            fpCount+=1;
+        else:
+            tpCount+=1;
+
+    print("True Postives Count: " + str(tpCount));
+    print("False Positives Count: " + str(fpCount));
+    print("True Negatives Count: " + str(tnCount));
+    print("False Negatives Count: " + str(fnCount));
+
+
 
 def majorityVote(predictions):
 
@@ -138,7 +157,7 @@ def surprisinglyPopularVote(predictions, crowdPredictions):
         for p in predictions:
             if p == choices[i]:
                 choiceCounts[i] += 1
-                
+
     #print(choiceCounts)
     #count each vote to q3
     for i in range(len(choices)):
@@ -147,19 +166,19 @@ def surprisinglyPopularVote(predictions, crowdPredictions):
                  choiceCountsCrowd[i] += 1
 
     #print(choiceCountsCrowd)
-    
+
     #differences = [m - n for m,n in zip(choiceCounts,choiceCountsCrowd)]
-    
+
     #convert to percentages
     #choiceCounts = [x/ len(predictions) for x in choiceCounts]
     #choiceCountsCrowd = [x/ len(predictions) for x in choiceCountsCrowd]
-    #find the percentage difference between the majority votes, 
+    #find the percentage difference between the majority votes,
     #and what the crowd believed the majority woulf predict
 
     differences = [m - n for m,n in zip(choiceCounts,choiceCountsCrowd)]
 
     #print(differences)
-    
+
     #check to see if there is a tie
     tie = tieCheck(differences)
     #return winner (0 for No, 1 for yes, -1 for tie)
@@ -178,17 +197,17 @@ def honeypot(predictions, trap):
 
     #specify binary decisions(1 for yes and 0 for no)
     choices = [1,0]
-    
+
     #list to count majority votes
     choiceCounts = [0] * len(choices)
-    
-    #count each vote to q1 
+
+    #count each vote to q1
     for i in range(len(choices)):
         for j in range(len(predictions)):
             # if judge j returns correct answers to all the trapping questions
             if (predictions[j] == choices[i]) and (trap[j] == max(trap)):
                 choiceCounts[i] += 1
-                
+
     #print(choiceCounts)
 
     #check to see if there is a tie
@@ -208,18 +227,18 @@ def weighted_honeypot(predictions, trap):
 
     #specify binary decisions(1 for yes and 0 for no)
     choices = [1,0]
-    
+
     #list to count majority votes
     choiceCounts = [0] * len(choices)
-    #count each vote to q1 
+    #count each vote to q1
     for i in range(len(choices)):
         for j in range(len(predictions)):
             # if judge j returns correct answers to all the trapping questions
             if predictions[j] == choices[i]:
                 choiceCounts[i] += 1*trap[j]/(max(trap)*1.0)
-                
+
     #print(choiceCounts)
-    
+
     #check to see if there is a tie
     tie = tieCheck(choiceCounts)
     #return winner (0 for No, 1 for yes, -1 for tie)
@@ -242,19 +261,19 @@ def ELICE(predictions, groundtruth, trap_true, trap_false):
     #beta = difficulty of questions
     beta = 0
     P = 0
-    
-    
+
+
     for i in range(len(predictions)):
-        alpha[i] += (trap_true[i] - trap_false[i])*1/3.0     
+        alpha[i] += (trap_true[i] - trap_false[i])*1/3.0
         if predictions[j] == groundtruth:
-            beta += 1/(len(predictions)*1.0)   
-                
+            beta += 1/(len(predictions)*1.0)
+
     #score --- inferred labels
     for i in range(len(predictions)):
         if predictions[i] == 1:
             P += (1/(len(predictions)*1.0))*(1/(1+math.exp(-alpha[i]*beta)))*predictions[i]
         else:
-            P += (1/(len(predictions)*1.0))*(1/(1+math.exp(-alpha[i]*beta)))*(-1)            
+            P += (1/(len(predictions)*1.0))*(1/(1+math.exp(-alpha[i]*beta)))*(-1)
 
     #return winner (negative for No, positive for yes,)
     if P >= 0:
@@ -264,7 +283,7 @@ def ELICE(predictions, groundtruth, trap_true, trap_false):
     return winner
 
 #main
-# 
+#
 
 #load json file
 with open('12-02-2020Test2-1.json') as f:
@@ -296,7 +315,7 @@ for i in range(24):
                 trap_false[j] +=1
 
 
-#aggregation method totals 
+#aggregation method totals
 majTotals = []
 confTotals = []
 hconfTotals = []
@@ -310,7 +329,7 @@ for i in range(24):
 
     predictions = []
     confidence = []
-    crowdPredictions = []   
+    crowdPredictions = []
 
     for userResponse in data:
         response = userResponse[str(i + 1)]
@@ -328,13 +347,13 @@ for i in range(24):
 #    print('==================================')
     print('SP Winner: ' + str(surprisinglyPopularVote(predictions, crowdPredictions)))
 #    print('==================================')
-    
+
     if i not in honeypots:
 
         print('Honeypot Winner: ' + str(honeypot(predictions, trap_true)))
         print('Weighted Honeypot Winner: ' + str(weighted_honeypot(predictions, trap_true)))
         print('ELICE: ' + str(ELICE(predictions, groundtruth[i], trap_true, trap_false)))
-        
+
         #add to array of predictions
         majTotals.append(checkAnswer(majorityVote(predictions),groundtruth[i]))
         confTotals.append(checkAnswer(confidenceWeightedVote(predictions, confidence),groundtruth[i]))
@@ -345,6 +364,27 @@ for i in range(24):
         eTotals.append(checkAnswer(ELICE(predictions, groundtruth[i], trap_true, trap_false),groundtruth[i]))
 
 print(str("---------------------- Totals ------------------------"))
+
+print("Majority Totals: ")
+countAnswer(majTotals)
+
+print("Confidence Weighted Voting Totals: ")
+countAnswer(confTotals)
+
+print("High Confidence Weighted Voting Totals")
+countAnswer(hconfTotals)
+
+print("Surprisingly Popular Voting Totals")
+countAnswer(spTotals)
+
+print("Honey Pot Voting Totals")
+countAnswer(hpTotals)
+
+print("Weighted Honey Pot Voting Totals")
+countAnswer(whTotals)
+
+print("ELICE Voting Totals")
+countAnswer(eTotals)
 
 '''
 print('Majority Vote Totals: ' + sum())
@@ -361,11 +401,3 @@ print('Weighted Honeypot Winner: ' + )
 
 print('ELICE: ' + )
 '''
-
-
-         
-
-
-
-
-
