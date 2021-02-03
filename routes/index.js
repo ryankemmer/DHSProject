@@ -6,10 +6,10 @@ const co = require('co');
 const User = require('../User');
 const { response } = require('express');
 
-var url = 'mongodb://localhost:27014/';
-//var url = 'mongodb://localhost:27017/';
+//var url = 'mongodb://localhost:27014/';
+var url = 'mongodb://localhost:27017/';
 
-var datab = 'Test3-1'
+var datab = 'Test3-2'
 var userID = null
 let users = [];
 
@@ -307,7 +307,7 @@ router.post('/survey/:userID', function(req,res,next){
 //
 
 
-router.post('/activity/:use/:userID/sendSurvey', function (req, res, next) {
+router.post('/survey/:use/:userID/sendSurvey', function (req, res, next) {
 
     //collect variables from front end
     userID = req.params.userID;
