@@ -50,10 +50,10 @@ function mouseDown(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/activity/img-" + sequence + ".png";
+    exercise_img_src = "/images/activity/bat-" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/activity/img-" + sequence + ".gif";
+        document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
         document.getElementById("img2find").width = "100"
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
