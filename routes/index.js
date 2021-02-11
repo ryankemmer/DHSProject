@@ -14,10 +14,11 @@ var userID = null
 let users = [];
 
 
+
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
 
-//snooze function 
+//snooze function
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
@@ -49,7 +50,7 @@ router.post('/activity/', function(req,res,next){
 
   //Fetch current user
   let currentUser = getUserInstance(req.body.userID);
-  
+
   //add new user if not already exists based on id
   if (!currentUser) {
     users.push(new User(req.body.userID));
@@ -59,7 +60,7 @@ router.post('/activity/', function(req,res,next){
   questionNum = currentUser.selectQuestion()
   console.log(questionNum)
 
-  //store user in db 
+  //store user in db
   co(function* () {
 
     let client = yield MongoClient.connect(url);
@@ -67,24 +68,24 @@ router.post('/activity/', function(req,res,next){
     let usersCol = db.collection('users')
 
     check = yield usersCol.findOne({"user" : currentUser.id})
-              
+
     //check to see if user exists in database
     if(check === null && currentUser.id != null){
-              
+
       //insert new user if user does not exist
-      var item = { 
+      var item = {
         "user": currentUser.id,
         "key2pay": null,
         "surveyResults": null,
         "score": null
       };
-                
+
       yield usersCol.insertOne(item);
 
       res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
-              
-    } 
-        
+
+    }
+
     else{
       res.render('index', {error: "ERROR: Username already exists"})
     }
@@ -125,7 +126,7 @@ router.post('/activity/:userID/', function(req,res,next){
     }else{
 
       currentUser.nextquestion()
-  
+
       questionNum = currentUser.selectQuestion()
       console.log(questionNum)
 
@@ -136,7 +137,7 @@ router.post('/activity/:userID/', function(req,res,next){
 
         var truth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
         var correct = []
-        
+
         //get results
         for(i = 1; i < 25; i++){
           var response = yield responseCol.findOne({"user": currentUser.id, "question" : i})
@@ -182,7 +183,7 @@ router.post('/activity/:userID/', function(req,res,next){
 
 
 router.post('/activity/:userID/data', function(req,res,next){
-  
+
   userID = req.params.userID;
 
   let currentUser = getUserInstance(userID);
@@ -210,7 +211,7 @@ router.post('/activity/:userID/data', function(req,res,next){
     const db = client.db(datab)
     let responseCol = db.collection('responses')
 
-    var item = { 
+    var item = {
       "user": userID,
       "question": question,
       "time": time,
@@ -227,13 +228,13 @@ router.post('/activity/:userID/data', function(req,res,next){
     }else{
       console.log("invalid inuput, retry")
     }
-  
+
   });
 
 });
 
 router.post('/activity/:use/:userID/data', function(req,res,next){
-  
+
   userID = req.params.userID;
 
   let currentUser = getUserInstance(userID);
@@ -261,7 +262,7 @@ router.post('/activity/:use/:userID/data', function(req,res,next){
     const db = client.db(datab)
     let responseCol = db.collection('responses')
 
-    var item = { 
+    var item = {
       "user": userID,
       "question": question,
       "time": time,
@@ -278,7 +279,7 @@ router.post('/activity/:use/:userID/data', function(req,res,next){
     }else{
       console.log("invalid inuput, retry")
     }
-  
+
   });
 
 });
@@ -322,7 +323,7 @@ router.post('/survey/:user/:userID/sendSurvey', function(req,res,next){
     let UsersCol = db.collection('users')
 
     newItem = {
-        "surveyResults": userDemographic, 
+        "surveyResults": userDemographic,
         "key2pay": key
     }
 
