@@ -8,8 +8,9 @@ const { response } = require('express');
 
 var url = 'mongodb://localhost:27014/';
 //var url = 'mongodb://localhost:27017/';
-
-var datab = 'Test2-3'
+//first acitivity to
+var datab1 = 'Test4_1_1'
+var datab2 = 'Test4_1_2'
 var userID = null
 let users = [];
 
@@ -60,37 +61,48 @@ router.post('/activity/', function(req,res,next){
   questionNum = currentUser.selectQuestion()
   console.log(questionNum)
 
-  //store user in db
+//checks if entry is in first part activity
   co(function* () {
 
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab)
+    var db = client.db(datab1) //first part db
     let usersCol = db.collection('users')
 
     check = yield usersCol.findOne({"user" : currentUser.id})
 
     //check to see if user exists in database
-    if(check === null && currentUser.id != null){
+    if(check != null && currentUser.id != null){
+      let client = yield MongoClient.connect(url);
+      db = client.db(datab2) //second part db
+      let usersCol = db.collection('users')
 
-      //insert new user if user does not exist
-      var item = {
-        "user": currentUser.id,
-        "key2pay": null,
-        "surveyResults": null,
-        "score": null
-      };
+      check = yield usersCol.findOne({"user" : currentUser.id})
 
-      yield usersCol.insertOne(item);
+      if(check === null && currentUser.id != null){
+        //insert new user if user does not exist
+        var item = {
+          "user": currentUser.id,
+          "key2pay": null,
+          "surveyResults": null,
+          "score": null
+        };
 
-      res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
+        yield usersCol.insertOne(item);
 
+        //contiunes to second part
+        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
+      }
+      else{
+        res.render('index', {error: "ERROR: Cannot repeat activity"})
+      }
     }
 
     else{
-      res.render('index', {error: "ERROR: Username already exists"})
+      res.render('index', {error: "ERROR: Cannot continue without finishing part 1"})
     }
 
   });
+
 });
 
 
@@ -98,8 +110,6 @@ router.post('/activity/', function(req,res,next){
 //
 //load activity
 //
-
-
 
 router.post('/activity/:userID/', function(req,res,next){
 
