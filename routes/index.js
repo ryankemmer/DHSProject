@@ -6,8 +6,9 @@ const co = require('co');
 const User = require('../User');
 const { response } = require('express');
 
-var url = 'mongodb://localhost:27014/';
-//var url = 'mongodb://localhost:27017/';
+var url = 'mongodb://localhost:27014/'; //for server
+//var url = 'mongodb://localhost:27017/'; //for localhost
+
 //first acitivity to
 var datab1 = 'Test4_1_1'
 var datab2 = 'Test4_1_2'
@@ -31,6 +32,7 @@ const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 router.get('/', function(req, res, next) {
   res.render('index');
+  console.log("Index loaded");
 });
 
 
@@ -69,6 +71,7 @@ router.post('/activity/', function(req,res,next){
     let usersCol = db.collection('users')
 
     check = yield usersCol.findOne({"user" : currentUser.id})
+    console.log(check);
 
     //check to see if user exists in database
     if(check != null && currentUser.id != null){
@@ -96,7 +99,6 @@ router.post('/activity/', function(req,res,next){
         res.render('index', {error: "ERROR: Cannot repeat activity"})
       }
     }
-
     else{
       res.render('index', {error: "ERROR: Cannot continue without finishing part 1"})
     }
