@@ -7,12 +7,12 @@ const User = require('../User');
 const { response } = require('express');
 
 // TODO: Remove hardcoded link
-// var url = 'mongodb://localhost:27014/';
-var url = 'mongodb://localhost:27017/';
+var url = 'mongodb://localhost:27014/'
+//var url = 'mongodb://localhost:27017/'
 
-var datab = 'Test1'
+var datab = 'testdatabase'
 var userID = null
-let users = [];
+let users = []
 
 
 //get user instance function
