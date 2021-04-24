@@ -28,7 +28,7 @@ for user in usersCol.find():
     userResponse["name"] = userName
     userResponse["demographic"] = demographic
 
-    for i in range(1,25):
+    for i in range(1,17):
         response = responsesCol.find_one({"user": userName, "question": i})
         userResponse[i] = {
             "q1": response["q1"],
