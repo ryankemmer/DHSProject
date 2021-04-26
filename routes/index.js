@@ -110,8 +110,6 @@ router.post('/activity/', function(req,res,next){
 //load activity
 //
 
-<<<<<<< HEAD
-=======
 
 >>>>>>> bbac7af49214544bdbc6907954f80a57cec7efe4
 router.post('/activity/:userID/', function(req,res,next){
