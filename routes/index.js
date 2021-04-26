@@ -6,16 +6,14 @@ const co = require('co');
 const User = require('../User');
 const { response } = require('express');
 
-var url = 'mongodb://localhost:27014/'; //for server
-//var url = 'mongodb://localhost:27017/'; //for localhost
+var url = 'mongodb://localhost:27017/'; //for server tests
+//var url = 'mongodb://localhost:27014/'; //for local tests
 
-//first acitivity to
-var datab1 = 'Test4_1_1'
-var datab2 = 'Test4_1_2'
+var datab = 'Test4_1_1'
 var userID = null
 let users = [];
 
-
+var totalQs = 16;
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
@@ -108,11 +106,14 @@ router.post('/activity/', function(req,res,next){
 });
 
 
-
 //
 //load activity
 //
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> bbac7af49214544bdbc6907954f80a57cec7efe4
 router.post('/activity/:userID/', function(req,res,next){
 
   //Fetch current user
@@ -140,19 +141,20 @@ router.post('/activity/:userID/', function(req,res,next){
       currentUser.nextquestion()
 
       questionNum = currentUser.selectQuestion()
-      console.log(questionNum)
 
-      if (currentUser.index < 25){
+      if (currentUser.index <= totalQs){
+        console.log("Q no: " + currentUser.index);
         res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
       }
       else{
-
-        var truth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+        //change Ground Truth Array
+        var truth = [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1] //16 in length
         var correct = []
 
         //get results
-        for(i = 1; i < 25; i++){
-          var response = yield responseCol.findOne({"user": currentUser.id, "question" : i})
+        for(i = 0; i < totalQs; i++){
+
+          var response = yield responseCol.findOne({"user": currentUser.id, "question" : i+1})
           console.log(response)
           if (response == null){
             console.log('null response')
@@ -165,12 +167,14 @@ router.post('/activity/:userID/', function(req,res,next){
         }
 
         var sum = 0
+
         //save score of user
-        for(i = 0; i < 24; i++){
+        for(i = 0; i < totalQs; i++){
           sum = sum + correct[i]
         }
 
         newItem = {"score" : sum}
+
         usersCol.updateOne({"user": currentUser.id}, { $set: newItem });
 
         //get leaderboard

@@ -20,11 +20,11 @@
         <div class = "row">
             <div class = "col-sm">
                 <h1>Your Score:</h1>
-                <h1 class="text-danger">{{total}} / 24</h1>
+                <h1 class="text-danger">{{total}} / 16</h1>
             </div>
             <div class= "col-sm">
                 <h1>Leaderboard</h1>
-                
+
                 <div class= "wrapper">
 
                     <table>
@@ -40,7 +40,7 @@
                                 <tr>
                                     <td class="rank"> {{ loop.index }} </td>
                                     <td class="user"> {{user.user}} </td>
-                                    <td class="score"> {{user.score}} / 24 </td>
+                                    <td class="score"> {{user.score}} / 15 </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

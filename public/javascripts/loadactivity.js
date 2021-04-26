@@ -1,6 +1,8 @@
 var timeText
 var rotations = 0
-
+var imgArray = [1,5,10,14,19,23,28,32]
+var a = 4;
+var b = 5;
 function rotateElem(){
 
     var angle = ($('#myImg').data('angle') + 90) || 90;
@@ -14,14 +16,13 @@ function rotateElem(){
 }
 
 function renderQuestion(userID, question, duration){
-
     //var startTime = new Date().getTime();
-
     if (duration > 0){
-        document.getElementById("myImg").src = "/images/activity/bat-" + question + ".png";
-        document.getElementById("img2find").src = "/images/activity/bat-" + question + ".gif";
-        document.getElementById("img2find").width = "100"
-    } else{
+      document.getElementById("myImg").src = "/images/4_1_Images/bat-" + question + ".png"; //image for each question
+      document.getElementById("img2find").src = "/images/4_1_Images/bat-" + 5 + ".gif"; //the bat to be found in images
+      document.getElementById("img2find").width = "100"
+    }
+    else{
         document.getElementById("myImg").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
         display.textContent = " 00:00";
@@ -74,11 +75,11 @@ function renderQuestion(userID, question, duration){
         .attr('height', 70)
         .append('g')
         .attr('transform', 'translate(30,30)')
-    
+
     slide.call(sliderSimple);
 
     d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
-    
+
     //
     //Button
     //
@@ -124,7 +125,7 @@ function renderQuestion(userID, question, duration){
 
 
         q2 = document.getElementById("value-simple").innerHTML
-        
+
         //
         //Question 3
         //
@@ -149,11 +150,11 @@ function renderQuestion(userID, question, duration){
 
 function sendData(userID, time, q1,q2,q3){
     console.log("sending data")
-    
-    url2go =  userID + "/data" 
+
+    url2go =  userID + "/data"
     data2send = [time, q1, q2, q3]
     console.log(data2send)
-            
+
     //add ajax function
     new Promise((resolve, reject) => {
         $.ajax({
@@ -204,4 +205,4 @@ function startTimer(duration, display, captionText, userID){
     }, 1000);
 
 
-} 
+}
