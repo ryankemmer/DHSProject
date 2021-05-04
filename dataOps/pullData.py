@@ -29,6 +29,7 @@ for user in usersCol.find():
     userResponse["demographic"] = demographic
 
     for i in range(1,17):
+        print(i," = LOOP ENTERED")
         response = responsesCol.find_one({"user": userName, "question": i})
         userResponse[i] = {
             "q1": response["q1"],
