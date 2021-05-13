@@ -6,10 +6,10 @@ const co = require('co');
 const User = require('../User');
 const { response } = require('express');
 
-//var url = 'mongodb://localhost:27017/'; //for server tests
-var url = 'mongodb://localhost:27017/'; //for local tests
+var url = 'mongodb://localhost:27017/'; //for server tests
+//var url = 'mongodb://localhost:27014/'; //for local tests
 
-var datab = 'Test4_1_2'
+var datab = 'Test4_1_3'
 var userID = null
 let users = [];
 
@@ -30,7 +30,6 @@ const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 router.get('/', function(req, res, next) {
   res.render('index');
-  console.log("Index loaded");
 });
 
 
@@ -61,46 +60,44 @@ router.post('/activity/', function(req,res,next){
   questionNum = currentUser.selectQuestion()
   console.log(questionNum)
 
+  //store user in db
   co(function* () {
 
+    let client = yield MongoClient.connect(url);
+    const db = client.db(datab)
+    let usersCol = db.collection('users')
+
+    check = yield usersCol.findOne({"user" : currentUser.id})
+
     //check to see if user exists in database
-    if(currentUser.id != null){
-      let client = yield MongoClient.connect(url);
-      db = client.db(datab) 
-      let usersCol = db.collection('users')
+    if(check === null && currentUser.id != null){
 
-      check = yield usersCol.findOne({"user" : currentUser.id})
+      //insert new user if user does not exist
+      var item = {
+        "user": currentUser.id,
+        "key2pay": null,
+        "surveyResults": null,
+        "score": null
+      };
 
-      if(check === null && currentUser.id != null){
-        //insert new user if user does not exist
-        var item = {
-          "user": currentUser.id,
-          "key2pay": null,
-          "surveyResults": null,
-          "score": null
-        };
+      yield usersCol.insertOne(item);
 
-        yield usersCol.insertOne(item);
+      res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
 
-        //contiunes to second part
-        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
-      }
-      else{
-        res.render('index', {error: "ERROR: Cannot repeat activity"})
-      }
     }
+
     else{
-      res.render('index', {error: "ERROR: Cannot continue without finishing part 1"})
+      res.render('index', {error: "ERROR: Username already exists"})
     }
 
   });
-
 });
 
 
 //
 //load activity
 //
+
 
 router.post('/activity/:userID/', function(req,res,next){
 
@@ -180,42 +177,42 @@ router.post('/activity/:userID/', function(req,res,next){
 
 
 
-
 //
 //Store data
 //
 
 
+
 router.post('/activity/:userID/data', function(req,res,next){
 
-    userID = req.params.userID;
+  userID = req.params.userID;
 
-    let currentUser = getUserInstance(userID);
+  let currentUser = getUserInstance(userID);
 
-    question = currentUser.currentQ()
+  question = currentUser.currentQ()
 
-    let group = Object.keys(req.body)
-    group = JSON.parse(group)
+  let group = Object.keys(req.body)
+  group = JSON.parse(group)
 
-    group[2] = group[2].substring(0, group[2].length - 1);
-    group[2] = parseInt(group[2])
-    console.log(group)
+  group[2] = group[2].substring(0, group[2].length - 1);
+  group[2] = parseInt(group[2])
+  console.log(group)
 
-    TimeLeft = group[0]
-    currentUser.setPrevTime(TimeLeft)
-    time = 60 - TimeLeft
+  TimeLeft = group[0]
+  currentUser.setPrevTime(TimeLeft)
+  time = 60 - TimeLeft
 
-    console.log('timeLeft  ', TimeLeft)
-    console.log('time spent  ', time)
+  console.log('timeLeft  ', TimeLeft)
+  console.log('time spent  ', time)
 
-    //store response in db
-    co(function* () {
+  //store response in db
+  co(function* () {
 
-        let client = yield MongoClient.connect(url);
-        const db = client.db(datab)
-        let responseCol = db.collection('responses')
+    let client = yield MongoClient.connect(url);
+    const db = client.db(datab)
+    let responseCol = db.collection('responses')
 
-        var item = {
+    var item = {
             "user": userID,
             "question": question,
             "time": time,
@@ -226,49 +223,50 @@ router.post('/activity/:userID/data', function(req,res,next){
             "y": group[5]
         };
 
-        if (group[1] != -2 && group[3] != -2) {
 
-            yield responseCol.insertOne(item);
-            console.log('posted to db!')
+    if (group[1] != -2 && group[3] != -2){
 
-        } else {
-            console.log("invalid inuput, retry")
-        }
+      yield responseCol.insertOne(item);
+      console.log('posted to db!')
 
-    });
+    }else{
+      console.log("invalid inuput, retry")
+    }
+
+  });
 
 });
 
-router.post('/activity/:use/:userID/data', function (req, res, next) {
+router.post('/activity/:use/:userID/data', function(req,res,next){
 
-    userID = req.params.userID;
+  userID = req.params.userID;
 
-    let currentUser = getUserInstance(userID);
+  let currentUser = getUserInstance(userID);
 
-    question = currentUser.currentQ()
+  question = currentUser.currentQ()
 
-    let group = Object.keys(req.body)
-    group = JSON.parse(group)
+  let group = Object.keys(req.body)
+  group = JSON.parse(group)
 
-    group[2] = group[2].substring(0, group[2].length - 1);
-    group[2] = parseInt(group[2])
-    console.log(group)
+  group[2] = group[2].substring(0, group[2].length - 1);
+  group[2] = parseInt(group[2])
+  console.log(group)
 
-    TimeLeft = group[0]
-    currentUser.setPrevTime(TimeLeft)
-    time = 60 - TimeLeft
+  TimeLeft = group[0]
+  currentUser.setPrevTime(TimeLeft)
+  time = 60 - TimeLeft
 
-    console.log('timeLeft  ', TimeLeft)
-    console.log('time spent  ', time)
+  console.log('timeLeft  ', TimeLeft)
+  console.log('time spent  ', time)
 
-    //store response in db
-    co(function* () {
+  //store response in db
+  co(function* () {
 
-        let client = yield MongoClient.connect(url);
-        const db = client.db(datab)
-        let responseCol = db.collection('responses')
+    let client = yield MongoClient.connect(url);
+    const db = client.db(datab)
+    let responseCol = db.collection('responses')
 
-        var item = {
+    var item = {
             "user": userID,
             "question": question,
             "time": time,
@@ -279,16 +277,17 @@ router.post('/activity/:use/:userID/data', function (req, res, next) {
             "y": group[5]
         };
 
-        if (group[1] != -2 && group[3] != -2) {
 
-            yield responseCol.insertOne(item);
-            console.log('posted to db!')
+    if (group[1] != -2 && group[3] != -2){
 
-        } else {
-            console.log("invalid inuput, retry")
-        }
+      yield responseCol.insertOne(item);
+      console.log('posted to db!')
 
-    });
+    }else{
+      console.log("invalid inuput, retry")
+    }
+
+  });
 
 });
 
@@ -316,31 +315,31 @@ router.post('/survey/:userID', function(req,res,next){
 //
 
 
-router.post('/survey/:use/:userID/sendSurvey', function (req, res, next) {
+router.post('/survey/:user/:userID/sendSurvey', function(req,res,next){
 
-    //collect variables from front end
-    userID = req.params.userID;
-    key = req.body.key;
-    userDemographic = req.body.userDemographic;
-    userDemographic = JSON.parse(userDemographic);
+  //collect variables from front end
+  userID = req.params.userID;
+  key = req.body.key;
+  userDemographic = req.body.userDemographic;
+  userDemographic = JSON.parse(userDemographic);
 
-    //storesurvey results
-    co(function* () {
-        let client = yield MongoClient.connect(url);
-        const db = client.db(datab)
-        let UsersCol = db.collection('users')
+  //storesurvey results
+  co(function* () {
+    let client = yield MongoClient.connect(url);
+    const db = client.db(datab)
+    let UsersCol = db.collection('users')
 
-        newItem = {
-            "surveyResults": userDemographic,
-            "key2pay": key
-        }
+    newItem = {
+        "surveyResults": userDemographic,
+        "key2pay": key
+    }
 
-        UsersCol.updateOne({"user": userID}, {$set: newItem});
-        console.log('User Completed task')
-    })
+    UsersCol.updateOne({"user": userID}, { $set: newItem });
+    console.log('User Completed task')
+})
 
-    //give a response to load next page
-    res.send("{}");
+  //give a response to load next page
+  res.send("{}");
 
 })
 

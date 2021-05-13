@@ -50,10 +50,10 @@ function mouseDown(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/4_1_1_Images/bat-" + sequence + ".png";
+    exercise_img_src = "/images/4_1_3_Images/apple-" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/4_1_1_Images/bat-" + 5 + ".gif";
+        document.getElementById("img2find").src = "/images/4_1_3_Images/apple-" + 18 + ".gif";
         document.getElementById("img2find").width = "100"
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
