@@ -5,7 +5,7 @@ var assert = require('assert');
 const co = require('co');
 const User = require('../User');
 const { response } = require('express');
-
+totalQs = 16;
 //var url = 'mongodb://localhost:27014/'; //for server
 var url = 'mongodb://localhost:27017/'; //for localhost
 
