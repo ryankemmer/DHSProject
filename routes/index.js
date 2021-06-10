@@ -9,7 +9,6 @@ const { response } = require('express');
 
 var url = 'mongodb://localhost:27014/'; //for server
 //var url = 'mongodb://localhost:27017/'; //for localhost
-=======
 totalQs = 16;
 //var url = 'mongodb://localhost:27014/'; //for server
 //var url = 'mongodb://localhost:27017/'; //for localhost
