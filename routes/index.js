@@ -10,7 +10,7 @@ const { response } = require('express');
 var url = 'mongodb://localhost:27017/'; //for localhost
 
 //first acitivity to
-var datab1 = 'Test4_1_1'
+var datab1 = 'Test4_1_3'
 var datab2 = 'Test4_2_1'
 var userID = null
 let users = [];
@@ -148,7 +148,7 @@ router.post('/activity/:userID/', function(req,res,next){
     yield snooze(1000)
 
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab)
+    const db = client.db(datab2)
     let responseCol = db.collection('responses')
     let usersCol = db.collection('users')
 
@@ -246,7 +246,7 @@ router.post('/activity/:userID/data', function(req,res,next){
   co(function* () {
 
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab)
+    const db = client.db(datab2)
     let responseCol = db.collection('responses')
 
     var item = {
@@ -300,7 +300,7 @@ router.post('/activity/:use/:userID/data', function(req,res,next){
   co(function* () {
 
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab)
+    const db = client.db(datab2)
     let responseCol = db.collection('responses')
 
     var item = {
@@ -363,7 +363,7 @@ router.post('/survey/:user/:userID/sendSurvey', function(req,res,next){
   //storesurvey results
   co(function* () {
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab)
+    const db = client.db(datab2)
     let UsersCol = db.collection('users')
 
     newItem = {
