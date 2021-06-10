@@ -5,9 +5,15 @@ var assert = require('assert');
 const co = require('co');
 const User = require('../User');
 const { response } = require('express');
+<<<<<<< HEAD
 
 var url = 'mongodb://localhost:27014/'; //for server
 //var url = 'mongodb://localhost:27017/'; //for localhost
+=======
+totalQs = 16;
+//var url = 'mongodb://localhost:27014/'; //for server
+//var url = 'mongodb://localhost:27017/'; //for localhost
+
 
 //first acitivity to
 var datab1 = 'Test4_1_3'
