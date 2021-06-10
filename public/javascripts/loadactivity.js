@@ -17,6 +17,9 @@ function rotateElem(){
 var mouse_x = null;
 var mouse_y = null;
 
+var yC = 0;
+var nC = 0;
+
 function drawCanvas(imageSource) {
     imageObj = new Image();
     imageObj.onload = function () {
@@ -51,10 +54,13 @@ function mouseDown(e) {
 
 function renderQuestion(userID, sequence, duration) {
     exercise_img_src = "/images/4_1_4_Images/ray-" + sequence + ".png";
+    yC = 5
+    nC = 9
     if (duration > 0) {
         drawCanvas(exercise_img_src);
         document.getElementById("img2find").src = "/images/4_1_4_Images/ray-" + 7 + ".gif";
         document.getElementById("img2find").width = "100"
+
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
