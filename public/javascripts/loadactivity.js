@@ -17,9 +17,6 @@ function rotateElem(){
 var mouse_x = null;
 var mouse_y = null;
 
-var yC = 0;
-var nC = 0;
-
 function drawCanvas(imageSource) {
     imageObj = new Image();
     imageObj.onload = function () {
@@ -53,12 +50,17 @@ function mouseDown(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/4_1_1_Images/bat-" + sequence + ".png";
+    exercise_img_src = "/images/GroundTruth1_Z/image-z_" + sequence + ".png";
+
+
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/4_1_1_Images/bat-" + 5 + ".gif";
-        document.getElementById("img2find").width = "100"
+        document.getElementById("img2find_left").src = "/images/GroundTruth1_X/image-x_" + sequence + ".png";
 
+        document.getElementById("img2find_right").src = "/images/GroundTruth1_Y/image-y_" + sequence + ".png";
+
+        document.getElementById("img2find").src = "/images/4_1_3_Images/apple-" + 18 + ".gif";
+        document.getElementById("img2find").width = "100"
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
@@ -75,6 +77,15 @@ function renderQuestion(userID, sequence, duration) {
     canvas.ondblclick = function () {
         modal.style.display = "block";
         modalImg.src = exercise_img_src;
+        modalImg.width = '75%';
+    }
+    img2find_left.ondblclick = function () {
+        modal.style.display = "block";
+        modalImg.src = "/images/GroundTruth1_X/image-x_" + sequence + ".png";
+    }
+    img2find_right.ondblclick = function () {
+        modal.style.display = "block";
+        modalImg.src = "/images/GroundTruth1_Y/image-y_" + sequence + ".png";
         modalImg.width = '75%';
     }
 

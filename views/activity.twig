@@ -20,29 +20,31 @@
 
 <body>
 <div class="activitypage">
-    <div class="container text-center mt-4">
+    <div class="container text-center mt-6">
         <div class="d-flex justify-content-center py-2" id="userID">UserID:
             <div name="userID" style="display:inline" id="userID">{{ userID }}</div>
         </div>
-        <h1 class="py-2">Exercise {{ sequence }} of 16</h1>
+        <h1 class="py-2">Exercise {{ sequence }} of 12</h1>
 
         <p class="py-2 text-danger" id="errorText1"> {{ error }} </p>
         <p><b>Can you find this object in the image below?</b></p>
 
         <img id="img2find">
-        <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
-        <br>
-        <p>In a previous implementation of the study:</p>
-        <p>{{ yes }} out of 19 answered "Yes" with an average confidence of {{ yesC }}%</p>
-        <p>{{ no }} out of 19 answered "No" with an average confidence of {{ noC }}%</p>
 
+
+        <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
+
+        <div class="row">
+          <img id="img2find_left" width="500">
+          <img id="img2find_right" width="500">
+        </div>
         <div class="container mainContainer">
             <div class="row">
-
                 <div class="col-sm">
-                    <canvas id="canvas" style="cursor: crosshair;
-                         border: 1px solid #000000;"></canvas>
-                    <p id="imgText">Double click on the image to enlarge</p>
+
+                  <canvas id="canvas"></canvas>
+                  <p id="imgText">Double click on the image to enlarge</p>
+
                 </div>
                 <div class="col-sm answeractivity">
                     <p>Is the object in this image?</p>
@@ -105,8 +107,8 @@
     capText = document.getElementById("caption");
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
-    var imgWidth = 500;
-    var imgHeight = 500;
+    var imgWidth = 600;
+    var imgHeight = 600;
     ctx.canvas.width = imgWidth;
     ctx.canvas.height = imgHeight;
     var rect = {}; // Properties: startX, startY, w, h
@@ -116,6 +118,8 @@
     rect.h = null;
     var drag = false;
     var imageObj = null;
+
+
     // Popup text when "Yes" selected
     var yesButon = document.getElementById("option11");
     var noButton = document.getElementById("option12");
