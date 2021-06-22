@@ -13,7 +13,7 @@ var datab = 'Test4_3_1'
 var userID = null
 let users = [];
 
-var totalQs = 11;
+var totalQs = 24;
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
@@ -133,7 +133,7 @@ router.post('/activity/:userID/', function(req,res,next){
       }
       else{
         //change Ground Truth Array
-        var truth = [0,0,0,0,0,0,0,1,1,1,1,1] //16 in length
+        var truth = [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0] //24 in length
         var correct = []
 
         //get results
@@ -212,13 +212,16 @@ router.post('/activity/:userID/data', function(req,res,next){
     const db = client.db(datab)
     let responseCol = db.collection('responses')
 
+    console.log("GROUP 4 DATA: ");
+    console.log(group[4]);
     var item = {
       "user": userID,
       "question": question,
       "time": time,
       "q1": group[1],
       "q2": group[2],
-      "q3": group[3]
+      "q3": group[3],
+      "boundingBox": group[4]
     };
 
     if (group[1] != -2 && group[3] != -2){

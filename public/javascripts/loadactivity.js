@@ -24,43 +24,50 @@ function drawCanvas(imageSource) {
     };
     imageObj.src = imageSource;
     canvas.addEventListener('mousedown', mouseDown, false);
+    canvas.addEventListener('mouseup', mouseUp, false);
+    canvas.addEventListener('mousemove', mouseMove, false);
 }
 
 function mouseDown(e) {
-    mouse_x = e.offsetX;
-    mouse_y = e.offsetY;
-    rect_width = 10;
-    ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
-    ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
-    // ctx.beginPath();
-    // ctx.strokeStyle = 'red';
-    // ctx.strokeRect(mouse_x - rect_width, mouse_y - rect_width, rect_width, rect_width);
-    ctx.beginPath();
-    ctx.arc(mouse_x, mouse_y, 10, 0, 2 * Math.PI);
-    // Turn transparency on
-    ctx.globalAlpha = 0.5;
-    ctx.fillStyle = 'red';
-    ctx.lineWidth = 2;
-    ctx.fill();
-    ctx.stroke();
-    ctx.globalAlpha = 1.0;
-    //Output (debug code)
-    $('#output').html('Object Location (x, y): (' + mouse_x + ', ' + mouse_y + ')');
+    rect.startX = e.pageX - this.offsetLeft;
+    rect.startY = e.pageY - this.offsetTop;
+    drag = true;
+}
+
+function mouseUp() {
+    drag = false;
+}
+
+function mouseMove(e) {
+    mousex = e.pageX - this.offsetLeft;
+    mousey = e.pageY - this.offsetTop;
+    if (drag) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
+        ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
+        ctx.beginPath();
+        rect.w = mousex - rect.startX;
+        rect.h = mousey - rect.startY;
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+    }
+    //Output
+    $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
 }
 
 
+
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/GroundTruth1_Z/image-z_" + sequence + ".png";
-
-
+    exercise_img_src = "/images/4_3_1_Z-Images/image-z_" + sequence + ".png";
+    ex_img_left = "/images/4_3_1_X-Images/image-x_" + sequence + ".png";
+    ex_img_right = "/images/4_3_1_Y-Images/image-y_" + sequence + ".png";
+    obj_img = "/images/objects/pickaxe.png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find_left").src = "/images/GroundTruth1_X/image-x_" + sequence + ".png";
+        document.getElementById("img2find_left").src = ex_img_left;
+        document.getElementById("img2find_right").src = ex_img_right;
 
-        document.getElementById("img2find_right").src = "/images/GroundTruth1_Y/image-y_" + sequence + ".png";
-
-        document.getElementById("img2find").src = "/images/4_1_3_Images/apple-" + 18 + ".gif";
-        document.getElementById("img2find").width = "100"
+        document.getElementById("img2find").src = obj_img;
+        document.getElementById("img2find").width = "200"
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
@@ -73,6 +80,9 @@ function renderQuestion(userID, sequence, duration) {
 
     var w = window.innerWidth;
 
+    console.log('width: ', w);
+    console.log('bounding box: X:', rect.startX, ', Y:', rect.startY);
+
     // TODO: Add canvas in zoomed-in image
     canvas.ondblclick = function () {
         modal.style.display = "block";
@@ -81,11 +91,12 @@ function renderQuestion(userID, sequence, duration) {
     }
     img2find_left.ondblclick = function () {
         modal.style.display = "block";
-        modalImg.src = "/images/GroundTruth1_X/image-x_" + sequence + ".png";
+        modalImg.src = ex_img_left;
+        modalImg.width = '75%';
     }
     img2find_right.ondblclick = function () {
         modal.style.display = "block";
-        modalImg.src = "/images/GroundTruth1_Y/image-y_" + sequence + ".png";
+        modalImg.src = ex_img_right;
         modalImg.width = '75%';
     }
 
@@ -157,9 +168,9 @@ function renderQuestion(userID, sequence, duration) {
         var radio11 = document.getElementById('option11')
         var radio12 = document.getElementById('option12')
 
-        if (radio11.classList.contains('active') && mouse_x != null && mouse_y != null) {
+        if (radio11.classList.contains('active') && rect.w != null && rect.h != null) {
             q1 = 1
-        } else if (radio12.classList.contains('active')) {
+        }else if (radio12.classList.contains('active')) {
             q1 = 0
 
             //if answer is no, dont send x y data
@@ -193,18 +204,18 @@ function renderQuestion(userID, sequence, duration) {
         }
 
 
-        sendData(userID, timeLeft, q1, q2, q3, mouse_x, mouse_y);
+        sendData(userID, timeLeft, q1, q2, q3, rect);
 
     })
 }
 
 
-function sendData(userID, time, q1, q2, q3, x, y) {
+function sendData(userID, time, q1, q2, q3, bb) {
     console.log("sending data")
 
     url2go = userID + "/data"
-    data2send = [time, q1, q2, q3, x, y]
-    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " object_loc: {" + x + ", " + y + "}");
+    data2send = [time, q1, q2, q3, bb]
+    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " rectangle: {" + bb.startX + ", " + bb.startX + ", " + bb.w + ", " + bb.h + "}");
 
     //add ajax function
     new Promise((resolve, reject) => {
