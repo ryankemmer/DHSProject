@@ -5,7 +5,7 @@ var assert = require('assert');
 const co = require('co');
 const User = require('../User');
 const { response } = require('express');
-<<<<<<< HEAD
+
 
 var url = 'mongodb://localhost:27014/'; //for server
 //var url = 'mongodb://localhost:27017/'; //for localhost
@@ -17,6 +17,8 @@ totalQs = 16;
 //first acitivity to
 var datab1 = 'Test4_1_3'
 var datab2 = 'Test4_2_1'
+var datab3 = 'Test4_1_2'
+var datab4 = 'Test4_1_4'
 var userID = null
 let users = [];
 
@@ -92,20 +94,28 @@ router.post('/activity/', function(req,res,next){
   co(function* () {
 
     let client = yield MongoClient.connect(url);
-    var db = client.db(datab1) //first part db
-    let usersCol = db.collection('users')
+    var db1 = client.db(datab1) //first part db
+    var db3 = client.db(datab3) //first part db
+    var db4 = client.db(datab4) //first part db
+    let usersCol1 = db1.collection('users')
+    let usersCol3 = db3.collection('users')
+    let usersCol4 = db4.collection('users')
 
-    check = yield usersCol.findOne({"user" : currentUser.id})
-    console.log("USER: "+check);
+    check1 = yield usersCol1.findOne({"user" : currentUser.id})
+    check3 = yield usersCol3.findOne({"user" : currentUser.id})
+    check4 = yield usersCol4.findOne({"user" : currentUser.id})
+    console.log("USER: "+check1);
+    console.log("USER: "+check3);
+    console.log("USER: "+check4);
 
     //check to see if user exists in database
-    if(check != null && currentUser.id != null){
-      console.log("Present in datab1");
+    if((check1 != null  || check3 != null || check4 != null) && currentUser.id != null){
+      console.log("Present in one of three");
 
       db = client.db(datab2) //second part db
       let usersCol = db.collection('users')
       check = yield usersCol.findOne({"user" : currentUser.id})
-      console.log("D2 User: "+check);
+      console.log(check);
 
       if(check === null){
         console.log("Add to second db");
