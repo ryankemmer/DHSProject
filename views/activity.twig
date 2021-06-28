@@ -11,14 +11,17 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <script src="https://d3js.org/d3.v6.js"></script>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://unpkg.com/d3-simple-slider"></script>
+
     <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
+
     <link rel="stylesheet" href="/stylesheets/activity.scss">
 </head>
 
-<body>
+<body style="font-size: 20px;">
 <div class="activitypage">
     <div class="container text-center mt-6">
         <div class="d-flex justify-content-center py-2" id="userID">UserID:
@@ -33,22 +36,24 @@
 
 
         <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
-        <img id="img2find_right" width="500">
-        <p>Right View</p>
-
-        <div class="img-with-text text-center"></div>
 
         <p><b>NOTE: Double click to enlarge images</b></p>
         <div class="container mainContainer">
+          <div class="col text-right">
+            <img id="img2find_right" height="300" width="500">
+            <p style="text-align:right;font-size:150%;"><b>Front View</b></p>
+          </div>
             <div class="row">
                 <div class="row">
                   <div class="img-with-text">
                     <img id="img2find_left" height="500">
-                    <p>Left View</p>
+
+                    <p style="text-align:center;font-size:140%;"><b>Lateral View</b></p>
+
                   </div>
                   <div class="img-with-text">
                     <canvas id="canvas"></canvas>
-                    <p>Top View</p>
+                    <p style="text-align:center;font-size:150%;"><b>Top View</b></p>
                   </div>
                 </div>
 
@@ -64,11 +69,11 @@
                         </label>
                     </div>
                     <div id="popup" style="color: red;"> </div>
-                    <div id="output" class="text-info"></div>
-                    <br>
+
+                    <p id="value-simple" style="visibility: hidden;"></p>
                     <p>Please rate the confidence in your decision.</p>
-                    <p id="value-simple"></p>
                     <div id="slider-simple"></div>
+
                     <br>
                     <p>What do you think the majority of people responded?</p>
 
@@ -80,18 +85,13 @@
                             <input type="radio" name="q3" autocomplete="off"> No
                         </label>
                     </div>
-
-                    <div id="output"></div>
-                    <br>
-                    <br>
-                    <p> Please draw a bounding box on the image around the bat (if exists)</p>
-
+                    <form id="subForm" action="/activity/{{ userID }}/" method="POST">
+                        <p class="py-2 text-danger" id="errorText2"> {{ error }} </p>
+                        <input type="submit" class="btn btn-outline-success" id="submitButton" value="Submit">
+                    </form>
                 </div>
             </div>
-            <form id="subForm" action="/activity/{{ userID }}/" method="POST">
-                <p class="py-2 text-danger" id="errorText2"> {{ error }} </p>
-                <input type="submit" class="btn btn-outline-success" id="submitButton" value="Submit">
-            </form>
+
         </div>
 
     </div>
@@ -131,7 +131,7 @@
     var yesButon = document.getElementById("option11");
     var noButton = document.getElementById("option12");
     yesButon.onclick = function (){
-        document.getElementById("popup").innerText = "Please identify the object on the image. Click on where you think the object is.";
+        document.getElementById("popup").innerText = "Please draw a bounding box on the image around the pickaxe.";
     }
     noButton.onclick = function () {
         document.getElementById("popup").innerText = "";

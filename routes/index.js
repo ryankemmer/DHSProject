@@ -272,7 +272,9 @@ router.post('/activity/:use/:userID/data', function(req,res,next){
       "time": time,
       "q1": group[1],
       "q2": group[2],
-      "q3": group[3]
+      "q3": group[3],
+      "boundingBox": group[4]
+
     };
 
     if (group[1] != -2 && group[3] != -2){

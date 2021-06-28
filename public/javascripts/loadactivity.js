@@ -80,8 +80,6 @@ function renderQuestion(userID, sequence, duration) {
 
     var w = window.innerWidth;
 
-    console.log('width: ', w);
-    console.log('bounding box: X:', rect.startX, ', Y:', rect.startY);
 
     // TODO: Add canvas in zoomed-in image
     canvas.ondblclick = function () {
@@ -107,40 +105,50 @@ function renderQuestion(userID, sequence, duration) {
         modal.style.display = "none";
     }
 
+    var formatter = d3.format(",.2f");
+    var tickFormatter = function(d) {
+      if(d == 0){
+        return "Uncertain";
+      }
+      if(d == .30){
+        return "Slightly Confident";
+      }
+      if(d == .70){
+        return "Confident";
+      }
+      if(d == 1){
+        return "Very Confident";
+      }
+    }
 
-    //
-    //Slider
-    //
     let sliderWidth = d3.select('#slider-simple').node().offsetWidth
-    var data = [0, .25, .50, .75, 1];
+var data = [0, .30, .70,1];
 
-    var sliderSimple = d3
-        .sliderHorizontal()
-        .min(d3.min(data))
-        .max(d3.max(data))
-        .width(sliderWidth / 1.2)
-        .tickFormat(d3.format('.0%'))
-        .ticks(9)
-        .step(.1)
-        .default(.5)
-        .on('onchange', val => {
-            d3.select('p#value-simple').text(d3.format('.0%')(val));
-        });
+var sliderSimple = d3
+    .sliderHorizontal()
+    .min(d3.min(data))
+    .max(d3.max(data))
+    .width(sliderWidth/1.1)
+    .tickFormat(tickFormatter)
+    .ticks(9)
+    .step(.1)
+    .default(.5)
+    .on('onchange', val => {
+        d3.select('p#value-simple').text(d3.format('.0%')(val));
+    });
 
-    d3.select('div#slider-simple')
-        .append('svg')
-        .attr('width', sliderWidth)
-        .attr('height', 70)
-        .append('g')
-        .attr('transform', 'translate(30,30)')
-        .call(sliderSimple);
+d3.select('div#slider-simple')
+    .append('svg')
+    .attr('width', sliderWidth)
+    .attr('height', 90)
+    .append('g')
+    .attr('transform', 'translate(30,30)')
+    .call(sliderSimple);
 
-    d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
-
+d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
     //
     //Button
     //
-
     d3.select(".btn-outline-success").on("click", function () {
 
         var q1
@@ -170,12 +178,20 @@ function renderQuestion(userID, sequence, duration) {
 
         if (radio11.classList.contains('active') && rect.w != null && rect.h != null) {
             q1 = 1
-        }else if (radio12.classList.contains('active')) {
+        }else if (radio11.classList.contains('active') && timeLeft <=0){
+          rect.X = null
+          rect.Y = null
+          rect.w = null
+          rect.h = null
+        }
+        else if (radio12.classList.contains('active')) {
             q1 = 0
 
             //if answer is no, dont send x y data
-            mouse_x = null
-            mouse_y = null
+            rect.X = null
+            rect.Y = null
+            rect.w = null
+            rect.h = null
 
         } else {
             q1 = -2
@@ -184,10 +200,7 @@ function renderQuestion(userID, sequence, duration) {
         //
         //Question 2
         //
-
-
         q2 = document.getElementById("value-simple").innerHTML
-
         //
         //Question 3
         //
@@ -240,7 +253,8 @@ function startTimer(duration, display, captionText, userID) {
             clearInterval(timeChange)
 
             //setTimeout(sendFunc, 1000)
-
+            document.getElementById("img2find_left").style.visibility = "hidden";
+            document.getElementById("img2find_right").style.visibility = "hidden";
             document.getElementById("canvas").style.visibility = "hidden";
             document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
             display.textContent = " 00:00";
