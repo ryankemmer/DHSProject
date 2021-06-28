@@ -128,7 +128,7 @@ var sliderSimple = d3
     .sliderHorizontal()
     .min(d3.min(data))
     .max(d3.max(data))
-    .width(sliderWidth/1.1)
+    .width(sliderWidth/1.3)
     .tickFormat(tickFormatter)
     .ticks(9)
     .step(.1)
