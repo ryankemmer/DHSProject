@@ -9,7 +9,7 @@ const { response } = require('express');
 var url = 'mongodb://localhost:27017/'; //for server tests
 //var url = 'mongodb://localhost:27014/'; //for local tests
 
-var datab = 'Test4_3_1'
+var datab = 'TestingNewVersion'
 var userID = null
 let users = [];
 

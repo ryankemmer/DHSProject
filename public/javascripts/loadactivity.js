@@ -105,51 +105,30 @@ function renderQuestion(userID, sequence, duration) {
         modal.style.display = "none";
     }
 
-    var formatter = d3.format(",.2f");
-    var tickFormatter = function(d) {
-      if(d == 0){
-        return "Uncertain";
-      }
-      if(d == .30){
-        return "Slightly Confident";
-      }
-      if(d == .70){
-        return "Confident";
-      }
-      if(d == 1){
-        return "Very Confident";
-      }
-    }
+    //
+    //slider
+    //
 
-    let sliderWidth = d3.select('#slider-simple').node().offsetWidth
-var data = [0, .30, .70,1];
-
-var sliderSimple = d3
-    .sliderHorizontal()
-    .min(d3.min(data))
-    .max(d3.max(data))
-    .width(sliderWidth/1.3)
-    .tickFormat(tickFormatter)
-    .ticks(9)
-    .step(.1)
-    .default(.5)
-    .on('onchange', val => {
-        d3.select('p#value-simple').text(d3.format('.0%')(val));
+    var slider = new Slider("#ex13", {
+        ticks: [0, 33, 67, 100],
+        ticks_labels: ['Uncertain', 'Slightly Confident', 'Confident', 'Very Confident'],
+        ticks_snap_bounds: 1
     });
 
-d3.select('div#slider-simple')
-    .append('svg')
-    .attr('width', sliderWidth)
-    .attr('height', 90)
-    .append('g')
-    .attr('transform', 'translate(30,30)')
-    .call(sliderSimple);
+    var value = slider.getValue(); //get value of slider
 
-d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
+    var output = document.getElementById('value-simple'); //display current value of slider
+    output.innerHTML = value;
+    //change display value as slider value changes
+    slider.onchange = (function(){
+      value = slider.getValue();
+      output.innerHTML = value;
+    });
+
     //
     //Button
     //
-    d3.select(".btn-outline-success").on("click", function () {
+    submitButton.onclick = function () {
 
         var q1
         var q2
@@ -200,7 +179,8 @@ d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
         //
         //Question 2
         //
-        q2 = document.getElementById("value-simple").innerHTML
+        q2 = output.innerHTML
+
         //
         //Question 3
         //
@@ -219,9 +199,8 @@ d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
 
         sendData(userID, timeLeft, q1, q2, q3, rect);
 
-    })
+    }
 }
-
 
 function sendData(userID, time, q1, q2, q3, bb) {
     console.log("sending data")
