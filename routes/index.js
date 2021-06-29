@@ -189,12 +189,15 @@ router.post('/activity/:userID/data', function(req,res,next){
 
   let currentUser = getUserInstance(userID);
 
+  console.log(currentUser)
+
   question = currentUser.currentQ()
 
   let group = Object.keys(req.body)
   group = JSON.parse(group)
 
-  group[2] = group[2].substring(0, group[2].length - 1);
+  console.log(group)
+
   group[2] = parseInt(group[2])
   console.log(group)
 
@@ -212,8 +215,6 @@ router.post('/activity/:userID/data', function(req,res,next){
     const db = client.db(datab)
     let responseCol = db.collection('responses')
 
-    console.log("GROUP 4 DATA: ");
-    console.log(group[4]);
     var item = {
       "user": userID,
       "question": question,
@@ -248,7 +249,6 @@ router.post('/activity/:use/:userID/data', function(req,res,next){
   let group = Object.keys(req.body)
   group = JSON.parse(group)
 
-  group[2] = group[2].substring(0, group[2].length - 1);
   group[2] = parseInt(group[2])
   console.log(group)
 

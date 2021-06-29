@@ -179,7 +179,7 @@ function renderQuestion(userID, sequence, duration) {
         //
         //Question 2
         //
-        q2 = output.innerHTML
+        q2 = slider.getValue();
 
         //
         //Question 3
