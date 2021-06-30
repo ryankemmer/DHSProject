@@ -32,6 +32,7 @@ function mouseDown(e) {
     rect.startX = e.pageX - this.offsetLeft;
     rect.startY = e.pageY - this.offsetTop;
     drag = true;
+    document.getElementById('popup').style.visibility = "hidden";
 }
 
 function mouseUp() {
@@ -50,6 +51,7 @@ function mouseMove(e) {
         ctx.strokeStyle = 'red';
         ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
     }
+
     //Output
     $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
 }

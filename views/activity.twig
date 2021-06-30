@@ -68,7 +68,7 @@
                             <input type="radio" name="q1" autocomplete="off"> No
                         </label>
                     </div>
-                    <div id="popup" style="color: red;"> </div>
+                    <div id="popup" style="color: blue;"> </div>
 
                     <p id="value-simple" style="visibility: hidden;"></p>
                     <p>Please rate the confidence in your decision.</p>
@@ -139,12 +139,13 @@
     }
     window.onload = function () {
         if (duration <= 0) {
-            duration = 0
+            duration = 1
             renderQuestion(userID, question, duration);
         } else {
             renderQuestion(userID, question, duration);
             startTimer(duration, display, capText, userID);
         }
+
     }
 
 
