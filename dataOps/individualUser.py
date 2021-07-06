@@ -48,3 +48,4 @@ for x in percentArray:
     sum = sum+x
 
 avg = sum/len(percentArray)
+print(avg)
