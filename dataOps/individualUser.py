@@ -42,3 +42,9 @@ for user in usersCol.find():
     percentArray.append(percentage)
 
 print(percentArray)
+sum = 0
+avg = 0
+for x in percentArray:
+    sum = sum+x
+
+avg = sum/len(percentArray)
