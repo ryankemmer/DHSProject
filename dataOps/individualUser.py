@@ -38,8 +38,6 @@ for user in usersCol.find():
             "q1": response["q1"],
             "q2": response["q2"],
             "q3": response["q3"],
-            "x": response["x"],
-            "y": response["y"],
             "time": response["time"]
         }
 
