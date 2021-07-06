@@ -32,7 +32,7 @@ for user in usersCol.find():
     score = 0
     for i in range(1,25):
         response = responsesCol.find_one({"user": userName, "question": i})
-        if(response["q1"] == groundtruth[i]):
+        if(response["q1"] == groundtruth[i-1]):
             score = score+1
 
     print("SCORE = ",score)
