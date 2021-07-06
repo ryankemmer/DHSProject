@@ -36,3 +36,4 @@ for user in usersCol.find():
             score = score+1
 
     print("SCORE = ",score)
+    print("PERCENTAGE = ",(score*100)/24)
