@@ -34,13 +34,5 @@ for user in usersCol.find():
         print(i," = LOOP ENTERED")
 
         response = responsesCol.find_one({"user": userName, "question": i})
-        userResponse[i] = {
-            "q1": response["q1"],
-            "q2": response["q2"],
-            "q3": response["q3"],
-            "time": response["time"]
-        }
-
-    dataArray.append(userResponse)
-
-    print(dataArray)
+        if(response["q1"] == groundtruth[i]):
+            print("Correct")
