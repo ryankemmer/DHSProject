@@ -17,7 +17,7 @@ responsesCol = db['responses']
 percentArray = []
 dataArray = []
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+groundtruth = [1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0]
 
 for user in usersCol.find():
 
