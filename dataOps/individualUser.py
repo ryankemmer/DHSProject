@@ -33,7 +33,7 @@ for user in usersCol.find():
     percentage = 0
     response = usersCol.find_one({"user": userName})
 
-    score = response["score"]
+    score = (int)response["score"]
 
     percentage = (score*100)/24
 
