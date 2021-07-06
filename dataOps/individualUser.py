@@ -31,7 +31,7 @@ for user in usersCol.find():
     userResponse["demographic"] = demographic
     score = 0
     percentage = 0
-    for i in range(1,25):
+    for i in range(1,17):
         response = responsesCol.find_one({"user": userName, "question": i})
         if(response["q1"] == groundtruth[i-1]):
             score = score+1
