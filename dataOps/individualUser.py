@@ -31,21 +31,12 @@ for user in usersCol.find():
     userResponse["demographic"] = demographic
     score = 0
     percentage = 0
-    for i in range(1,25):
-        response = responsesCol.find_one({"user": userName, "question": i})
-        if(response["q1"] == groundtruth[i-1]):
-            score = score+1
+    response = usersCol.find_one({"user": userName})
+
+    score = response["score"]
+
     percentage = (score*100)/24
 
     print("SCORE = ",score)
     print("PERCENTAGE = ",percentage)
     percentArray.append(percentage)
-
-print(percentArray)
-sum = 0
-avg = 0
-for x in percentArray:
-    sum = sum+x
-
-avg = sum/len(percentArray)
-print(avg)
