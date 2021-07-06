@@ -29,11 +29,12 @@ for user in usersCol.find():
 
     userResponse["name"] = userName
     userResponse["demographic"] = demographic
-
+    score = 0
     for i in range(1,24):
         print(i," = LOOP ENTERED")
-        score = 0
+
         response = responsesCol.find_one({"user": userName, "question": i})
         if(response["q1"] == groundtruth[i]):
             score = score+1
+
     print("SCORE = ",score)
