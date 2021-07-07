@@ -31,7 +31,6 @@ for user in usersCol.find():
     userResponse["demographic"] = demographic
 
     score = user['score']
-    if(score == "None"):
-        print("None is the score")
-    else:
+    if(score != "None"):
         print(score)
+        percentArray.append((score*100)/24))
