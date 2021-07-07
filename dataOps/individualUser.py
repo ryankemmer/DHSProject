@@ -23,21 +23,16 @@ for user in usersCol.find():
 
     userName = user['user']
     userResponse = responsesCol.find({"user":userName})
+    print(userResponse)
     print(userName)
     demographic = user["surveyResults"]
 
-    
 
     score = user['score']
     if(score != "None"):
         print(score)
         percentArray.append(score*100/24)
 
-    #false negative check
-    fnr = 0
-    for i in range(12):
-        if(userResponse["q1"] != groundtruth[i]):
-            fnr = fnr+1
-    print(fnr)
+    
 
 print(percentArray)
