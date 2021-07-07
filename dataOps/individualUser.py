@@ -16,15 +16,13 @@ usersCol = db['users']
 responsesCol = db['responses']
 percentArray = []
 dataArray = []
-
 #specify ground truth for each question
-groundtruth = [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1]
+groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
 
 for user in usersCol.find():
 
-    userResponse = {}
-
     userName = user['user']
+    userResponse = responsesCol.find({"user":userName})
     print(userName)
     demographic = user["surveyResults"]
 
@@ -34,6 +32,13 @@ for user in usersCol.find():
     score = user['score']
     if(score != "None"):
         print(score)
-        percentArray.append(score*100/16)
+        percentArray.append(score*100/24)
 
+    #false negative check
+    fnr = 0
+    for i in range(12):
+        if(userResponse["q1"] != groundtruth[i]):
+            fnr = fnr+1
+    print(fnr)
+    
 print(percentArray)
