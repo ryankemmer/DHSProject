@@ -34,6 +34,7 @@ for user in usersCol.find():
     response = usersCol.find_one({"user": userName})
 
     if(score != "null"):
+        print(score)
         score = response["score"]
         percentage = (score*100)/24
         print("SCORE = ",score)
