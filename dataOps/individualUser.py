@@ -31,8 +31,10 @@ for user in usersCol.find():
     if(score != "None"):
         print(score)
         percentArray.append(score*100/24)
+
     for x in userResponse:
-        if(x["question"] < 12 and x["q1"] != groundtruth[x["question"]-1]):
+
+        if(x["question"] < 12 and x["q1"] != 1):
             fnr = fnr+1
 print(fnr)
 print(percentArray)
