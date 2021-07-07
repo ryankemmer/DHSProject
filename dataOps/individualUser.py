@@ -35,9 +35,7 @@ for user in usersCol.find():
 
     if(score != 'null'):
         score = response["score"]
-
-    percentage = (score*100)/24
-
-    print("SCORE = ",score)
-    print("PERCENTAGE = ",percentage)
-    percentArray.append(percentage)
+        percentage = (score*100)/24
+        print("SCORE = ",score)
+        print("PERCENTAGE = ",percentage)
+        percentArray.append(percentage)
