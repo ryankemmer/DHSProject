@@ -33,4 +33,4 @@ for user in usersCol.find():
     score = user['score']
     if(score != "None"):
         print(score)
-        percentArray.append((score*100)/24))
+        percentArray.append(score*100/24)
