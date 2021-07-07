@@ -16,8 +16,9 @@ usersCol = db['users']
 responsesCol = db['responses']
 percentArray = []
 dataArray = []
+
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+groundtruth = [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1]
 
 for user in usersCol.find():
 
@@ -33,6 +34,6 @@ for user in usersCol.find():
     score = user['score']
     if(score != "None"):
         print(score)
-        percentArray.append(score*100/24)
+        percentArray.append(score*100/16)
 
 print(percentArray)
