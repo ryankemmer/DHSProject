@@ -26,8 +26,7 @@ for user in usersCol.find():
     print(userName)
     demographic = user["surveyResults"]
 
-    userResponse["name"] = userName
-    userResponse["demographic"] = demographic
+    
 
     score = user['score']
     if(score != "None"):
@@ -40,5 +39,5 @@ for user in usersCol.find():
         if(userResponse["q1"] != groundtruth[i]):
             fnr = fnr+1
     print(fnr)
-    
+
 print(percentArray)
