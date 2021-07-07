@@ -23,7 +23,7 @@ for user in usersCol.find():
 
     userName = user['user']
     userResponse = responsesCol.find({"user":userName})
-    print(userResponse)
+    print(userResponse['q1'])
     print(userName)
     demographic = user["surveyResults"]
 
@@ -33,6 +33,6 @@ for user in usersCol.find():
         print(score)
         percentArray.append(score*100/24)
 
-    
+
 
 print(percentArray)
