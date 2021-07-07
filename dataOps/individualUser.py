@@ -36,5 +36,5 @@ for user in usersCol.find():
 
         if(x["question"] < 12 and x["q1"] != 1):
             fnr = fnr+1
-print(fnr)
+    print(fnr)
 print(percentArray)
