@@ -23,7 +23,7 @@ for user in usersCol.find():
 
     userName = user['user']
     userResponse = responsesCol.find({"user":userName})
-    print(userResponse["q1"])
+    #print(userResponse["q1"])
     print(userName)
     demographic = user["surveyResults"]
 
