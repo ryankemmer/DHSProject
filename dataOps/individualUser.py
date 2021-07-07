@@ -29,16 +29,6 @@ for user in usersCol.find():
 
     userResponse["name"] = userName
     userResponse["demographic"] = demographic
-    score = 0
-    percentage = 0
-    response = usersCol.find_one({"user": userName})
 
-    if(score != "null"):
-        print(score)
-        score = response["score"]
-        percentage = (score*100)/24
-        print("SCORE = ",score)
-        print("PERCENTAGE = ",percentage)
-        percentArray.append(percentage)
-    else:
-        print("NULL")
+    score = user['score']
+    print(score)
