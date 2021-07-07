@@ -31,4 +31,7 @@ for user in usersCol.find():
     userResponse["demographic"] = demographic
 
     score = user['score']
-    print(score)
+    if(score == "None"):
+        print("None is the score")
+    else:
+        print(score)
