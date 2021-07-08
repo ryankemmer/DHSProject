@@ -35,5 +35,6 @@ for user in usersCol.find():
     for x in userResponse:
         if(x["question"] > 8 and x["q1"] != 1):
             fnr = fnr+1
+    print(fnr)
     print("FNR = ",(fnr*100/8))
 print(percentArray)
