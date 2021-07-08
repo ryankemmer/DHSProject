@@ -17,7 +17,7 @@ responsesCol = db['responses']
 percentArray = []
 dataArray = []
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+groundtruth = [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1]
 
 for user in usersCol.find():
 
@@ -34,7 +34,7 @@ for user in usersCol.find():
 
     for x in userResponse:
 
-        if(x["question"] <= 12 and x["q1"] != 1):
+        if(x["question"] > 8 and x["q1"] != 1):
             fnr = fnr+1
-    print("FNR = ",(fnr*100/12))
+    print("FNR = ",(fnr*100/8))
 print(percentArray)
