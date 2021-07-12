@@ -53,10 +53,10 @@ function mouseDown(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/4_1_1_Images/bat-" + sequence + ".png";
+    exercise_img_src = "/images/4_1_2_Images/butterfly-" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/4_1_1_Images/bat-" + 5 + ".gif";
+        document.getElementById("img2find").src = "/images/4_1_2_Images/butterfly-" + 14 + ".gif";
         document.getElementById("img2find").width = "100"
 
     } else {

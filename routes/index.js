@@ -7,18 +7,18 @@ const User = require('../User');
 const { response } = require('express');
 
 
-var url = 'mongodb://localhost:27014/'; //for server
-//var url = 'mongodb://localhost:27017/'; //for localhost
-totalQs = 16;
 //var url = 'mongodb://localhost:27014/'; //for server
-//var url = 'mongodb://localhost:27017/'; //for localhost
+var url = 'mongodb://localhost:27017/'; //for localhost
+totalQs = 16;
+
 
 
 //first acitivity to
-var datab1 = 'Test4_1_3'
-var datab2 = 'Test4_2_1'
-var datab3 = 'Test4_1_2'
-var datab4 = 'Test4_1_4'
+var datab2 = 'Test4_1_2' //first part db not allowed
+var datab = 'Test4_2_2' //second part db
+var datab1 = 'Test4_1_1_correct' //first part db allowed
+var datab3 = 'Test4_1_3' //first part db allowed
+var datab4 = 'Test4_1_4' //first part db allowed
 var userID = null
 let users = [];
 
@@ -112,7 +112,7 @@ router.post('/activity/', function(req,res,next){
     if((check1 != null  || check3 != null || check4 != null) && currentUser.id != null){
       console.log("Present in one of three");
 
-      db = client.db(datab2) //second part db
+      db = client.db(datab) //second part db
       let usersCol = db.collection('users')
       check = yield usersCol.findOne({"user" : currentUser.id})
       console.log(check);
@@ -130,7 +130,7 @@ router.post('/activity/', function(req,res,next){
         yield usersCol.insertOne(item);
 
         //contiunes to second part
-        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index, yes: yesCount1[questionNum-1], no: noCount1[questionNum-1], yesC: yesConf1[questionNum-1], noC: noConf1[questionNum-1]})
+        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index, yes: yesCount2[questionNum-1], no: noCount2[questionNum-1], yesC: yesConf2[questionNum-1], noC: noConf2[questionNum-1]})
       }
       else{
         res.render('index', {error: "ERROR: Cannot repeat activity"})
@@ -163,7 +163,7 @@ router.post('/activity/:userID/', function(req,res,next){
     yield snooze(1000)
 
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab2)
+    const db = client.db(datab)
     let responseCol = db.collection('responses')
     let usersCol = db.collection('users')
 
@@ -171,7 +171,7 @@ router.post('/activity/:userID/', function(req,res,next){
 
     if (check == null){
 
-      res.render('activity', {time: prevTime -1, userID: currentUser.id, question: currentUser.currentQ(), sequence: currentUser.index,  yes: yesCount1[questionNum-1], no: noCount1[questionNum-1], yesC: yesConf1[questionNum-1], noC: noConf1[questionNum-1], error: "ERROR: Please answer all questions!"})
+      res.render('activity', {time: prevTime -1, userID: currentUser.id, question: currentUser.currentQ(), sequence: currentUser.index,  yes: yesCount2[questionNum-1], no: noCount2[questionNum-1], yesC: yesConf2[questionNum-1], noC: noConf2[questionNum-1], error: "ERROR: Please answer all questions!"})
 
     }else{
 
@@ -181,7 +181,7 @@ router.post('/activity/:userID/', function(req,res,next){
 
       if (currentUser.index <= totalQs){
         console.log("Q no: " + currentUser.index);
-        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index,  yes: yesCount1[questionNum-1], no: noCount1[questionNum-1], yesC: yesConf1[questionNum-1], noC: noConf1[questionNum-1]})
+        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index,  yes: yesCount2[questionNum-1], no: noCount2[questionNum-1], yesC: yesConf2[questionNum-1], noC: noConf2[questionNum-1]})
       }
       else{
         //change Ground Truth Array
@@ -261,7 +261,7 @@ router.post('/activity/:userID/data', function(req,res,next){
   co(function* () {
 
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab2)
+    const db = client.db(datab)
     let responseCol = db.collection('responses')
 
     var item = {
@@ -315,7 +315,7 @@ router.post('/activity/:use/:userID/data', function(req,res,next){
   co(function* () {
 
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab2)
+    const db = client.db(datab)
     let responseCol = db.collection('responses')
 
     var item = {
@@ -378,7 +378,7 @@ router.post('/survey/:user/:userID/sendSurvey', function(req,res,next){
   //storesurvey results
   co(function* () {
     let client = yield MongoClient.connect(url);
-    const db = client.db(datab2)
+    const db = client.db(datab)
     let UsersCol = db.collection('users')
 
     newItem = {
