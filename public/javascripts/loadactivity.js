@@ -185,6 +185,8 @@ d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
           rect.Y = null
           rect.w = null
           rect.h = null
+
+          document.getElementById("popup").innerText = "";
         }
         else if (radio12.classList.contains('active')) {
             q1 = 0

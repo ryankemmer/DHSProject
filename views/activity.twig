@@ -139,6 +139,7 @@
     }
     window.onload = function () {
         if (duration <= 0) {
+            document.getElementById("popup").innerText = "";
             duration = 1
             renderQuestion(userID, question, duration);
         } else {
