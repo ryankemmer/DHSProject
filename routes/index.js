@@ -9,7 +9,7 @@ const { response } = require('express');
 //var url = 'mongodb://localhost:27014/'; //for server tests
 var url = 'mongodb://localhost:27017/'; //for local tests
 
-var datab = 'Test_SURI_hb'
+var datab = 'Test_SURI_hb_np'
 var userID = null
 let users = [];
 
@@ -222,8 +222,7 @@ router.post('/activity/:userID/data', function(req,res,next){
             "q1": group[1],
             "q2": group[2],
             "q3": group[3],
-            "x": group[4],
-            "y": group[5]
+
         };
 
         if (group[1] != -2 && group[3] != -2) {
@@ -275,8 +274,7 @@ router.post('/activity/:use/:userID/data', function (req, res, next) {
             "q1": group[1],
             "q2": group[2],
             "q3": group[3],
-            "x": group[4],
-            "y": group[5]
+            
         };
 
         if (group[1] != -2 && group[3] != -2) {

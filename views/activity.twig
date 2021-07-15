@@ -29,7 +29,7 @@
         <p><b>Can you find this object in the image below?</b></p>
         <img id="img2find">
         <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
-        
+
         <div class="container mainContainer">
             <div class="row">
 
@@ -50,7 +50,7 @@
                         </label>
                     </div>
                     <div id="popup" style="color: red;"> </div>
-                    <div id="output" class="text-info"></div>
+
                     <br>
                     <p>Please rate the confidence in your decision.</p>
                     <p id="value-simple"></p>
@@ -69,7 +69,7 @@
 
                     <br>
                     <br>
-                    <p> Please click on the image where the object is.</p>
+                    <p> Please draw a bounding box around the object</p>
 
                 </div>
             </div>
@@ -114,7 +114,7 @@
     var yesButon = document.getElementById("option11");
     var noButton = document.getElementById("option12");
     yesButon.onclick = function (){
-        document.getElementById("popup").innerText = "Please identify the object on the image. Click on where you think the object is.";
+        document.getElementById("popup").innerText = "Please identify the object on the image. Draw a box around the object.";
     }
     noButton.onclick = function () {
         document.getElementById("popup").innerText = "";
