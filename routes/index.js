@@ -6,14 +6,14 @@ const co = require('co');
 const User = require('../User');
 const { response } = require('express');
 
-//var url = 'mongodb://localhost:27017/'; //for server tests
+//var url = 'mongodb://localhost:27014/'; //for server tests
 var url = 'mongodb://localhost:27017/'; //for local tests
 
-var datab = 'Test4_1_2'
+var datab = 'Test_SURI_hb'
 var userID = null
 let users = [];
 
-var totalQs = 16;
+var totalQs = 24;
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
@@ -66,7 +66,7 @@ router.post('/activity/', function(req,res,next){
     //check to see if user exists in database
     if(currentUser.id != null){
       let client = yield MongoClient.connect(url);
-      db = client.db(datab) 
+      db = client.db(datab)
       let usersCol = db.collection('users')
 
       check = yield usersCol.findOne({"user" : currentUser.id})
@@ -136,7 +136,7 @@ router.post('/activity/:userID/', function(req,res,next){
       }
       else{
         //change Ground Truth Array
-        var truth = [0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1] //16 in length
+        var truth = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0] //24 in length
         var correct = []
 
         //get results
