@@ -7,8 +7,8 @@ const User = require('../User');
 const { response } = require('express');
 
 
-//var url = 'mongodb://localhost:27014/'; //for server
-var url = 'mongodb://localhost:27017/'; //for localhost
+var url = 'mongodb://localhost:27014/'; //for server
+//var url = 'mongodb://localhost:27017/'; //for localhost
 totalQs = 16;
 
 
