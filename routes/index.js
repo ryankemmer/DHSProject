@@ -6,8 +6,8 @@ const co = require('co');
 const User = require('../User');
 const { response } = require('express');
 
-//var url = 'mongodb://localhost:27014/'; //for server tests
-var url = 'mongodb://localhost:27017/'; //for local tests
+var url = 'mongodb://localhost:27014/'; //for server tests
+//var url = 'mongodb://localhost:27017/'; //for local tests
 
 var datab = 'Test_SURI_hb_np'
 var userID = null
