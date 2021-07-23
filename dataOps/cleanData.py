@@ -104,6 +104,6 @@ for user in usersCol.find():
                 #if flag is true then user is a spammer so delete from db
                 if(flag):
                     spammers.append(user)
-
+print(spammers)
 print("Completed Users: " + str(len(completed_users)))
 print("Users Removed: " + str(userRemove))

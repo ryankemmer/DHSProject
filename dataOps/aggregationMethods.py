@@ -50,7 +50,18 @@ def countAnswer(array):
     print("True Negatives Count: " + str(tnCount));
     print("False Negatives Count: " + str(fnCount));
 
+def totalYNCounts(array):
+    yCount = 0
+    nCount = 0
 
+    for i in range(len(array)):
+        if(array[i] == 0):
+            nCount+=1;
+        else:
+            yCount+=1;
+
+    print("Y Count: " + str(yCount));
+    print("N Count: " + str(nCount));
 
 def majorityVote(predictions):
 
