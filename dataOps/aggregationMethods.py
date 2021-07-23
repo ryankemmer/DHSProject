@@ -31,6 +31,7 @@ def checkAnswer(x,gtruth):
         return 'TP'
 
 def countAnswer(array):
+    print("TOTAL LENGTH OF ARRAY IS "+str(len(array)))
     tnCount = 0
     fnCount = 0
     fpCount = 0
@@ -317,15 +318,7 @@ for i in range(24):
     for userResponse in data:
         response = userResponse[str(i + 1)]
         predictions.append(response["q1"])
-
-    if i in honeypots:
-        for j in range(len(predictions)):
-            if predictions[j] == groundtruth[i]:
-                trap_true[j] +=1
-            else:
-                trap_false[j] +=1
-
-
+    print(predictions)
 #aggregation method totals
 majTotals = []
 confTotals = []
@@ -343,7 +336,7 @@ for i in range(24):
     crowdPredictions = []
 
     for userResponse in data:
-        response = userResponse[str(i + 1)]
+        response = userResponse[str(i+1)]
         predictions.append(response["q1"])
         confidence.append(response["q2"])
         crowdPredictions.append(response["q3"])
