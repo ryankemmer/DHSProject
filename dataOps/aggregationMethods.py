@@ -286,11 +286,11 @@ def ELICE(predictions, groundtruth, trap_true, trap_false):
 #
 
 #load json file
-with open('12-02-2020Test2-1.json') as f:
+with open('07-23-2021Test_SURI_hb.json') as f:
     data = json.load(f)
 
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0]
 
 #honeypots (indexed starting at 0)
 honeypots = [2,3,14,15]
@@ -307,12 +307,12 @@ for i in range(24):
         response = userResponse[str(i + 1)]
         predictions.append(response["q1"])
 
-    if i in honeypots:
-        for j in range(len(predictions)):
-            if predictions[j] == groundtruth[i]:
-                trap_true[j] +=1
-            else:
-                trap_false[j] +=1
+    #if i in honeypots:
+        #for j in range(len(predictions)):
+            #if predictions[j] == groundtruth[i]:
+                #trap_true[j] +=1
+            #else:
+                #trap_false[j] +=1
 
 
 #aggregation method totals
@@ -348,20 +348,19 @@ for i in range(24):
     print('SP Winner: ' + str(surprisinglyPopularVote(predictions, crowdPredictions)))
 #    print('==================================')
 
-    if i not in honeypots:
-
-        print('Honeypot Winner: ' + str(honeypot(predictions, trap_true)))
-        print('Weighted Honeypot Winner: ' + str(weighted_honeypot(predictions, trap_true)))
-        print('ELICE: ' + str(ELICE(predictions, groundtruth[i], trap_true, trap_false)))
+    #if i not in honeypots:
+        #print('Honeypot Winner: ' + str(honeypot(predictions, trap_true)))
+        #print('Weighted Honeypot Winner: ' + str(weighted_honeypot(predictions, trap_true)))
+        #print('ELICE: ' + str(ELICE(predictions, groundtruth[i], trap_true, trap_false)))
 
         #add to array of predictions
         majTotals.append(checkAnswer(majorityVote(predictions),groundtruth[i]))
         confTotals.append(checkAnswer(confidenceWeightedVote(predictions, confidence),groundtruth[i]))
         hconfTotals.append(checkAnswer(highConfidenceWeightedVote(predictions, confidence),groundtruth[i]))
         spTotals.append(checkAnswer(surprisinglyPopularVote(predictions, confidence),groundtruth[i]))
-        hpTotals.append(checkAnswer(honeypot(predictions, trap_true),groundtruth[i]))
-        whTotals.append(checkAnswer(weighted_honeypot(predictions, trap_true),groundtruth[i]))
-        eTotals.append(checkAnswer(ELICE(predictions, groundtruth[i], trap_true, trap_false),groundtruth[i]))
+       #hpTotals.append(checkAnswer(honeypot(predictions, trap_true),groundtruth[i]))
+        #whTotals.append(checkAnswer(weighted_honeypot(predictions, trap_true),groundtruth[i]))
+        #eTotals.append(checkAnswer(ELICE(predictions, groundtruth[i], trap_true, trap_false),groundtruth[i]))
 
 print(str("---------------------- Totals ------------------------"))
 
@@ -377,14 +376,14 @@ countAnswer(hconfTotals)
 print("Surprisingly Popular Voting Totals")
 countAnswer(spTotals)
 
-print("Honey Pot Voting Totals")
-countAnswer(hpTotals)
+#print("Honey Pot Voting Totals")
+#countAnswer(hpTotals)
 
-print("Weighted Honey Pot Voting Totals")
-countAnswer(whTotals)
+#print("Weighted Honey Pot Voting Totals")
+#countAnswer(whTotals)
 
-print("ELICE Voting Totals")
-countAnswer(eTotals)
+#print("ELICE Voting Totals")
+#countAnswer(eTotals)
 
 '''
 print('Majority Vote Totals: ' + sum())
