@@ -297,7 +297,7 @@ def ELICE(predictions, groundtruth, trap_true, trap_false):
 #
 
 #load json file
-with open('07-19-2021Test_SURI_hb.json') as f:
+with open('07-23-2021Test_SURI_hb.json') as f:
     data = json.load(f)
 
 #specify ground truth for each question

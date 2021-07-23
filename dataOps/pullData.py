@@ -30,7 +30,7 @@ for user in usersCol.find():
     userResponse["demographic"] = demographic
 
     for i in range(1,25):
-        print(i," = LOOP ENTERED")
+        #print(i," = LOOP ENTERED")
         response = responsesCol.find_one({"user": userName, "question": i})
 
         if(response == None):
@@ -43,10 +43,10 @@ for user in usersCol.find():
             "q1": response["q1"],
             "q2": response["q2"],
             "q3": response["q3"],
-            "bb": response["bb"],
+           # "bb": response["bb"],
             "time": response["time"]
         }
-        print(userResponse)
+        print(userResponse[i]["time"])
     print("Yes Count = "+str(yesCount))
     print("No Count = "+str(noCount))
     dataArray.append(userResponse)
