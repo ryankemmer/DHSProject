@@ -20,7 +20,8 @@ dataArray = []
 for user in usersCol.find():
 
     userResponse = {}
-
+    yesCount = 0
+    noCount = 0
     userName = user['user']
     print(userName)
     demographic = user["surveyResults"]
@@ -31,9 +32,13 @@ for user in usersCol.find():
     for i in range(1,25):
         print(i," = LOOP ENTERED")
         response = responsesCol.find_one({"user": userName, "question": i})
-        print(response)
+
         if(response == None):
             continue
+        if(response["q1"] == 0):
+            noCount = noCount + 1
+        else:
+            yesCount = yesCount + 1
         userResponse[i] = {
             "q1": response["q1"],
             "q2": response["q2"],
@@ -42,8 +47,8 @@ for user in usersCol.find():
             "time": response["time"]
         }
         print(userResponse)
-
-
+    print("Yes Count = "+str(yesCount))
+    print("No Count = "+str(noCount))
     dataArray.append(userResponse)
 
 rightNow = datetime.datetime.today().strftime('%m-%d-%Y')
