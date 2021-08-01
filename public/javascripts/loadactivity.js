@@ -59,9 +59,19 @@ function mouseMove(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/4_3_1_Z-Images/image-z_" + sequence + ".png";
-    ex_img_left = "/images/4_3_1_X-Images/image-x_" + sequence + ".png";
-    ex_img_right = "/images/4_3_1_Y-Images/image-y_" + sequence + ".png";
+    var x = parseInt(sequence)+13;
+    console.log(sequence);
+    if(sequence > 11){
+      //console.log(sequence+13);
+      exercise_img_src = "/images/4_3_1_Z-Images/image-z_" + x + ".png";
+      ex_img_left = "/images/4_3_1_X-Images/image-x_" + x + ".png";
+      ex_img_right = "/images/4_3_1_Y-Images/image-y_" + x + ".png";
+    }
+    else{
+      exercise_img_src = "/images/4_3_1_Z-Images/image-z_" + sequence + ".png";
+      ex_img_left = "/images/4_3_1_X-Images/image-x_" + sequence + ".png";
+      ex_img_right = "/images/4_3_1_Y-Images/image-y_" + sequence + ".png";
+    }
     obj_img = "/images/objects/pickaxe.png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
@@ -107,52 +117,54 @@ function renderQuestion(userID, sequence, duration) {
         modal.style.display = "none";
     }
 
-    var formatter = d3.format(",.2f");
-    var tickFormatter = function(d) {
-      if(d == 0){
-        return "Uncertain";
-      }
-      if(d == .30){
-        return "Slightly Confident";
-      }
-      if(d == .70){
-        return "Confident";
-      }
-      if(d == 1){
-        return "Very Confident";
-      }
-    }
 
-    let sliderWidth = d3.select('#slider-simple').node().offsetWidth
-var data = [0, .30, .70,1];
 
-var sliderSimple = d3
-    .sliderHorizontal()
-    .min(d3.min(data))
-    .max(d3.max(data))
-    .width(sliderWidth/1.3)
-    .tickFormat(tickFormatter)
-    .ticks(9)
-    .step(.1)
-    .default(.5)
-    .on('onchange', val => {
-        d3.select('p#value-simple').text(d3.format('.0%')(val));
-    });
+  var formatter = d3.format(",.2f");
+      var tickFormatter = function(d) {
+        if(d == 0){
+          return "Uncertain";
+        }
+        if(d == .30){
+          return "Slightly Confident";
+        }
+        if(d == .70){
+          return "Confident";
+        }
+        if(d == 1){
+          return "Very Confident";
+        }
+      }
 
-d3.select('div#slider-simple')
-    .append('svg')
-    .attr('width', sliderWidth)
-    .attr('height', 90)
-    .append('g')
-    .attr('transform', 'translate(30,30)')
-    .call(sliderSimple);
+      let sliderWidth = d3.select('#slider-simple').node().offsetWidth
+  var data = [0, .30, .70,1];
 
-d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
+  var sliderSimple = d3
+      .sliderHorizontal()
+      .min(d3.min(data))
+      .max(d3.max(data))
+      .width(sliderWidth/1.2)
+      .tickFormat(tickFormatter)
+      .ticks(9)
+      .step(.1)
+      .default(.5)
+      .on('onchange', val => {
+          d3.select('p#value-simple').text(d3.format('.0%')(val));
+      });
+
+  d3.select('div#slider-simple')
+      .append('svg')
+      .attr('width', sliderWidth)
+      .attr('height', 90)
+      .append('g')
+      .attr('transform', 'translate(30,30)')
+      .call(sliderSimple);
+
+  d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
     //
     //Button
     //
     d3.select(".btn-outline-success").on("click", function () {
-
+      console.log("BUTTON PRESSED YO");
         var q1
         var q2
         var q3
@@ -160,7 +172,6 @@ d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
         //
         //Get time
         //
-
         var timeLeft = document.getElementById("time").innerHTML
         console.log(timeLeft)
 
@@ -200,11 +211,14 @@ d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
         } else {
             q1 = -2
         }
-
         //
         //Question 2
         //
+
+
         q2 = document.getElementById("value-simple").innerHTML
+        console.log(q2)
+
         //
         //Question 3
         //
