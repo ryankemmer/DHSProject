@@ -164,7 +164,7 @@ function renderQuestion(userID, sequence, duration) {
     //Button
     //
     d3.select(".btn-outline-success").on("click", function () {
-      console.log("BUTTON PRESSED YO");
+      console.log("BUTTON PRESSED");
         var q1
         var q2
         var q3
