@@ -20,14 +20,12 @@ spammers = []
 userRemove = 0
 args = len(sys.argv) - 1
 
-with open('12-02-2020Test2-1.json') as f:
+with open('08-05-2021Test4_3_1.json') as f:
     data = json.load(f)
 
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+groundtruth = [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
 
-#honeypots (indexed starting at 0)
-honeypots = [2,3,14,15]
 
 for user in usersCol.find():
 
@@ -53,8 +51,8 @@ for user in usersCol.find():
         userRemove += 1
         if(args > 1):
             if(sys.argv[2] == "delete"): #delete incomplete entries
-                responsesCol.delete_many({'user' : userName})
-                usersCol.delete_one({'user' : userName})
+                #responsesCol.delete_many({'user' : userName})
+                #usersCol.delete_one({'user' : userName})
 
             elif(sys.argv[2] == "spam-delete"): #spam check
                 for i in responseCount: #for each question
@@ -68,14 +66,14 @@ for user in usersCol.find():
 
                 flag = False;
                 #honeypot wrong
-                honeypotWrongCount = 0;
+                #honeypotWrongCount = 0;
 
-                for i in honeypots: #checks all honeypot qs
-                    if(answers_q1[honeypots[i]] != groundtruth[honeypots[i]]):
-                        honeypotWrongCount = honeypotWrongCount+1;
+                #for i in honeypots: #checks all honeypot qs
+                    #if(answers_q1[honeypots[i]] != groundtruth[honeypots[i]]):
+                        #honeypotWrongCount = honeypotWrongCount+1;
 
-                if(honeypotWrongCount == len(honeypots)): #all honeypots are wrong
-                    flag = true;
+                #if(honeypotWrongCount == len(honeypots)): #all honeypots are wrong
+                    #flag = True;
 
                 #time taken less than 5 seconds
                 lessTime = 0;
@@ -85,8 +83,8 @@ for user in usersCol.find():
                     if(time[i] <= 5):
                         lessTime = lessTime + 1
 
-                if(lessTime == responseCount):
-                    flag = true
+                if(lessTime == numOfQs):
+                    flag = True
 
                 #Y or N for all
                 yesCount = 0
@@ -99,11 +97,12 @@ for user in usersCol.find():
                         noCount = noCount + 1
 
                 if(yesCount == responseCount or noCount == responseCount):
-                    flag = true
+                    flag = True
 
                 #if flag is true then user is a spammer so delete from db
                 if(flag):
                     spammers.append(user)
+print(spammers)
 
 print("Completed Users: " + str(len(completed_users)))
 print("Users Removed: " + str(userRemove))
