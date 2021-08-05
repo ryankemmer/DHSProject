@@ -7,7 +7,7 @@
 6 silly lifecycle dhsproject@0.0.0~prestart: no script for prestart, continuing
 7 info lifecycle dhsproject@0.0.0~start: dhsproject@0.0.0
 8 verbose lifecycle dhsproject@0.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle dhsproject@0.0.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/hbhogara/DHSProject/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+9 verbose lifecycle dhsproject@0.0.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/hbhogara/DHSProject/node_modules/.bin:/home/hbhogara/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 10 verbose lifecycle dhsproject@0.0.0~start: CWD: /home/hbhogara/DHSProject
 11 silly lifecycle dhsproject@0.0.0~start: Args: [ '-c', 'node ./bin/www' ]
 12 silly lifecycle dhsproject@0.0.0~start: Returned: code: 1  signal: null
