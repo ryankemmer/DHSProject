@@ -50,10 +50,7 @@ for user in usersCol.find():
     else:
         userRemove += 1
         if(args > 1):
-            if(sys.argv[2] == "delete"): #delete incomplete entries
-                #responsesCol.delete_many({'user' : userName})
-                #usersCol.delete_one({'user' : userName})
-            elif(sys.argv[2] == "spam-delete"): #spam check
+            if(sys.argv[2] == "spam-delete"): #spam check
                 for i in responseCount: #for each question
                     for userResponse in data:
                         response = userResponse[str(i + 1)]
@@ -105,3 +102,4 @@ print(spammers)
 
 print("Completed Users: " + str(len(completed_users)))
 print("Users Removed: " + str(userRemove))
+
