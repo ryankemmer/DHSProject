@@ -53,7 +53,6 @@ for user in usersCol.find():
             if(sys.argv[2] == "delete"): #delete incomplete entries
                 #responsesCol.delete_many({'user' : userName})
                 #usersCol.delete_one({'user' : userName})
-
             elif(sys.argv[2] == "spam-delete"): #spam check
                 for i in responseCount: #for each question
                     for userResponse in data:
