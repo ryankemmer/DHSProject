@@ -35,20 +35,14 @@ for user in usersCol.find():
             "q1": response["q1"],
             "q2": response["q2"],
             "q3": response["q3"],
-            "x": response["x"],
-            "y": response["y"],
+            "bb": response["bb"],
             "time": response["time"]
         }
 
     dataArray.append(userResponse)
 
 rightNow = datetime.datetime.today().strftime('%m-%d-%Y')
-file_name = rightNow + dbase + ".json" 
+file_name = rightNow + dbase + ".json"
 
 with open(str(file_name), 'w+') as outfile:
-	json.dump(dataArray, outfile) 
-
-
-
-
-
+	json.dump(dataArray, outfile)
