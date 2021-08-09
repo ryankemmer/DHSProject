@@ -50,7 +50,10 @@ for user in usersCol.find():
     else:
         userRemove += 1
         if(args > 1):
-             if(sys.argv[2] == "delete"):
+            if(sys.argv[2] == "delete"):
+                print(userName)
+                print("ACtually reponses are")
+                print(responseCount)
                 responsesCol.delete_many({'user' : userName})
                 #usersCol.delete_one({'user' : userName})
             if(sys.argv[2] == "spam-delete"): #spam check
