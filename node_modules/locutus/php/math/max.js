@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = function max() {
-  //  discuss at: http://locutus.io/php/max/
+  //  discuss at: https://locutus.io/php/max/
   // original by: Onno Marsman (https://twitter.com/onnomarsman)
   //  revised by: Onno Marsman (https://twitter.com/onnomarsman)
   // improved by: Jack
@@ -21,8 +21,8 @@ module.exports = function max() {
   //   example 6: max([2, 4, 8], [2, 5, 7])
   //   returns 6: [2, 5, 7]
 
-  var ar;
-  var retVal;
+  var ar = void 0;
+  var retVal = void 0;
   var i = 0;
   var n = 0;
   var argv = arguments;
@@ -31,13 +31,13 @@ module.exports = function max() {
     if (Object.prototype.toString.call(obj) === '[object Array]') {
       return obj;
     } else {
-      var ar = [];
-      for (var i in obj) {
-        if (obj.hasOwnProperty(i)) {
-          ar.push(obj[i]);
+      var _ar = [];
+      for (var _i in obj) {
+        if (obj.hasOwnProperty(_i)) {
+          _ar.push(obj[_i]);
         }
       }
-      return ar;
+      return _ar;
     }
   };
   var _compare = function _compare(current, next) {

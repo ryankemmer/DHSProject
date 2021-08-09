@@ -3,12 +3,12 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = function intval(mixedVar, base) {
-  //  discuss at: http://locutus.io/php/intval/
-  // original by: Kevin van Zonneveld (http://kvz.io)
+  //  discuss at: https://locutus.io/php/intval/
+  // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: stensi
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
-  // bugfixed by: Rafał Kukawski (http://blog.kukawski.pl)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
+  // bugfixed by: Rafał Kukawski (https://blog.kukawski.pl)
   //    input by: Matteo
   //   example 1: intval('Kevin van Zonneveld')
   //   returns 1: 0
@@ -27,7 +27,8 @@ module.exports = function intval(mixedVar, base) {
   //   example 8: intval('010', 0)
   //   returns 8: 8
 
-  var tmp, match;
+  var tmp = void 0,
+      match = void 0;
 
   var type = typeof mixedVar === 'undefined' ? 'undefined' : _typeof(mixedVar);
 

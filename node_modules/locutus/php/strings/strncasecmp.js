@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function strncasecmp(argStr1, argStr2, len) {
-  //  discuss at: http://locutus.io/php/strncasecmp/
+  //  discuss at: https://locutus.io/php/strncasecmp/
   // original by: Saulo Vallory
   //    input by: Nate
   // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
@@ -18,7 +18,7 @@ module.exports = function strncasecmp(argStr1, argStr2, len) {
   //   example 5: strncasecmp('Version 12.15', 'Version 12.9', 20)
   //   returns 5: -8
 
-  var diff;
+  var diff = void 0;
   var i = 0;
   var str1 = (argStr1 + '').toLowerCase().substr(0, len);
   var str2 = (argStr2 + '').toLowerCase().substr(0, len);

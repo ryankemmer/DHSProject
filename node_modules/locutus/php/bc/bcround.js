@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function bcround(val, precision) {
-  //  discuss at: http://locutus.io/php/bcround/
+  //  discuss at: https://locutus.io/php/bcround/
   // original by: lmeyrick (https://sourceforge.net/projects/bcmath-js/)
   //   example 1: bcround(1, 2)
   //   returns 1: '1.00'
@@ -9,8 +9,10 @@ module.exports = function bcround(val, precision) {
   var _bc = require('../_helpers/_bc');
   var libbcmath = _bc();
 
-  var temp, result, digit;
-  var rightOperand;
+  var temp = void 0,
+      result = void 0,
+      digit = void 0;
+  var rightOperand = void 0;
 
   // create number
   temp = libbcmath.bc_init_num();

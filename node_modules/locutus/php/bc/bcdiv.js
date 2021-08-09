@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function bcdiv(leftOperand, rightOperand, scale) {
-  //  discuss at: http://locutus.io/php/bcdiv/
+  //  discuss at: https://locutus.io/php/bcdiv/
   // original by: lmeyrick (https://sourceforge.net/projects/bcmath-js/)
   //   example 1: bcdiv('1', '2')
   //   returns 1: '0'
@@ -15,7 +15,9 @@ module.exports = function bcdiv(leftOperand, rightOperand, scale) {
   var _bc = require('../_helpers/_bc');
   var libbcmath = _bc();
 
-  var first, second, result;
+  var first = void 0,
+      second = void 0,
+      result = void 0;
 
   if (typeof scale === 'undefined') {
     scale = libbcmath.scale;

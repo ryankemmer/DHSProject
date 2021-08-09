@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = function natsort(inputArr) {
-  //  discuss at: http://locutus.io/php/natsort/
-  // original by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  //  discuss at: https://locutus.io/php/natsort/
+  // original by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   // improved by: Theriault (https://github.com/Theriault)
   //      note 1: This function deviates from PHP in returning a copy of the array instead
   //      note 1: of acting by reference and returning true; this was necessary because
@@ -22,8 +22,8 @@ module.exports = function natsort(inputArr) {
   var strnatcmp = require('../strings/strnatcmp');
 
   var valArr = [];
-  var k;
-  var i;
+  var k = void 0;
+  var i = void 0;
   var sortByReference = false;
   var populateArr = {};
 

@@ -1,18 +1,18 @@
 'use strict';
 
 module.exports = function sprintf() {
-  //  discuss at: http://locutus.io/php/sprintf/
-  // original by: Ash Searle (http://hexmen.com/blog/)
-  // improved by: Michael White (http://getsprink.com)
+  //  discuss at: https://locutus.io/php/sprintf/
+  // original by: Ash Searle (https://hexmen.com/blog/)
+  // improved by: Michael White (https://getsprink.com)
   // improved by: Jack
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Dj
   // improved by: Allidylls
   //    input by: Paulo Freitas
-  //    input by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Rafał Kukawski (http://kukawski.pl)
+  //    input by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Rafał Kukawski (https://kukawski.pl)
   //   example 1: sprintf("%01.2f", 123.1)
   //   returns 1: '123.10'
   //   example 2: sprintf("[%10s]", 'monkey')
@@ -77,7 +77,11 @@ module.exports = function sprintf() {
 
   // doFormat()
   var doFormat = function doFormat(substring, argIndex, modifiers, minWidth, precision, specifier) {
-    var number, prefix, method, textTransform, value;
+    var number = void 0,
+        prefix = void 0,
+        method = void 0,
+        textTransform = void 0,
+        value = void 0;
 
     if (substring === '%%') {
       return '%';
@@ -87,7 +91,8 @@ module.exports = function sprintf() {
     var padChar = ' '; // pad with spaces by default
     var leftJustify = false;
     var positiveNumberPrefix = '';
-    var j, l;
+    var j = void 0,
+        l = void 0;
 
     for (j = 0, l = modifiers.length; j < l; j++) {
       switch (modifiers.charAt(j)) {

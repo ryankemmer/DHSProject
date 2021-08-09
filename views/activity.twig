@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css">
-    
+
     <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
 
     <link rel="stylesheet" href="/stylesheets/activity.scss">
@@ -56,6 +56,8 @@
                   </div>
                   <div class="img-with-text">
                     <canvas id="canvas"></canvas>
+
+                    <canvas id="zoom" width="400" height="200" style="position:absolute; top:0; left:0; display:none"></canvas>
                     <p style="text-align:center;font-size:150%;"><b>Top View</b></p>
                   </div>
                 </div>
@@ -117,6 +119,8 @@
     capText = document.getElementById("caption");
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+    var zoom = document.getElementById("zoom");
+    var zoomCtx = zoom.getContext("2d");
     var imgWidth = 500;
     var imgHeight = 500;
     ctx.canvas.width = imgWidth;

@@ -1,13 +1,13 @@
 'use strict';
 
 module.exports = function levenshtein(s1, s2, costIns, costRep, costDel) {
-  //       discuss at: http://locutus.io/php/levenshtein/
-  //      original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
+  //       discuss at: https://locutus.io/php/levenshtein/
+  //      original by: Carlos R. L. Rodrigues (https://www.jsfromhell.com)
   //      bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  //       revised by: Andrea Giammarchi (http://webreflection.blogspot.com)
-  // reimplemented by: Brett Zamir (http://brett-zamir.me)
+  //       revised by: Andrea Giammarchi (https://webreflection.blogspot.com)
+  // reimplemented by: Brett Zamir (https://brett-zamir.me)
   // reimplemented by: Alexander M Beedie
-  // reimplemented by: Rafał Kukawski (http://blog.kukawski.pl)
+  // reimplemented by: Rafał Kukawski (https://blog.kukawski.pl)
   //        example 1: levenshtein('Kevin van Zonneveld', 'Kevin van Sommeveld')
   //        returns 1: 3
   //        example 2: levenshtein("carrrot", "carrots")
@@ -56,7 +56,12 @@ module.exports = function levenshtein(s1, s2, costIns, costRep, costDel) {
   var p1 = new Array(l2 + 1);
   var p2 = new Array(l2 + 1);
 
-  var i1, i2, c0, c1, c2, tmp;
+  var i1 = void 0,
+      i2 = void 0,
+      c0 = void 0,
+      c1 = void 0,
+      c2 = void 0,
+      tmp = void 0;
 
   for (i2 = 0; i2 <= l2; i2++) {
     p1[i2] = i2 * costIns;

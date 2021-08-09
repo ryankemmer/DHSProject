@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = function idate(format, timestamp) {
-  //  discuss at: http://locutus.io/php/idate/
-  // original by: Brett Zamir (http://brett-zamir.me)
+  //  discuss at: https://locutus.io/php/idate/
+  // original by: Brett Zamir (https://brett-zamir.me)
   // original by: date
   // original by: gettimeofday
   //    input by: Alex
-  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  // bugfixed by: Brett Zamir (https://brett-zamir.me)
   // improved by: Theriault (https://github.com/Theriault)
   //   example 1: idate('y', 1255633200)
   //   returns 1: 9
@@ -20,7 +20,7 @@ module.exports = function idate(format, timestamp) {
 
   // @todo: Need to allow date_default_timezone_set() (check for $locutus.default_timezone and use)
   var _date = typeof timestamp === 'undefined' ? new Date() : timestamp instanceof Date ? new Date(timestamp) : new Date(timestamp * 1000);
-  var a;
+  var a = void 0;
 
   switch (format) {
     case 'B':

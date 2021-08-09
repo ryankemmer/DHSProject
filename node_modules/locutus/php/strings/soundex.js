@@ -1,15 +1,15 @@
 'use strict';
 
 module.exports = function soundex(str) {
-  //  discuss at: http://locutus.io/php/soundex/
-  // original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
-  // original by: Arnout Kazemier (http://www.3rd-Eden.com)
+  //  discuss at: https://locutus.io/php/soundex/
+  // original by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
+  // original by: Arnout Kazemier (https://www.3rd-Eden.com)
   // improved by: Jack
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // bugfixed by: Onno Marsman (https://twitter.com/onnomarsman)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io)
-  //    input by: Brett Zamir (http://brett-zamir.me)
-  //  revised by: Rafał Kukawski (http://blog.kukawski.pl)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io)
+  //    input by: Brett Zamir (https://brett-zamir.me)
+  //  revised by: Rafał Kukawski (https://blog.kukawski.pl)
   //   example 1: soundex('Kevin')
   //   returns 1: 'K150'
   //   example 2: soundex('Ellery')
@@ -44,10 +44,10 @@ module.exports = function soundex(str) {
     R: 6
   };
   var i = 0;
-  var j;
+  var j = void 0;
   var s = 0;
-  var c;
-  var p;
+  var c = void 0;
+  var p = void 0;
 
   while ((c = str.charAt(i++)) && s < 4) {
     if (j = m[c]) {

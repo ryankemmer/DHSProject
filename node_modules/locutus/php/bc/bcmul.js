@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function bcmul(leftOperand, rightOperand, scale) {
-  //  discuss at: http://locutus.io/php/bcmul/
+  //  discuss at: https://locutus.io/php/bcmul/
   // original by: lmeyrick (https://sourceforge.net/projects/bcmath-js/)
   //   example 1: bcmul('1', '2')
   //   returns 1: '2'
@@ -15,7 +15,9 @@ module.exports = function bcmul(leftOperand, rightOperand, scale) {
   var _bc = require('../_helpers/_bc');
   var libbcmath = _bc();
 
-  var first, second, result;
+  var first = void 0,
+      second = void 0,
+      result = void 0;
 
   if (typeof scale === 'undefined') {
     scale = libbcmath.scale;

@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = function uniqid(prefix, moreEntropy) {
-  //  discuss at: http://locutus.io/php/uniqid/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  //  revised by: Kankrelune (http://www.webfaktory.info/)
+  //  discuss at: https://locutus.io/php/uniqid/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  //  revised by: Kankrelune (https://www.webfaktory.info/)
   //      note 1: Uses an internal counter (in locutus global) to avoid collision
   //   example 1: var $id = uniqid()
   //   example 1: var $result = $id.length === 13
@@ -19,7 +19,7 @@ module.exports = function uniqid(prefix, moreEntropy) {
     prefix = '';
   }
 
-  var retId;
+  var retId = void 0;
   var _formatSeed = function _formatSeed(seed, reqWidth) {
     seed = parseInt(seed, 10).toString(16); // to hex str
     if (reqWidth < seed.length) {

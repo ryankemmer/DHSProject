@@ -1,13 +1,13 @@
 'use strict';
 
 module.exports = function rsort(inputArr, sortFlags) {
-  //  discuss at: http://locutus.io/php/rsort/
-  // original by: Kevin van Zonneveld (http://kvz.io)
-  //  revised by: Brett Zamir (http://brett-zamir.me)
-  // improved by: Brett Zamir (http://brett-zamir.me)
+  //  discuss at: https://locutus.io/php/rsort/
+  // original by: Kevin van Zonneveld (https://kvz.io)
+  //  revised by: Brett Zamir (https://brett-zamir.me)
+  // improved by: Brett Zamir (https://brett-zamir.me)
   //      note 1: SORT_STRING (as well as natsort and natcasesort) might also be
   //      note 1: integrated into all of these functions by adapting the code at
-  //      note 1: http://sourcefrog.net/projects/natsort/natcompare.js
+  //      note 1: https://sourcefrog.net/projects/natsort/natcompare.js
   //      note 1: This function deviates from PHP in returning a copy of the array instead
   //      note 1: of acting by reference and returning true; this was necessary because
   //      note 1: IE does not allow deleting and re-adding of properties without caching
@@ -35,9 +35,9 @@ module.exports = function rsort(inputArr, sortFlags) {
   var i18nlgd = require('../i18n/i18n_loc_get_default');
   var strnatcmp = require('../strings/strnatcmp');
 
-  var sorter;
-  var i;
-  var k;
+  var sorter = void 0;
+  var i = void 0;
+  var k = void 0;
   var sortByReference = false;
   var populateArr = {};
 

@@ -1,15 +1,15 @@
 'use strict';
 
 module.exports = function wordwrap(str, intWidth, strBreak, cut) {
-  //  discuss at: http://locutus.io/php/wordwrap/
-  // original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+  //  discuss at: https://locutus.io/php/wordwrap/
+  // original by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
   // improved by: Nick Callen
-  // improved by: Kevin van Zonneveld (http://kvz.io)
+  // improved by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Sakimori
-  //  revised by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+  //  revised by: Jonas Raoni Soares Silva (https://www.jsfromhell.com)
   // bugfixed by: Michael Grier
   // bugfixed by: Feras ALHAEK
-  // improved by: Rafał Kukawski (http://kukawski.net)
+  // improved by: Rafał Kukawski (https://kukawski.net)
   //   example 1: wordwrap('Kevin van Zonneveld', 6, '|', true)
   //   returns 1: 'Kevin|van|Zonnev|eld'
   //   example 2: wordwrap('The quick brown fox jumped over the lazy dog.', 20, '<br />\n')
@@ -21,7 +21,9 @@ module.exports = function wordwrap(str, intWidth, strBreak, cut) {
   strBreak = arguments.length >= 3 ? '' + strBreak : '\n';
   cut = arguments.length >= 4 ? !!cut : false;
 
-  var i, j, line;
+  var i = void 0,
+      j = void 0,
+      line = void 0;
 
   str += '';
 
@@ -35,7 +37,7 @@ module.exports = function wordwrap(str, intWidth, strBreak, cut) {
 
   var lines = str.split(reLineBreaks);
   var l = lines.length;
-  var match;
+  var match = void 0;
 
   // for each line of text
   for (i = 0; i < l; lines[i++] += line) {

@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function hex2bin(s) {
-  //  discuss at: http://locutus.io/php/hex2bin/
-  // original by: Dumitru Uzun (http://duzun.me)
+  //  discuss at: https://locutus.io/php/hex2bin/
+  // original by: Dumitru Uzun (https://duzun.me)
   //   example 1: hex2bin('44696d61')
   //   returns 1: 'Dima'
   //   example 2: hex2bin('00')
@@ -12,7 +12,7 @@ module.exports = function hex2bin(s) {
 
   var ret = [];
   var i = 0;
-  var l;
+  var l = void 0;
 
   s += '';
 

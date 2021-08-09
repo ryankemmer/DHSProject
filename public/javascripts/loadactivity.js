@@ -21,6 +21,7 @@ function drawCanvas(imageSource) {
     imageObj = new Image();
     imageObj.onload = function () {
         ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
+        zoomCtx.drawImage(imageObj, e.x, e.y, 200, 100, 0,0, 400, 200);
     };
     imageObj.src = imageSource;
     canvas.addEventListener('mousedown', mouseDown, false);
@@ -51,7 +52,7 @@ function mouseMove(e) {
         ctx.strokeStyle = 'red';
         ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
     }
-
+    //zoomCtx.drawImage(imageObj, e.x, e.y, 200, 100, 0,0, 400, 200);
     //Output
     $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
 }
@@ -92,6 +93,48 @@ function renderQuestion(userID, sequence, duration) {
 
     var w = window.innerWidth;
 
+
+    var ctx = canvas.getContext("2d")
+
+    var img = new Image();
+    img.src = exercise_img_src;
+    img.onload = run;
+
+    function run(){
+        drawCanvas(img);
+    }
+
+    canvas.addEventListener("mousemove", function(e){
+        //console.log(e);
+        zoomCtx.fillStyle = "white";
+        //zoomCtx.clearRect(0,0, zoom.width, zoom.height);
+        //zoomCtx.fillStyle = "transparent";
+        zoomCtx.fillRect(0,0, zoom.width, zoom.height);
+        zoomCtx.drawImage(img, e.x, e.y, 200, 100, 0,0, 400, 200);
+        //console.log(zoom.style);
+        zoom.style.top = e.pageY + 10 + "px"
+        zoom.style.left = e.pageX + 10 + "px"
+        zoom.style.display = "block";
+
+        mousex = e.pageX - this.offsetLeft;
+        mousey = e.pageY - this.offsetTop;
+        if (drag) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
+            ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
+            ctx.beginPath();
+            rect.w = mousex - rect.startX;
+            rect.h = mousey - rect.startY;
+            ctx.strokeStyle = 'red';
+            ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+        }
+        //zoomCtx.drawImage(imageObj, e.x, e.y, 200, 100, 0,0, 400, 200);
+        //Output
+        $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
+    });
+
+    canvas.addEventListener("mouseout", function(){
+        zoom.style.display = "none";
+    });
 
     // TODO: Add canvas in zoomed-in image
     canvas.ondblclick = function () {

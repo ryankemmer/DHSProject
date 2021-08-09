@@ -3,21 +3,21 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = function serialize(mixedValue) {
-  //  discuss at: http://locutus.io/php/serialize/
+  //  discuss at: https://locutus.io/php/serialize/
   // original by: Arpad Ray (mailto:arpad@php.net)
   // improved by: Dino
-  // improved by: Le Torbi (http://www.letorbi.de/)
-  // improved by: Kevin van Zonneveld (http://kvz.io/)
+  // improved by: Le Torbi (https://www.letorbi.de/)
+  // improved by: Kevin van Zonneveld (https://kvz.io/)
   // bugfixed by: Andrej Pavlovic
   // bugfixed by: Garagoth
-  // bugfixed by: Russell Walker (http://www.nbill.co.uk/)
-  // bugfixed by: Jamie Beck (http://www.terabit.ca/)
-  // bugfixed by: Kevin van Zonneveld (http://kvz.io/)
-  // bugfixed by: Ben (http://benblume.co.uk/)
-  // bugfixed by: Codestar (http://codestarlive.com/)
+  // bugfixed by: Russell Walker (https://www.nbill.co.uk/)
+  // bugfixed by: Jamie Beck (https://www.terabit.ca/)
+  // bugfixed by: Kevin van Zonneveld (https://kvz.io/)
+  // bugfixed by: Ben (https://benblume.co.uk/)
+  // bugfixed by: Codestar (https://codestarlive.com/)
   // bugfixed by: idjem (https://github.com/idjem)
-  //    input by: DtTvB (http://dt.in.th/2008-09-16.string-length-in-bytes.html)
-  //    input by: Martin (http://www.erlenwiese.de/)
+  //    input by: DtTvB (https://dt.in.th/2008-09-16.string-length-in-bytes.html)
+  //    input by: Martin (https://www.erlenwiese.de/)
   //      note 1: We feel the main purpose of this function should be to ease
   //      note 1: the transport of data between php & js
   //      note 1: Aiming for PHP-compatibility, we have to translate objects to arrays
@@ -28,7 +28,9 @@ module.exports = function serialize(mixedValue) {
   //   example 3: serialize( {'ü': 'ü', '四': '四', '𠜎': '𠜎'})
   //   returns 3: 'a:3:{s:2:"ü";s:2:"ü";s:3:"四";s:3:"四";s:4:"𠜎";s:4:"𠜎";}'
 
-  var val, key, okey;
+  var val = void 0,
+      key = void 0,
+      okey = void 0;
   var ktype = '';
   var vals = '';
   var count = 0;
@@ -38,10 +40,10 @@ module.exports = function serialize(mixedValue) {
   };
 
   var _getType = function _getType(inp) {
-    var match;
-    var key;
-    var cons;
-    var types;
+    var match = void 0;
+    var key = void 0;
+    var cons = void 0;
+    var types = void 0;
     var type = typeof inp === 'undefined' ? 'undefined' : _typeof(inp);
 
     if (type === 'object' && !inp) {

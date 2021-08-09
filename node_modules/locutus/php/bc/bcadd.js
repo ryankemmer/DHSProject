@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function bcadd(leftOperand, rightOperand, scale) {
-  //  discuss at: http://locutus.io/php/bcadd/
+  //  discuss at: https://locutus.io/php/bcadd/
   // original by: lmeyrick (https://sourceforge.net/projects/bcmath-js/)
   //   example 1: bcadd('1', '2')
   //   returns 1: '3'
@@ -13,7 +13,9 @@ module.exports = function bcadd(leftOperand, rightOperand, scale) {
   var bc = require('../_helpers/_bc');
   var libbcmath = bc();
 
-  var first, second, result;
+  var first = void 0,
+      second = void 0,
+      result = void 0;
 
   if (typeof scale === 'undefined') {
     scale = libbcmath.scale;

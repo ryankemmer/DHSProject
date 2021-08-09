@@ -1,7 +1,9 @@
 /* Style the Image Used to Trigger the Modal */
 #myImg {
     padding-top: 30px;
-    cursor: pointer;
+    cursor: -moz-zoom-in;
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
     transition: 0.3s;
   }
 
@@ -134,4 +136,9 @@ span {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+}
+
+#zoom{
+   border:1px black solid;
+   box-shadow: 5px 5px 10px #1e1e1e;
 }

@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = function min() {
-  //  discuss at: http://locutus.io/php/min/
+  //  discuss at: https://locutus.io/php/min/
   // original by: Onno Marsman (https://twitter.com/onnomarsman)
   //  revised by: Onno Marsman (https://twitter.com/onnomarsman)
   // improved by: Jack
@@ -21,8 +21,8 @@ module.exports = function min() {
   //   example 6: min([2, 4, 8], [2, 5, 7])
   //   returns 6: [2, 4, 8]
 
-  var ar;
-  var retVal;
+  var ar = void 0;
+  var retVal = void 0;
   var i = 0;
   var n = 0;
   var argv = arguments;
@@ -32,9 +32,9 @@ module.exports = function min() {
       return obj;
     }
     var ar = [];
-    for (var i in obj) {
-      if (obj.hasOwnProperty(i)) {
-        ar.push(obj[i]);
+    for (var _i in obj) {
+      if (obj.hasOwnProperty(_i)) {
+        ar.push(obj[_i]);
       }
     }
     return ar;
