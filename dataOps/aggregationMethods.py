@@ -286,11 +286,11 @@ def ELICE(predictions, groundtruth, trap_true, trap_false):
 #
 
 #load json file
-with open('12-02-2020Test2-1.json') as f:
+with open('08-05-2021Test4_3_1.json') as f:
     data = json.load(f)
 
 #specify ground truth for each question
-groundtruth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
+groundtruth = [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
 
 #honeypots (indexed starting at 0)
 honeypots = [2,3,14,15]
