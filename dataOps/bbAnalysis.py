@@ -5,8 +5,8 @@ import datetime
 import sys
 import numpy
 
-url = 'mongodb://localhost:27017/'
-#url = 'mongodb://localhost:27014/'
+#url = 'mongodb://localhost:27017/'
+url = 'mongodb://localhost:27014/'
 
 dbase = sys.argv[1]
 print("database: " + str(dbase))
@@ -42,3 +42,6 @@ for user in usersCol.find():
         print(i," = LOOP ENTERED")
         response = responsesCol.find_one({"user": userName, "question": i})
         print(response["boundingBox"])
+
+        if(response["boundingBox"]["startX"] != None):
+            print("")
