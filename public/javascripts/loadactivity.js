@@ -100,22 +100,34 @@ function renderQuestion(userID, sequence, duration) {
     img.src = exercise_img_src;
 
     canvas.addEventListener("mousemove", function mouseMoveZoom(e){
+
+
+   zoomCtx.fillStyle = "white";
+   //zoomCtx.clearRect(0,0, zoom.width, zoom.height);
+   //zoomCtx.fillStyle = "transparent";
+   zoomCtx.fillRect(0,0, zoom.width, zoom.height);
+   zoomCtx.drawImage(img, e.x-50, e.y-50, 250, 250, 0,0, 400, 200);
+   //console.log(zoom.style);
+   zoom.style.top = e.pageY + 5 + "px"
+   zoom.style.left = e.pageX + 5 + "px"
+   zoom.style.display = "block";
+
       //console.log(e);
-      zoomCtx.fillStyle = "white";
+      //zoomCtx.fillStyle = "white";
       //zoomCtx.clearRect(0,0, zoom.width, zoom.height);
       //zoomCtx.fillStyle = "transparent";
-      zoomCtx.fillRect(0,0, zoom.width, zoom.height);
-      zoomCtx.drawImage(img, e.x, e.y, 25, 25, 0,0, 100, 100);
+      //zoomCtx.fillRect(0,0, zoom.width, zoom.height);
+      //zoomCtx.drawImage(img, e.x, e.y, 500, 500, 0,0, 100, 100);
       //console.log(zoom.style);
-      zoom.style.top = e.pageY + 5 + "px"
-      zoom.style.left = e.pageX + 5 + "px"
-      //zoom.style.bottom = e.pageY + 5 + "px"
-      //zoom.style.right = e.pageX - 10 + "px"
+      //zoom.style.top = e.pageY + 10 + "px"
+      //zoom.style.left = e.pageX + 10 + "px"
+      //zoom.style.bottom = e.pageY + 100 + "px"
+      //zoom.style.right = e.pageX + 100 + "px"
 
-      zoom.style.display = "block";
+      //zoom.style.display = "block";
 
-      mousex = e.pageX - this.offsetLeft;
-      mousey = e.pageY - this.offsetTop;
+      //mousex = e.pageX + 1;
+      //mousey = e.pageY + 1;
 
     });
 

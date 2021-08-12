@@ -1,0 +1,16 @@
+<html>
+<title>Testing</title>
+    <canvas id="main" width="200" height="200" style="border:1px solid     #c3c3c3;">
+    Error: Browser does not support canvas element.
+    </canvas>
+    <script type="text/javascript">
+
+        var main = document.getElementById("main");
+        var render = main.getContext("2d");
+        main.width = 200;
+        main.height = 200;
+        main.style.left = "40px";
+        main.style.top = "100px";
+        main.style.position = "absolute";
+    </script>
+</html>
