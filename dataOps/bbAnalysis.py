@@ -18,10 +18,10 @@ responsesCol = db['responses']
 percentArray = []
 dataArray = []
 
-bbStartX = []
-
-
-
+bbStartX = [400,300,150,400,350,0,100,150,50,0,700,0,0]
+bbStartY = [39,699,700,449,500,550,699,339,50,699,400,339,189]
+bbEndX = [715,807,408,907,608,258,607,465,308,507,958,315,315]
+bbEndY = [300,1000,850,750,650,700,1000,600,200,1000,550,600,450]
 
 #specify ground truth for each question
 groundtruth = [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
@@ -31,7 +31,7 @@ for user in usersCol.find():
     userName = user['user']
     userResponse = responsesCol.find({"user":userName})
     userBBCount = 0
-
+    j = -1
     #print(userResponse["q1"])
     print(userName)
     demographic = user["surveyResults"]
@@ -47,14 +47,15 @@ for user in usersCol.find():
         response = responsesCol.find_one({"user": userName, "question": i})
         print(response["boundingBox"])
 
-        if(response["boundingBox"]["startX"] != None):
-            if(response["boundingBox"]["w"] < 0 || response["boundingBox"]["h"] < 0):
+        if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
+            j = j+1
+            if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
                 userStartX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
                 userStartY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
                 userEndX = response["boundingBox"]["startX"]
                 userEndY = response["boundingBox"]["startY"]
 
-                if(userStartX <= bbCoordinates[j]+10 or userStartX >= bbCoordinates[j]-10 and userEndX <= bbCoordinates[j]+10 or userEndX >= bbCoordinates[j]-10 and userStartY <= bbCoordinates[j]+10 or userStartY >= bbCoordinates[j]-10 and userEndY <= bbCoordinates[j]+10 or userEndY >= bbCoordinates[j]-10):
+                if(userStartX <= bbStartX[j]+10 or userStartX >= bbStartX[j]-10 and userEndX <= bbEndX[j]+10 or userEndX >= bbEndX[j]-10 and userStartY <= bbStartY[j]+10 or userStartY >= bbStartY[j]-10 and userEndY <= bbEndY[j]+10 or userEndY >= bbEndY[j]-10):
                     userBBCount = userBBCount + 1
             else:
                 userStartX = response["boundingBox"]["startX"]
@@ -62,7 +63,7 @@ for user in usersCol.find():
                 userEndX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
                 userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
 
-                if(userStartX <= bbStartX[j]+10 or userStartX >= bbStartX[j]-10 and userEndX <= bbEndX[j]+10 or userEndX >= bbEndX[j]-10 and userStartY <= bbStartY[j]+10 or userStartY >= bbStartY[j]-10 and userEndY <= bbEndY[j]+10 or userEndY >= bbEndY[j]-10):
+                if((userStartX <= bbStartX[j]+10 or userStartX >= bbStartX[j]-10) and (userEndX <= bbEndX[j]+10 or userEndX >= bbEndX[j]-10) and (userStartY <= bbStartY[j]+10 or userStartY >= bbStartY[j]-10) and (userEndY <= bbEndY[j]+10 or userEndY >= bbEndY[j]-10)):
                     userBBCount = userBBCount + 1
 
     print(bbCount)
