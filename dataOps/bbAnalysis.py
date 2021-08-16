@@ -47,7 +47,7 @@ for user in usersCol.find():
         response = responsesCol.find_one({"user": userName, "question": i})
         print(response["boundingBox"])
 
-        if(i > 10):
+        if(i > 11):
             if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
 
                 if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
