@@ -47,24 +47,25 @@ for user in usersCol.find():
         response = responsesCol.find_one({"user": userName, "question": i})
         print(response["boundingBox"])
 
-        if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
-            j = j+1
-            if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
-                userStartX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
-                userStartY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
-                userEndX = response["boundingBox"]["startX"]
-                userEndY = response["boundingBox"]["startY"]
+        if(i > 10):
+            if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
 
-                if(userStartX <= bbStartX[j]+10 or userStartX >= bbStartX[j]-10 and userEndX <= bbEndX[j]+10 or userEndX >= bbEndX[j]-10 and userStartY <= bbStartY[j]+10 or userStartY >= bbStartY[j]-10 and userEndY <= bbEndY[j]+10 or userEndY >= bbEndY[j]-10):
-                    userBBCount = userBBCount + 1
-            else:
-                userStartX = response["boundingBox"]["startX"]
-                userStartY = response["boundingBox"]["startY"]
-                userEndX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
-                userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
+                if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
+                    userStartX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
+                    userStartY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
+                    userEndX = response["boundingBox"]["startX"]
+                    userEndY = response["boundingBox"]["startY"]
 
-                if((userStartX <= bbStartX[j]+10 or userStartX >= bbStartX[j]-10) and (userEndX <= bbEndX[j]+10 or userEndX >= bbEndX[j]-10) and (userStartY <= bbStartY[j]+10 or userStartY >= bbStartY[j]-10) and (userEndY <= bbEndY[j]+10 or userEndY >= bbEndY[j]-10)):
-                    userBBCount = userBBCount + 1
+                    if(userStartX <= bbStartX[j]+10 or userStartX >= bbStartX[j]-10 and userEndX <= bbEndX[j]+10 or userEndX >= bbEndX[j]-10 and userStartY <= bbStartY[j]+10 or userStartY >= bbStartY[j]-10 and userEndY <= bbEndY[j]+10 or userEndY >= bbEndY[j]-10):
+                        userBBCount = userBBCount + 1
+                else:
+                    userStartX = response["boundingBox"]["startX"]
+                    userStartY = response["boundingBox"]["startY"]
+                    userEndX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
+                    userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
+
+                    if((userStartX <= bbStartX[j]+10 or userStartX >= bbStartX[j]-10) and (userEndX <= bbEndX[j]+10 or userEndX >= bbEndX[j]-10) and (userStartY <= bbStartY[j]+10 or userStartY >= bbStartY[j]-10) and (userEndY <= bbEndY[j]+10 or userEndY >= bbEndY[j]-10)):
+                        userBBCount = userBBCount + 1
 
     print(bbCount)
     usersBB.append(bbCount)
