@@ -35,11 +35,11 @@ for user in usersCol.find():
     #print(userResponse["q1"])
     print(userName)
     demographic = user["surveyResults"]
-    fnr = 0
+    #fnr = 0
     score = user['score']
-    if(score != "None"):
-        print(score)
-        percentArray.append(score*100/24)
+    #if(score != "None"):
+        #print(score)
+        #percentArray.append(score*100/24)
 
     for i in range(1,25):
         print(i," = LOOP ENTERED")
@@ -47,7 +47,7 @@ for user in usersCol.find():
         response = responsesCol.find_one({"user": userName, "question": i})
         print(response["boundingBox"])
 
-        if(i > 10):
+        if(i > 11):
             if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
 
                 if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
