@@ -10,7 +10,7 @@ url = 'mongodb://localhost:27014/'
 
 dbase = sys.argv[1]
 print("database: " + str(dbase))
-
+usersBB = []
 client = pymongo.MongoClient(url)
 db = client[dbase]
 usersCol = db['users']
@@ -18,10 +18,10 @@ responsesCol = db['responses']
 percentArray = []
 dataArray = []
 
-bbStartX = [400,300,150,400,350,0,100,150,50,0,700,0,0]
-bbStartY = [39,699,700,449,500,550,699,339,50,699,400,339,189]
-bbEndX = [715,807,408,907,608,258,607,465,308,507,958,315,315]
-bbEndY = [300,1000,850,750,650,700,1000,600,200,1000,550,600,450]
+bbStartX = [200,150,75,200,175,0,50,75,25,0,350,0,0]
+bbStartY = [20,350,350,225,250,275,350,170,25,350,200,170,95]
+bbEndX = [358,404,204,454,304,129,304,465,233,154,254,479,158,158]
+bbEndY = [150,500,425,375,325,350,500,300,100,500,275,300,225]
 
 #specify ground truth for each question
 groundtruth = [0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1]
@@ -67,5 +67,5 @@ for user in usersCol.find():
                     if((userStartX <= bbStartX[j-11]+10 or userStartX >= bbStartX[j-11]-10) and (userEndX <= bbEndX[j-11]+10 or userEndX >= bbEndX[j-11]-10) and (userStartY <= bbStartY[j-11]+10 or userStartY >= bbStartY[j-11]-10) and (userEndY <= bbEndY[j-11]+10 or userEndY >= bbEndY[j-11]-10)):
                         userBBCount = userBBCount + 1
 
-    print(bbCount)
-    usersBB.append(bbCount)
+    print("User correct BB = "+str(userBBCount))
+    usersBB.append(userBBCount)
