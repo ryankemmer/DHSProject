@@ -99,7 +99,8 @@ function renderQuestion(userID, sequence, duration) {
     var img = new Image();
     img.src = exercise_img_src;
 
-    canvas.addEventListener("mousemove", function mouseMoveZoom(e){
+//ZOOM IN FEATURE CODE (WORK IN PROGRESS)
+  canvas.addEventListener("mousemove", function mouseMoveZoom(e){
 
 
    zoomCtx.fillStyle = "white";
@@ -134,6 +135,7 @@ function renderQuestion(userID, sequence, duration) {
     canvas.addEventListener("mouseout", function(){
         zoom.style.display = "none";
     });
+
 
     // TODO: Add canvas in zoomed-in image
     canvas.ondblclick = function () {

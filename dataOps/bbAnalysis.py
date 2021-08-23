@@ -42,7 +42,7 @@ for user in usersCol.find():
         #percentArray.append(score*100/24)
 
     for i in range(1,25):
-        print(i," = LOOP ENTERED")
+        #print(i," = LOOP ENTERED")
 
         response = responsesCol.find_one({"user": userName, "question": i})
         print(response["boundingBox"])
