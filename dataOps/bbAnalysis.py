@@ -56,7 +56,7 @@ for user in usersCol.find():
                     userEndX = response["boundingBox"]["startX"]
                     userEndY = response["boundingBox"]["startY"]
 
-                    if(userStartX <= bbStartX[j-11]+10 or userStartX >= bbStartX[j-11]-10 and userEndX <= bbEndX[j-11]+10 or userEndX >= bbEndX[j-11]-10 and userStartY <= bbStartY[j-11]+10 or userStartY >= bbStartY[j-11]-10 and userEndY <= bbEndY[j-11]+10 or userEndY >= bbEndY[j-11]-10):
+                    if(userStartX <= bbStartX[j-12]+10 or userStartX >= bbStartX[j-12]-10 and userEndX <= bbEndX[j-12]+10 or userEndX >= bbEndX[j-12]-10 and userStartY <= bbStartY[j-12]+10 or userStartY >= bbStartY[j-12]-10 and userEndY <= bbEndY[j-12]+10 or userEndY >= bbEndY[j-12]-10):
                         userBBCount = userBBCount + 1
                 else:
                     userStartX = response["boundingBox"]["startX"]
@@ -64,7 +64,7 @@ for user in usersCol.find():
                     userEndX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
                     userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
 
-                    if((userStartX <= bbStartX[j-11]+10 or userStartX >= bbStartX[j-11]-10) and (userEndX <= bbEndX[j-11]+10 or userEndX >= bbEndX[j-11]-10) and (userStartY <= bbStartY[j-11]+10 or userStartY >= bbStartY[j-11]-10) and (userEndY <= bbEndY[j-11]+10 or userEndY >= bbEndY[j-11]-10)):
+                    if((userStartX <= bbStartX[j-12]+10 or userStartX >= bbStartX[j-12]-10) and (userEndX <= bbEndX[j-12]+10 or userEndX >= bbEndX[j-12]-10) and (userStartY <= bbStartY[j-12]+10 or userStartY >= bbStartY[j-12]-10) and (userEndY <= bbEndY[j-12]+10 or userEndY >= bbEndY[j-12]-10)):
                         userBBCount = userBBCount + 1
 
     print("User correct BB = "+str(userBBCount))
