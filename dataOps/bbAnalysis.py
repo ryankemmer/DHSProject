@@ -49,6 +49,7 @@ for user in usersCol.find():
         print(response["boundingBox"])
 
         if(i > 11):
+            j = j+1
             if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
                 totalBBCount = totalBBCount + 1
                 if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
@@ -67,8 +68,9 @@ for user in usersCol.find():
                     userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
 
                     if((userStartX <= bbStartX[j-12]+10 or userStartX >= bbStartX[j-12]-10) and (userEndX <= bbEndX[j-12]+10 or userEndX >= bbEndX[j-12]-10) and (userStartY <= bbStartY[j-12]+10 or userStartY >= bbStartY[j-12]-10) and (userEndY <= bbEndY[j-12]+10 or userEndY >= bbEndY[j-12]-10)):
-                        print("BB Coordinate : " + str(bbStartY[j-12])) 
+                        print("BB Coordinate : " + str(bbStartY[j-12]))
                         userBBCount = userBBCount + 1
+
     print("Total BB = "+str(totalBBCount))
     print("User correct BB = "+str(userBBCount))
     usersBB.append(userBBCount)
