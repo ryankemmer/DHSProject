@@ -1,5 +1,5 @@
 import pymongo
-import ison
+import json
 import time
 import datetime
 import sys
@@ -32,7 +32,7 @@ for user in usersCol.find():
     userResponse = responsesCol.find({"user":userName})
     userBBCount = 0
     totalBBCount = 0
-    i = -1
+
     #print(userResponse["q1"])
     print(userName)
     demographic = user["surveyResults"]
@@ -49,7 +49,7 @@ for user in usersCol.find():
         print(response["boundingBox"])
 
         if(i > 11):
-            i = i+1
+            
             if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
                 totalBBCount = totalBBCount + 1
                 if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
