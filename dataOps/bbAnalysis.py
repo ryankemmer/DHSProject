@@ -58,10 +58,10 @@ for user in usersCol.find():
                     userEndX = response["boundingBox"]["startX"]
                     userEndY = response["boundingBox"]["startY"]
 
-                    if((userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10):
+                    if(userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10):
                         if(userEndX <= bbEndX[i-12]+10 or userEndX >= bbEndX[i-12]-10):
                             if(userStartY <= bbStartY[i-12]+10 or userStartY >= bbStartY[i-12]-10):
-                                if(userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10)):
+                                if(userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10):
                                     print("BB X start Coordinate : " + str(bbStartX[i-12]))
                                     print("BB Y start Coordinate : " + str(bbStartY[i-12]))
                                     print("BB X end Coordinate : " + str(bbEndX[i-12]))
@@ -73,10 +73,10 @@ for user in usersCol.find():
                     userEndX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
                     userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
 
-                    if((userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10):
+                    if(userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10):
                         if(userEndX <= bbEndX[i-12]+10 or userEndX >= bbEndX[i-12]-10):
                             if(userStartY <= bbStartY[i-12]+10 or userStartY >= bbStartY[i-12]-10):
-                                if(userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10)):
+                                if(userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10):
                                     print("BB X start Coordinate : " + str(bbStartX[i-12]))
                                     print("BB Y start Coordinate : " + str(bbStartY[i-12]))
                                     print("BB X end Coordinate : " + str(bbEndX[i-12]))
