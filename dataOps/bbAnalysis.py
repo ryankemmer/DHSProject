@@ -74,7 +74,6 @@ for user in usersCol.find():
                     userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
 
                     if(userStartX <= bbStartX[i-12]+10 and userStartX >= bbStartX[i-12]-10):
-                            print()
                         if(userEndX <= bbEndX[i-12]+10 and userEndX >= bbEndX[i-12]-10):
                             if(userStartY <= bbStartY[i-12]+10 and userStartY >= bbStartY[i-12]-10):
                                 if(userEndY <= bbEndY[i-12]+10 and userEndY >= bbEndY[i-12]-10):
