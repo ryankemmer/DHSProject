@@ -53,8 +53,8 @@ for user in usersCol.find():
             if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
                 totalBBCount = totalBBCount + 1
                 if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
-                    userStartX = response["boundingBox"]["startX"] - response["boundingBox"]["w"]
-                    userStartY = response["boundingBox"]["startY"] - response["boundingBox"]["h"]
+                    userStartX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
+                    userStartY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
                     userEndX = response["boundingBox"]["startX"]
                     userEndY = response["boundingBox"]["startY"]
 
