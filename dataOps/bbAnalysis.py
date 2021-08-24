@@ -49,7 +49,7 @@ for user in usersCol.find():
         print(response["boundingBox"])
 
         if(i > 11):
-            
+
             if(response["boundingBox"]["startX"] != None and response["boundingBox"]["startY"] != None and response["boundingBox"]["w"] != None):
                 totalBBCount = totalBBCount + 1
                 if(response["boundingBox"]["w"] < 0 or  response["boundingBox"]["h"] < 0):
@@ -58,24 +58,30 @@ for user in usersCol.find():
                     userEndX = response["boundingBox"]["startX"]
                     userEndY = response["boundingBox"]["startY"]
 
-                    if(userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10 and userEndX <= bbEndX[i-12]+10 or userEndX >= bbEndX[i-12]-10 and userStartY <= bbStartY[i-12]+10 or userStartY >= bbStartY[i-12]-10 and userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10):
-                        print("BB X start Coordinate : " + str(bbStartX[i-12]))
-                        print("BB Y start Coordinate : " + str(bbStartY[i-12]))
-                        print("BB X end Coordinate : " + str(bbEndX[i-12]))
-                        print("BB Y end Coordinate : " + str(bbEndY[i-12]))
-                        userBBCount = userBBCount + 1
+                    if((userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10):
+                        if(userEndX <= bbEndX[i-12]+10 or userEndX >= bbEndX[i-12]-10):
+                            if(userStartY <= bbStartY[i-12]+10 or userStartY >= bbStartY[i-12]-10):
+                                if(userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10)):
+                                    print("BB X start Coordinate : " + str(bbStartX[i-12]))
+                                    print("BB Y start Coordinate : " + str(bbStartY[i-12]))
+                                    print("BB X end Coordinate : " + str(bbEndX[i-12]))
+                                    print("BB Y end Coordinate : " + str(bbEndY[i-12]))
+                                    userBBCount = userBBCount + 1
                 else:
                     userStartX = response["boundingBox"]["startX"]
                     userStartY = response["boundingBox"]["startY"]
                     userEndX = response["boundingBox"]["startX"] + response["boundingBox"]["w"]
                     userEndY = response["boundingBox"]["startY"] + response["boundingBox"]["h"]
 
-                    if((userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10) and (userEndX <= bbEndX[i-12]+10 or userEndX >= bbEndX[i-12]-10) and (userStartY <= bbStartY[i-12]+10 or userStartY >= bbStartY[i-12]-10) and (userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10)):
-                        print("BB X start Coordinate : " + str(bbStartX[i-12]))
-                        print("BB Y start Coordinate : " + str(bbStartY[i-12]))
-                        print("BB X end Coordinate : " + str(bbEndX[i-12]))
-                        print("BB Y end Coordinate : " + str(bbEndY[i-12]))
-                        userBBCount = userBBCount + 1
+                    if((userStartX <= bbStartX[i-12]+10 or userStartX >= bbStartX[i-12]-10):
+                        if(userEndX <= bbEndX[i-12]+10 or userEndX >= bbEndX[i-12]-10):
+                            if(userStartY <= bbStartY[i-12]+10 or userStartY >= bbStartY[i-12]-10):
+                                if(userEndY <= bbEndY[i-12]+10 or userEndY >= bbEndY[i-12]-10)):
+                                    print("BB X start Coordinate : " + str(bbStartX[i-12]))
+                                    print("BB Y start Coordinate : " + str(bbStartY[i-12]))
+                                    print("BB X end Coordinate : " + str(bbEndX[i-12]))
+                                    print("BB Y end Coordinate : " + str(bbEndY[i-12]))
+                                    userBBCount = userBBCount + 1
 
     print("Total BB = "+str(totalBBCount))
     print("User correct BB = "+str(userBBCount))
