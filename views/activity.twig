@@ -33,12 +33,15 @@
         <h1 class="py-2">Exercise {{ sequence }} of 24</h1>
 
         <p class="py-2 text-danger" id="errorText1"> {{ error }} </p>
-        <p><b>Can you find the below pickaxe in the Top View image?</b></p>
+        <!---<p><b>Can you find one of the objects in the Top View image?</b></p>-->
 
-        <img id="img2find">
+        <img id="img2find" style="visibility:hidden;">
 
 
         <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
+
+        <p>View Target Objects</p>
+        <button id="targetobjbutton"type="button" name="button">Target Objects</button>
 
         <p><b>NOTE: Double click to enlarge images</b></p>
         <div class="container mainContainer">
@@ -56,21 +59,22 @@
                   </div>
                   <div class="img-with-text">
                     <canvas id="canvas"></canvas>
-
-                    <canvas id="zoom" width="400" height="200" style="position:absolute; top:20; left:20; display:none"></canvas>
                     <p style="text-align:center;font-size:150%;"><b>Top View</b></p>
                   </div>
                 </div>
 
                 <div class="col-sm answeractivity">
 
-                    <p>Is the object in the Top View image?</p>
+                    <p>Which of the target objects are present in the Top View image?</p>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary" id="option11">
-                            <input type="radio" name="q1" autocomplete="off"> Yes
+                        <label class="btn btn-secondary" >
+                            <input type="radio" id="option11" name="q1" autocomplete="off"> Pickaxe
                         </label>
-                        <label class="btn btn-secondary" id="option12">
-                            <input type="radio" name="q1" autocomplete="off"> No
+                        <label class="btn btn-secondary" >
+                            <input type="radio" id="option12" name="q1" autocomplete="off"> Hat
+                        </label>
+                        <label class="btn btn-secondary" >
+                            <input type="radio" id="option13" name="q1" autocomplete="off"> Wrench
                         </label>
                     </div>
                     <div id="popup" style="color: blue;"> </div>
@@ -119,8 +123,7 @@
     capText = document.getElementById("caption");
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
-    var zoom = document.getElementById("zoom");
-    var zoomCtx = zoom.getContext("2d");
+
     var imgWidth = 500;
     var imgHeight = 500;
     ctx.canvas.width = imgWidth;

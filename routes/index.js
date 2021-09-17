@@ -9,7 +9,7 @@ const { response } = require('express');
 var url = 'mongodb://localhost:27017/'; //for server tests
 //var url = 'mongodb://localhost:27014/'; //for local tests
 
-var datab = 'Test4_3_1'
+var datab = 'Test4_3_2'
 var userID = null
 let users = [];
 
@@ -214,6 +214,8 @@ router.post('/activity/:userID/data', function(req,res,next){
 
     console.log("GROUP 4 DATA: ");
     console.log(group[4]);
+    console.log("GROUP 1 DATA: ");
+    console.log(group[1]);
     var item = {
       "user": userID,
       "question": question,

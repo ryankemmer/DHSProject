@@ -21,45 +21,39 @@ function drawCanvas(imageSource) {
     imageObj = new Image();
     imageObj.onload = function () {
         ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
-        zoomCtx.drawImage(imageObj, e.x, e.y, 200, 100, 0,0, 400, 200);
     };
     imageObj.src = imageSource;
     canvas.addEventListener('mousedown', mouseDown, false);
     canvas.addEventListener('mouseup', mouseUp, false);
     canvas.addEventListener('mousemove', mouseMove, false);
-    canvas.addEventListener('mousemove', mouseMoveZoom, false);
 }
-
 function mouseDown(e) {
-    rect.startX = e.pageX - this.offsetLeft;
-    rect.startY = e.pageY - this.offsetTop;
-    drag = true;
-    document.getElementById('popup').style.visibility = "hidden";
+  rect.startX = e.offsetX;
+  rect.startY = e.offsetY;
+  drag = true;
+  document.getElementById('popup').style.visibility = "hidden";
 }
 
 function mouseUp() {
     drag = false;
 }
-function mouseMoveZoom(e){
 
-}
 function mouseMove(e) {
-    mousex = e.pageX - this.offsetLeft;
-    mousey = e.pageY - this.offsetTop;
-    if (drag) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
-        ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
-        ctx.beginPath();
-        rect.w = mousex - rect.startX;
-        rect.h = mousey - rect.startY;
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
-    }
-    //zoomCtx.drawImage(imageObj, e.x, e.y, 200, 100, 0,0, 400, 200);
+  mousex = e.offsetX;
+  mousey = e.offsetY;
+  if(drag){
+      ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
+      ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
+      ctx.beginPath();
+      rect.w = mousex - rect.startX;
+      rect.h = mousey - rect.startY;
+      ctx.strokeStyle = 'red';
+      ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+      ctx.closePath();
+  }
     //Output
     $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
 }
-
 
 
 function renderQuestion(userID, sequence, duration) {
@@ -76,7 +70,9 @@ function renderQuestion(userID, sequence, duration) {
       ex_img_left = "/images/4_3_1_X-Images/image-x_" + sequence + ".png";
       ex_img_right = "/images/4_3_1_Y-Images/image-y_" + sequence + ".png";
     }
-    obj_img = "/images/objects/pickaxe.png";
+
+    obj_img = "/images/objects/targetobjects.png";
+
     if (duration > 0) {
         drawCanvas(exercise_img_src);
         document.getElementById("img2find_left").src = ex_img_left;
@@ -96,48 +92,15 @@ function renderQuestion(userID, sequence, duration) {
 
     var w = window.innerWidth;
 
-    var img = new Image();
-    img.src = exercise_img_src;
-
-//ZOOM IN FEATURE CODE (WORK IN PROGRESS)
-  canvas.addEventListener("mousemove", function mouseMoveZoom(e){
-
-
-   zoomCtx.fillStyle = "white";
-   //zoomCtx.clearRect(0,0, zoom.width, zoom.height);
-   //zoomCtx.fillStyle = "transparent";
-   zoomCtx.fillRect(0,0, zoom.width, zoom.height);
-   zoomCtx.drawImage(img, e.x-50, e.y-50, 250, 250, 0,0, 400, 200);
-   //console.log(zoom.style);
-   zoom.style.top = e.pageY + 5 + "px"
-   zoom.style.left = e.pageX + 5 + "px"
-   zoom.style.display = "block";
-
-      //console.log(e);
-      //zoomCtx.fillStyle = "white";
-      //zoomCtx.clearRect(0,0, zoom.width, zoom.height);
-      //zoomCtx.fillStyle = "transparent";
-      //zoomCtx.fillRect(0,0, zoom.width, zoom.height);
-      //zoomCtx.drawImage(img, e.x, e.y, 500, 500, 0,0, 100, 100);
-      //console.log(zoom.style);
-      //zoom.style.top = e.pageY + 10 + "px"
-      //zoom.style.left = e.pageX + 10 + "px"
-      //zoom.style.bottom = e.pageY + 100 + "px"
-      //zoom.style.right = e.pageX + 100 + "px"
-
-      //zoom.style.display = "block";
-
-      //mousex = e.pageX + 1;
-      //mousey = e.pageY + 1;
-
-    });
-
-    canvas.addEventListener("mouseout", function(){
-        zoom.style.display = "none";
-    });
-
 
     // TODO: Add canvas in zoomed-in image
+
+    targetobjbutton.onclick = function () {
+
+      modal.style.display = "block";
+      modalImg.src = obj_img;
+      modalImg.width = '75%';
+    }
     canvas.ondblclick = function () {
         modal.style.display = "block";
         modalImg.src = exercise_img_src;
@@ -209,7 +172,7 @@ function renderQuestion(userID, sequence, duration) {
     //
     d3.select(".btn-outline-success").on("click", function () {
       console.log("BUTTON PRESSED");
-        var q1
+        var q1 = [];
         var q2
         var q3
 
@@ -233,18 +196,28 @@ function renderQuestion(userID, sequence, duration) {
         var radio11 = document.getElementById('option11')
         var radio12 = document.getElementById('option12')
 
-        if (radio11.classList.contains('active') && rect.w != null && rect.h != null) {
-            q1 = 1
-        }else if (radio11.classList.contains('active') && timeLeft <=0){
+        if (option11.checked){
+            q1[0] = 1;
+        }
+        else{
+            q1[0] = 0;
+        }
+
+        if(option12.checked){
           rect.X = null
           rect.Y = null
           rect.w = null
           rect.h = null
+          q1[1] = 1;
 
           document.getElementById("popup").innerText = "";
         }
-        else if (radio12.classList.contains('active')) {
-            q1 = 0
+        else{
+            q1[1] = 0;
+        }
+
+        if (option13.checked) {
+            q1[2] = 1
 
             //if answer is no, dont send x y data
             rect.X = null
@@ -252,9 +225,11 @@ function renderQuestion(userID, sequence, duration) {
             rect.w = null
             rect.h = null
 
-        } else {
-            q1 = -2
         }
+        else{
+            q1[2] = 0;
+        }
+        console.log(q1)
         //
         //Question 2
         //
