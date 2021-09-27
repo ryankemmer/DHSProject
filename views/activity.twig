@@ -40,7 +40,7 @@
 
         <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
 
-        <p>View Target Objects</p>
+        <p>Click here to view target objects</p>
         <button id="targetobjbutton"type="button" name="button">Target Objects</button>
 
         <p><b>NOTE: Double click to enlarge images</b></p>
@@ -67,24 +67,38 @@
 
                     <p>Which of the target objects are present in the Top View image?</p>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary" >
-                            <input type="radio" id="option11" name="q1" autocomplete="off"> Pickaxe
+                        <label class="btn btn-secondary" id="option11">
+                            <input type="radio" name="q1" autocomplete="off"> Cowboy Hat
                         </label>
-                        <label class="btn btn-secondary" >
-                            <input type="radio" id="option12" name="q1" autocomplete="off"> Hat
+                        <label class="btn btn-secondary" id="option12">
+                            <input type="radio" name="q1" autocomplete="off"> Headphones
                         </label>
-                        <label class="btn btn-secondary" >
-                            <input type="radio" id="option13" name="q1" autocomplete="off"> Wrench
+                        <label class="btn btn-secondary" id="option13">
+                            <input type="radio" name="q1" autocomplete="off"> Pickaxe
                         </label>
+
+                        <div>
+                        <label class="btn btn-secondary"  data-toggle="buttons" id="option14" style="margin:5px;">
+                          <input type="radio" name="q1" autocomplete="off"> No
+                        </label>
+                        </div>
+
                     </div>
+
+
                     <div id="popup" style="color: blue;"> </div>
 
                     <p id="value-simple" style="visibility: hidden;"></p>
-                    <p>Please rate the confidence in your decision.</p>
-                    <div id="slider-simple"></div>
 
+                    <p>Please rate the confidence in your decision:</p>
                     <br>
-                    <p>What do you think the majority of people responded?</p>
+                    <p>Not confident : 0 - 25%</p>
+                    <p>Somehwat confident: 26 - 50%</p>
+                    <p>Very Confident: 51 - 75%</p>
+                    <p>Extremely Confident: 76 - 10%</p>
+                    <div id="slider-simple"></div>
+                    <br>
+                    <p>Do you think the majority of the other participants could locate one of the target objects in the image?</p>
 
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-secondary" id="option21">
@@ -94,6 +108,8 @@
                             <input type="radio" name="q3" autocomplete="off"> No
                         </label>
                     </div>
+
+
                     <form id="subForm" action="/activity/{{ userID }}/" method="POST">
                         <p class="py-2 text-danger" id="errorText2"> {{ error }} </p>
                         <input type="submit" class="btn btn-outline-success" id="submitButton" value="Submit">
@@ -115,38 +131,47 @@
 </div>
 
 <script>
-    var duration = '{{ time }}'
-    duration = duration - 1
-    var userID = '{{ userID }}';
-    var question = '{{ question }}';
-    display = document.querySelector('#time')
-    capText = document.getElementById("caption");
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-
-    var imgWidth = 500;
-    var imgHeight = 500;
-    ctx.canvas.width = imgWidth;
-    ctx.canvas.height = imgHeight;
-    var rect = {}; // Properties: startX, startY, w, h
-    rect.startX = null;
-    rect.startY = null;
-    rect.w = null;
-    rect.h = null;
-    var drag = false;
-    var imageObj = null;
+var duration = '{{ time }}'
+duration = duration - 1
+var userID = '{{ userID }}';
+var question = '{{ question }}';
+display = document.querySelector('#time')
+capText = document.getElementById("caption");
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var imgWidth = 500;
+var imgHeight = 500;
+ctx.canvas.width = imgWidth;
+ctx.canvas.height = imgHeight;
+var rect = {}; // Properties: startX, startY, w, h
+rect.startX = null;
+rect.startY = null;
+rect.w = null;
+rect.h = null;
+var drag = false;
+var imageObj = null;
 
 
     // Popup text when "Yes" selected
-    var yesButon = document.getElementById("option11");
-    var noButton = document.getElementById("option12");
-    yesButon.onclick = function (){
-        document.getElementById("popup").innerText = "Please draw a bounding box on the image around the pickaxe.";
+    var yesPickaxeButon = document.getElementById("option11");
+    var yesHatButon = document.getElementById("option12");
+    var yesWrenchButon = document.getElementById("option13");
+    var noButton = document.getElementById("option14");
+
+    yesPickaxeButon.onclick = function (){
+        document.getElementById("popup").innerText = "Please identify the object on the image.";
+    }
+    yesHatButon.onclick = function(){
+        document.getElementById("popup").innerText = "Please identify the object on the image.";
+    }
+    yesWrenchButon.onclick = function(){
+        document.getElementById("popup").innerText = "Please identify the object on the image.";
     }
     noButton.onclick = function () {
         document.getElementById("popup").innerText = "";
         document.getElementById("output").innerText = "";
     }
+
     window.onload = function () {
         if (duration <= 0) {
             document.getElementById("popup").innerText = "";
@@ -161,6 +186,18 @@
 
 
 </script>
+<style>
+        .tab1 {
+            tab-size: 2;
+        }
 
+        .tab2 {
+            tab-size: 4;
+        }
+
+        .tab4 {
+            tab-size: 8;
+        }
+    </style>
 </body>
 </html>

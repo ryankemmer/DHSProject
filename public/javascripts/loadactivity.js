@@ -50,6 +50,9 @@ function mouseMove(e) {
       ctx.strokeStyle = 'red';
       ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
       ctx.closePath();
+
+
+
   }
     //Output
     $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
@@ -57,19 +60,11 @@ function mouseMove(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    var x = parseInt(sequence)+13;
-    console.log(sequence);
-    if(sequence > 11){
-      //console.log(sequence+13);
-      exercise_img_src = "/images/4_3_1_Z-Images/image-z_" + x + ".png";
-      ex_img_left = "/images/4_3_1_X-Images/image-x_" + x + ".png";
-      ex_img_right = "/images/4_3_1_Y-Images/image-y_" + x + ".png";
-    }
-    else{
-      exercise_img_src = "/images/4_3_1_Z-Images/image-z_" + sequence + ".png";
-      ex_img_left = "/images/4_3_1_X-Images/image-x_" + sequence + ".png";
-      ex_img_right = "/images/4_3_1_Y-Images/image-y_" + sequence + ".png";
-    }
+  var x = parseInt(sequence);
+  exercise_img_src = "/images/4_3_3_Z_Images/image-z_" + sequence + ".png";
+  ex_img_left = "/images/4_3_3_Y_Images/image-y_" + sequence + ".png";
+  ex_img_right = "/images/4_3_3_X_Images/image-x_" + sequence + ".png";
+
 
     obj_img = "/images/objects/targetobjects.png";
 
@@ -126,34 +121,23 @@ function renderQuestion(userID, sequence, duration) {
 
 
 
-  var formatter = d3.format(",.2f");
+  var formatter = d3.format("");
       var tickFormatter = function(d) {
-        if(d == 0){
-          return "Uncertain";
-        }
-        if(d == .30){
-          return "Slightly Confident";
-        }
-        if(d == .70){
-          return "Confident";
-        }
-        if(d == 1){
-          return "Very Confident";
-        }
+        return formatter(d) + "%";
       }
 
       let sliderWidth = d3.select('#slider-simple').node().offsetWidth
-  var data = [0, .30, .70,1];
+
 
   var sliderSimple = d3
       .sliderHorizontal()
-      .min(d3.min(data))
-      .max(d3.max(data))
+      .min(0)
+      .max(100)
       .width(sliderWidth/1.2)
       .tickFormat(tickFormatter)
       .ticks(9)
-      .step(.1)
-      .default(.5)
+      .step(10)
+      .default(50)
       .on('onchange', val => {
           d3.select('p#value-simple').text(d3.format('.0%')(val));
       });
@@ -171,7 +155,7 @@ function renderQuestion(userID, sequence, duration) {
     //Button
     //
     d3.select(".btn-outline-success").on("click", function () {
-      console.log("BUTTON PRESSED");
+
         var q1 = [];
         var q2
         var q3
@@ -192,43 +176,25 @@ function renderQuestion(userID, sequence, duration) {
         //
         //Question 1
         //
-
         var radio11 = document.getElementById('option11')
         var radio12 = document.getElementById('option12')
+        var radio13 = document.getElementById('option13')
+        var radio14 = document.getElementById('option14')
 
-        if (option11.checked){
-            q1[0] = 1;
+        if (radio11.classList.contains('active') && rect.startX != null && rect.startY != null) {
+            q1 = 1
+        } else if (radio12.classList.contains('active') && rect.startX != null && rect.startY != null) {
+            q1 = 2
+        } else if (radio13.classList.contains('active') && rect.startX != null && rect.startY != null) {
+            q1 = 3
         }
-        else{
-            q1[0] = 0;
+        else if (radio14.classList.contains('active')) {
+            q1 = 0
         }
-
-        if(option12.checked){
-          rect.X = null
-          rect.Y = null
-          rect.w = null
-          rect.h = null
-          q1[1] = 1;
-
-          document.getElementById("popup").innerText = "";
-        }
-        else{
-            q1[1] = 0;
+        else {
+            q1 = -2
         }
 
-        if (option13.checked) {
-            q1[2] = 1
-
-            //if answer is no, dont send x y data
-            rect.X = null
-            rect.Y = null
-            rect.w = null
-            rect.h = null
-
-        }
-        else{
-            q1[2] = 0;
-        }
         console.log(q1)
         //
         //Question 2
