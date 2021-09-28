@@ -68,13 +68,17 @@ function renderQuestion(userID, sequence, duration) {
 
     obj_img = "/images/objects/targetobjects.png";
 
+    ci_img = "/images/objects/confidenceIntervals.png"
     if (duration > 0) {
         drawCanvas(exercise_img_src);
         document.getElementById("img2find_left").src = ex_img_left;
         document.getElementById("img2find_right").src = ex_img_right;
 
         document.getElementById("img2find").src = obj_img;
-        document.getElementById("img2find").width = "200"
+        document.getElementById("img2find").width = "200";
+
+        document.getElementById("img_ci").src = ci_img;
+
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
