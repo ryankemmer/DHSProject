@@ -9,14 +9,14 @@ const { response } = require('express');
 var url = 'mongodb://localhost:27014/';
 //var url = 'mongodb://localhost:27017/';
 
-var datab = 'Test3-3'
+var datab = 'Set_C_data'
 var userID = null
 let users = [];
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
 
-//snooze function 
+//snooze function
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 
@@ -47,7 +47,7 @@ router.post('/activity/', function(req,res,next){
 
   //Fetch current user
   let currentUser = getUserInstance(req.body.userID);
-  
+
   //add new user if not already exists based on id
   if (!currentUser) {
     users.push(new User(req.body.userID));
@@ -57,7 +57,7 @@ router.post('/activity/', function(req,res,next){
   questionNum = currentUser.selectQuestion()
   console.log(questionNum)
 
-  //store user in db 
+  //store user in db
   co(function* () {
 
     let client = yield MongoClient.connect(url);
@@ -65,24 +65,24 @@ router.post('/activity/', function(req,res,next){
     let usersCol = db.collection('users')
 
     check = yield usersCol.findOne({"user" : currentUser.id})
-              
+
     //check to see if user exists in database
     if(check === null && currentUser.id != null){
-              
+
       //insert new user if user does not exist
-      var item = { 
+      var item = {
         "user": currentUser.id,
         "key2pay": null,
         "surveyResults": null,
         "score": null
       };
-                
+
       yield usersCol.insertOne(item);
 
       res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
-              
-    } 
-        
+
+    }
+
     else{
       res.render('index', {error: "ERROR: Username already exists"})
     }
@@ -102,38 +102,38 @@ router.post('/activity/:userID/', function(req,res,next){
     //Fetch current user
     let currentUser = getUserInstance(req.params.userID);
     prevTime = currentUser.getPrevTime()
-  
+
     //check to ensure previous response was posted
     co(function* () {
-  
+
       yield snooze(1000)
-  
+
       let client = yield MongoClient.connect(url);
       const db = client.db(datab)
       let responseCol = db.collection('responses')
       let usersCol = db.collection('users')
-  
+
       check = yield responseCol.findOne({"user" : currentUser.id, "question" : currentUser.currentQ()})
-  
+
       if (check == null){
-  
+
         res.render('activity', {time: prevTime -1, userID: currentUser.id, question: currentUser.currentQ(), sequence: currentUser.index, error: "ERROR: Please answer all questions!"})
-  
+
       }else{
-  
+
         currentUser.nextquestion()
-    
+
         questionNum = currentUser.selectQuestion()
         console.log(questionNum)
-  
+
         if (currentUser.index < 25){
           res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
         }
         else{
-  
+
           var truth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
           var correct = []
-          
+
           //get results
           for(i = 1; i < 25; i++){
             var response = yield responseCol.findOne({"user": currentUser.id, "question" : i})
@@ -147,16 +147,16 @@ router.post('/activity/:userID/', function(req,res,next){
               correct.push(0)
             }
           }
-  
+
           var sum = 0
           //save score of user
           for(i = 0; i < 24; i++){
             sum = sum + correct[i]
           }
-  
+
           newItem = {"score" : sum}
           usersCol.updateOne({"user": currentUser.id}, { $set: newItem });
-  
+
           //get leaderboard
           leaders = usersCol.find().sort({score: -1}).toArray(function(err, leaderboard) {
             if (err) throw err;
@@ -164,12 +164,12 @@ router.post('/activity/:userID/', function(req,res,next){
             res.render('leaderboard', {userID: currentUser.id, total: sum, leaderboard})
           });
         }
-  
+
       }
     });
-  
+
   });
-  
+
 
 
 //
@@ -178,26 +178,26 @@ router.post('/activity/:userID/', function(req,res,next){
 
 
 router.post('/activity/:userID/data', function(req,res,next){
-  
+
     userID = req.params.userID;
-  
+
     let currentUser = getUserInstance(userID);
-  
+
     question = currentUser.currentQ()
-  
+
     let group = Object.keys(req.body)
     group = JSON.parse(group)
-  
+
     group[2] = group[2].substring(0, group[2].length - 1);
     group[2] = parseInt(group[2])
     console.log(group)
-  
+
     TimeLeft = group[0]
     currentUser.setPrevTime(TimeLeft)
     time = 60 - TimeLeft
-  
+
     console.log('timeLeft  ', TimeLeft)
-    console.log('time spent  ', time)  
+    console.log('time spent  ', time)
 
     //store response in db
     co(function* () {
@@ -212,12 +212,11 @@ router.post('/activity/:userID/data', function(req,res,next){
             "time": time,
             "q1": group[1],
             "q2": group[2],
-            "q3": group[3],
-            "x": group[4],
-            "y": group[5]
+            "x": group[3],
+            "y": group[4]
         };
 
-        if (group[1] != -2 && group[3] != -2) {
+        if (group[1] != -2) {
 
             yield responseCol.insertOne(item);
             console.log('posted to db!')
@@ -233,24 +232,24 @@ router.post('/activity/:userID/data', function(req,res,next){
 router.post('/activity/:use/:userID/data', function (req, res, next) {
 
     userID = req.params.userID;
-  
+
     let currentUser = getUserInstance(userID);
-  
+
     question = currentUser.currentQ()
-  
+
     let group = Object.keys(req.body)
     group = JSON.parse(group)
-  
+
     group[2] = group[2].substring(0, group[2].length - 1);
     group[2] = parseInt(group[2])
     console.log(group)
-  
+
     TimeLeft = group[0]
     currentUser.setPrevTime(TimeLeft)
     time = 60 - TimeLeft
-  
+
     console.log('timeLeft  ', TimeLeft)
-    console.log('time spent  ', time)  
+    console.log('time spent  ', time)
 
     //store response in db
     co(function* () {
@@ -265,12 +264,11 @@ router.post('/activity/:use/:userID/data', function (req, res, next) {
             "time": time,
             "q1": group[1],
             "q2": group[2],
-            "q3": group[3],
-            "x": group[4],
-            "y": group[5]
+            "x": group[3],
+            "y": group[4]
         };
 
-        if (group[1] != -2 && group[3] != -2) {
+        if (group[1] != -2) {
 
             yield responseCol.insertOne(item);
             console.log('posted to db!')

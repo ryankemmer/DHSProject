@@ -50,10 +50,10 @@ function mouseDown(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/activity/bat-" + sequence + ".png";
+    exercise_img_src = "/images/set-c/img_" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/activity/bat-" + sequence + ".gif";
+        document.getElementById("img2find").src = "/images/set-c/bat-" + 1 + ".gif";
         document.getElementById("img2find").width = "100"
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
@@ -119,7 +119,7 @@ function renderQuestion(userID, sequence, duration) {
 
         var q1
         var q2
-        var q3
+
 
         //
         //Get time
@@ -162,34 +162,21 @@ function renderQuestion(userID, sequence, duration) {
 
         q2 = document.getElementById("value-simple").innerHTML
 
-        //
-        //Question 3
-        //
-
-        var radio21 = document.getElementById('option21')
-        var radio22 = document.getElementById('option22')
-
-        if (radio21.classList.contains('active')) {
-            q3 = 1
-        } else if (radio22.classList.contains('active')) {
-            q3 = 0
-        } else {
-            q3 = -2
-        }
 
 
-        sendData(userID, timeLeft, q1, q2, q3, mouse_x, mouse_y);
+
+        sendData(userID, timeLeft, q1, q2, mouse_x, mouse_y);
 
     })
 }
 
 
-function sendData(userID, time, q1, q2, q3, x, y) {
+function sendData(userID, time, q1, q2, x, y) {
     console.log("sending data")
 
     url2go = userID + "/data"
-    data2send = [time, q1, q2, q3, x, y]
-    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " object_loc: {" + x + ", " + y + "}");
+    data2send = [time, q1, q2, x, y]
+    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " object_loc: {" + x + ", " + y + "}");
 
     //add ajax function
     new Promise((resolve, reject) => {
@@ -241,4 +228,4 @@ function startTimer(duration, display, captionText, userID) {
     }, 1000);
 
 
-} 
+}
