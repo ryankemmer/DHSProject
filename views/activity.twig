@@ -38,8 +38,7 @@
                     <p id="imgText">Double click on the image to enlarge</p>
                 </div>
                 <div class="col-sm answeractivity">
-                  <br>
-                  <br>
+
                   <br>
                     <p>Is the bat in this image?</p>
 
@@ -51,15 +50,32 @@
                             <input type="radio" name="q1" autocomplete="off"> No
                         </label>
                     </div>
-                    <div id="popup" style="color: red;"> </div>
-                    <div id="output" class="text-info"></div>
+                    <div id="popup" style="color: blue;"> </div>
                     <br>
                     <br>
                     <br>
-                    <p>Please rate the confidence in your decision.</p>
+                    <img id="img_ci" width="500" height="300">
                     <p id="value-simple"></p>
                     <div id="slider-simple"></div>
 
+                    <br>
+                    <br>
+                    <br>
+                    <p>Please rate the difficulty of the image:</p>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary" id="option21">
+                            <input type="radio" name="q3" autocomplete="off"> Not at all difficult
+                        </label>
+                        <label class="btn btn-secondary" id="option22">
+                            <input type="radio" name="q3" autocomplete="off"> Somewhat difficult
+                        </label>
+                        <label class="btn btn-secondary" id="option23">
+                            <input type="radio" name="q3" autocomplete="off"> Very difficult
+                        </label>
+                        <label class="btn btn-secondary" id="option24">
+                            <input type="radio" name="q3" autocomplete="off"> Extremely difficult
+                        </label>
+                    </div>
                     <br>
                     <br>
 
@@ -83,54 +99,45 @@
 </div>
 
 <script>
-    var duration = '{{ time }}'
-    duration = duration - 1
-    var userID = '{{ userID }}';
-    var question = '{{ question }}';
-
-    display = document.querySelector('#time')
-    capText = document.getElementById("caption");
-
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    var imgWidth = 500;
-    var imgHeight = 500;
-
-    ctx.canvas.width = imgWidth;
-    ctx.canvas.height = imgHeight;
-    var rect = {}; // Properties: startX, startY, w, h
-    rect.startX = null;
-    rect.startY = null;
-    rect.w = null;
-    rect.h = null;
-    var drag = false;
-    var imageObj = null;
-
-    // Popup text when "Yes" selected
-    var yesButon = document.getElementById("option11");
-    var noButton = document.getElementById("option12");
-
-    yesButon.onclick = function (){
-        document.getElementById("popup").innerText = "Please identify the object on the image. Click on where you think the object is.";
-    }
-
-    noButton.onclick = function () {
-        document.getElementById("popup").innerText = "";
-        document.getElementById("output").innerText = "";
-    }
-
-    window.onload = function () {
-
-        if (duration <= 0) {
-            duration = 0
-            renderQuestion(userID, question, duration);
-        } else {
-            renderQuestion(userID, question, duration);
-            startTimer(duration, display, capText, userID);
-        }
-    }
-
-
+var duration = '{{ time }}'
+  duration = duration - 1
+  var userID = '{{ userID }}';
+  var question = '{{ question }}';
+  display = document.querySelector('#time')
+  capText = document.getElementById("caption");
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  var imgWidth = 500;
+  var imgHeight = 500;
+  ctx.canvas.width = imgWidth;
+  ctx.canvas.height = imgHeight;
+  var rect = {}; // Properties: startX, startY, w, h
+  rect.startX = null;
+  rect.startY = null;
+  rect.w = null;
+  rect.h = null;
+  var drag = false;
+  var imageObj = null;
+  // Popup text when "Yes" selected
+  var yesButon = document.getElementById("option11");
+  var noButton = document.getElementById("option12");
+  yesButon.onclick = function (){
+      document.getElementById("popup").innerText = "Please draw a bounding box on the image around the bat.";
+  }
+  noButton.onclick = function () {
+      document.getElementById("popup").innerText = "Please draw a bounding box on the part of the image that is most ambiguous to you";
+      document.getElementById("output").innerText = "";
+  }
+  window.onload = function () {
+      if (duration <= 0) {
+          document.getElementById("popup").innerText = "";
+          duration = 1
+          renderQuestion(userID, question, duration);
+      } else {
+          renderQuestion(userID, question, duration);
+          startTimer(duration, display, capText, userID);
+      }
+  }
 
 </script>
 

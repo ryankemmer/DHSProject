@@ -6,18 +6,21 @@ const co = require('co');
 const User = require('../User');
 const { response } = require('express');
 
-var url = 'mongodb://localhost:27014/';
-//var url = 'mongodb://localhost:27017/';
+var url = 'mongodb://localhost:27014/'; //for server tests
+//var url = 'mongodb://localhost:27017/'; //for local tests
 
-var datab = 'Set_C_data'
+var datab = 'C_Data'
 var userID = null
 let users = [];
+
+var totalQs = 24;
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
 
 //snooze function
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 
 
 //
@@ -27,6 +30,7 @@ const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 router.get('/', function(req, res, next) {
   res.render('index');
+  console.log("Index loaded");
 });
 
 
@@ -57,37 +61,40 @@ router.post('/activity/', function(req,res,next){
   questionNum = currentUser.selectQuestion()
   console.log(questionNum)
 
-  //store user in db
   co(function* () {
 
-    let client = yield MongoClient.connect(url);
-    const db = client.db(datab)
-    let usersCol = db.collection('users')
-
-    check = yield usersCol.findOne({"user" : currentUser.id})
-
     //check to see if user exists in database
-    if(check === null && currentUser.id != null){
+    if(currentUser.id != null){
+      let client = yield MongoClient.connect(url);
+      db = client.db(datab)
+      let usersCol = db.collection('users')
 
-      //insert new user if user does not exist
-      var item = {
-        "user": currentUser.id,
-        "key2pay": null,
-        "surveyResults": null,
-        "score": null
-      };
+      check = yield usersCol.findOne({"user" : currentUser.id})
 
-      yield usersCol.insertOne(item);
+      if(check === null && currentUser.id != null){
+        //insert new user if user does not exist
+        var item = {
+          "user": currentUser.id,
+          "key2pay": null,
+          "surveyResults": null,
+          "score": null
+        };
 
-      res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
+        yield usersCol.insertOne(item);
 
+        //contiunes to second part
+        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
+      }
+      else{
+        res.render('index', {error: "ERROR: Cannot repeat activity"})
+      }
     }
-
     else{
-      res.render('index', {error: "ERROR: Username already exists"})
+      res.render('index', {error: "ERROR: Cannot continue without finishing part 1"})
     }
 
   });
+
 });
 
 
@@ -95,80 +102,82 @@ router.post('/activity/', function(req,res,next){
 //load activity
 //
 
-
-
 router.post('/activity/:userID/', function(req,res,next){
 
-    //Fetch current user
-    let currentUser = getUserInstance(req.params.userID);
-    prevTime = currentUser.getPrevTime()
+  //Fetch current user
+  let currentUser = getUserInstance(req.params.userID);
+  prevTime = currentUser.getPrevTime()
 
-    //check to ensure previous response was posted
-    co(function* () {
+  //check to ensure previous response was posted
+  co(function* () {
 
-      yield snooze(1000)
+    yield snooze(1000)
 
-      let client = yield MongoClient.connect(url);
-      const db = client.db(datab)
-      let responseCol = db.collection('responses')
-      let usersCol = db.collection('users')
+    let client = yield MongoClient.connect(url);
+    const db = client.db(datab)
+    let responseCol = db.collection('responses')
+    let usersCol = db.collection('users')
 
-      check = yield responseCol.findOne({"user" : currentUser.id, "question" : currentUser.currentQ()})
+    check = yield responseCol.findOne({"user" : currentUser.id, "question" : currentUser.currentQ()})
 
-      if (check == null){
+    if (check == null){
 
-        res.render('activity', {time: prevTime -1, userID: currentUser.id, question: currentUser.currentQ(), sequence: currentUser.index, error: "ERROR: Please answer all questions!"})
+      res.render('activity', {time: prevTime -1, userID: currentUser.id, question: currentUser.currentQ(), sequence: currentUser.index, error: "ERROR: Please answer all questions!"})
 
-      }else{
+    }else{
 
-        currentUser.nextquestion()
+      currentUser.nextquestion()
 
-        questionNum = currentUser.selectQuestion()
-        console.log(questionNum)
+      questionNum = currentUser.selectQuestion()
 
-        if (currentUser.index < 25){
-          res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
-        }
-        else{
-
-          var truth = [1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0]
-          var correct = []
-
-          //get results
-          for(i = 1; i < 25; i++){
-            var response = yield responseCol.findOne({"user": currentUser.id, "question" : i})
-            console.log(response)
-            if (response == null){
-              console.log('null response')
-            }
-            else if (response["q1"] == truth[i]){
-              correct.push(1)
-            } else{
-              correct.push(0)
-            }
-          }
-
-          var sum = 0
-          //save score of user
-          for(i = 0; i < 24; i++){
-            sum = sum + correct[i]
-          }
-
-          newItem = {"score" : sum}
-          usersCol.updateOne({"user": currentUser.id}, { $set: newItem });
-
-          //get leaderboard
-          leaders = usersCol.find().sort({score: -1}).toArray(function(err, leaderboard) {
-            if (err) throw err;
-            leaderboard = leaderboard.slice(0,5)
-            res.render('leaderboard', {userID: currentUser.id, total: sum, leaderboard})
-          });
-        }
-
+      if (currentUser.index <= totalQs){
+        console.log("Q no: " + currentUser.index);
+        res.render('activity', {time: 60, userID: currentUser.id, question: questionNum, sequence: currentUser.index})
       }
-    });
+      else{
+        //change Ground Truth Array
+        var truth = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0] //24 in length
+        var correct = []
 
+        //get results
+        for(i = 0; i < totalQs; i++){
+
+          var response = yield responseCol.findOne({"user": currentUser.id, "question" : i+1})
+          console.log(response)
+          if (response == null){
+            console.log('null response')
+          }
+          else if (response["q1"] == truth[i]){
+            correct.push(1)
+          } else{
+            correct.push(0)
+          }
+        }
+
+        var sum = 0
+
+        //save score of user
+        for(i = 0; i < totalQs; i++){
+          sum = sum + correct[i]
+        }
+
+        newItem = {"score" : sum}
+
+        usersCol.updateOne({"user": currentUser.id}, { $set: newItem });
+
+        //get leaderboard
+        leaders = usersCol.find().sort({score: -1}).toArray(function(err, leaderboard) {
+          if (err) throw err;
+          leaderboard = leaderboard.slice(0,5)
+          res.render('leaderboard', {userID: currentUser.id, total: sum, leaderboard})
+        });
+      }
+
+    }
   });
+
+});
+
 
 
 
@@ -212,11 +221,12 @@ router.post('/activity/:userID/data', function(req,res,next){
             "time": time,
             "q1": group[1],
             "q2": group[2],
-            "x": group[3],
-            "y": group[4]
+            "q3": group[3],
+            "bb": group[4]
+
         };
 
-        if (group[1] != -2) {
+        if (group[1] != -2 && group[3] != -2) {
 
             yield responseCol.insertOne(item);
             console.log('posted to db!')
@@ -264,11 +274,12 @@ router.post('/activity/:use/:userID/data', function (req, res, next) {
             "time": time,
             "q1": group[1],
             "q2": group[2],
-            "x": group[3],
-            "y": group[4]
+            "q3": group[3],
+            "bb": group[4]
+
         };
 
-        if (group[1] != -2) {
+        if (group[1] != -2 && group[3] != -2) {
 
             yield responseCol.insertOne(item);
             console.log('posted to db!')
