@@ -4,8 +4,8 @@ import time
 import datetime
 import sys
 
-#url = 'mongodb://localhost:27017/'
-url = 'mongodb://localhost:27014/'
+url = 'mongodb://localhost:27017/'
+#url = 'mongodb://localhost:27014/'
 
 dbase = sys.argv[1]
 print("database: " + str(dbase))
@@ -34,8 +34,7 @@ for user in usersCol.find():
             "q1": response["q1"],
             "q2": response["q2"],
             "q3": response["q3"],
-	        "x": response["x"],
-	        "y": response["y"],
+	    "bb": response["bb"],
             "time": response["time"]
         }
 
