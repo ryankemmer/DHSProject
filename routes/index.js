@@ -9,11 +9,11 @@ const { response } = require('express');
 //var url = 'mongodb://localhost:27014/'; //for server tests
 var url = 'mongodb://localhost:27017/'; //for local tests
 
-var datab = 'C_Data'
+var datab = 'C_Data_20-80'
 var userID = null
 let users = [];
 
-var totalQs = 24;
+var totalQs = 40;
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
@@ -89,9 +89,6 @@ router.post('/activity/', function(req,res,next){
         res.render('index', {error: "ERROR: Cannot repeat activity"})
       }
     }
-    else{
-      res.render('index', {error: "ERROR: Cannot continue without finishing part 1"})
-    }
 
   });
 
@@ -136,7 +133,7 @@ router.post('/activity/:userID/', function(req,res,next){
       }
       else{
         //change Ground Truth Array
-        var truth = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0] //24 in length
+        var truth = [1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //40 in length
         var correct = []
 
         //get results

@@ -2,7 +2,7 @@ module.exports = class User {
     constructor(id) {
         this.id = id;
         this.index = 1;
-        this.questionArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        this.questionArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         this.currentQuestion = 0;
         this.prevTime = 60
     }
