@@ -51,16 +51,18 @@
                         </label>
                     </div>
                     <div id="popup" style="color: blue;"> </div>
+
+                    <br>
+                    <button type="button" id="ci_button" class="btn btn-primary">Confidence Guide</button>
+                    <img id="img_ci" width="500" height="200" style="display:none;">
+
                     <br>
                     <br>
-                    <br>
-                    <img id="img_ci" width="500" height="300">
                     <p id="value-simple"></p>
                     <div id="slider-simple"></div>
 
                     <br>
-                    <br>
-                    <br>
+
                     <p>Please rate the difficulty of the image:</p>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-secondary" id="option21">
@@ -121,6 +123,25 @@ var duration = '{{ time }}'
   // Popup text when "Yes" selected
   var yesButon = document.getElementById("option11");
   var noButton = document.getElementById("option12");
+  var modal = document.getElementById("myModal");
+  var modalImg = document.getElementById("img01");
+
+  var ci_button = document.getElementById("ci_button");
+
+  var w = window.innerWidth;
+
+  ci_button.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = "/images/set-c-20-80/img_ci" +".png";
+    modalImg.width = '75%';
+  }
+  var span = document.getElementsByClassName("close")[0];
+  span.width = w
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+      modal.style.display = "none";
+  }
+
   yesButon.onclick = function (){
       document.getElementById("popup").innerText = "Please draw a bounding box on the image around the bat.";
   }
