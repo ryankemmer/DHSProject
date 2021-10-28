@@ -59,13 +59,13 @@ function mouseMove(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/set-c-20-80/img_" + sequence + ".png";
+    exercise_img_src = "/images/set-c-10-90/img_" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/set-c-20-80/bat-" + 1 + ".gif";
+        document.getElementById("img2find").src = "/images/standardImages/bat-" + 1 + ".gif";
         document.getElementById("img2find").width = "100"
 
-        document.getElementById("img_ci").src = "/images/set-c-20-80/img_ci" +".png";
+        document.getElementById("img_ci").src = "/images/standardImages/img_ci" +".png";
 
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
