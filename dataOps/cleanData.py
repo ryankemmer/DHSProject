@@ -2,8 +2,8 @@ import pymongo
 import json
 import sys
 
-#url = 'mongodb://localhost:27017/'
-url = 'mongodb://localhost:27014/'
+url = 'mongodb://localhost:27017/'
+#url = 'mongodb://localhost:27014/'
 
 dbase = sys.argv[1]
 print(dbase)
@@ -27,10 +27,11 @@ for user in usersCol.find():
 
     print(userName + ": " + str(responseCount) + "  correct: " + str(nCorrect))
 
-    if(responseCount == 24):
+    if(responseCount == 40):
         completed_users.append(userName)
     else:
         userRemove += 1
+        print("Should delete:",userName)
         if(args > 1):
             if(sys.argv[2] == "delete"):
                 responsesCol.delete_many({'user' : userName})
