@@ -220,7 +220,8 @@ router.post('/activity/:userID/data', function(req,res,next){
             "q1": group[1],
             "q2": group[2],
             "q3": group[3],
-            "bb": group[4]
+            "bb": group[4],
+            "mi": group[5]
 
         };
 
@@ -273,7 +274,8 @@ router.post('/activity/:use/:userID/data', function (req, res, next) {
             "q1": group[1],
             "q2": group[2],
             "q3": group[3],
-            "bb": group[4]
+            "bb": group[4],
+            "mi": group[5]
 
         };
 

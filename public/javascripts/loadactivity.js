@@ -214,19 +214,21 @@ function renderQuestion(userID, sequence, duration) {
             q3 = -2
         }
 
+        mouseinfo = mouseArray;
 
 
-        sendData(userID, timeLeft, q1, q2, q3, rect);
+
+        sendData(userID, timeLeft, q1, q2, q3, rect, mouseinfo);
 
     })
 }
 
-function sendData(userID, time, q1, q2, q3, bb) {
+function sendData(userID, time, q1, q2, q3, bb, mouseinfo) {
     console.log("sending data")
 
     url2go = userID + "/data"
-    data2send = [time, q1, q2, q3, bb]
-    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " rectangle: {" + bb.startX + ", " + bb.startX + ", " + bb.w + ", " + bb.h + "}");
+    data2send = [time, q1, q2, q3, bb, mouseinfo]
+    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " rectangle: {" + bb.startX + ", " + bb.startX + ", " + bb.w + ", " + bb.h + "}" + "Mouse Info:" + mouseinfo);
 
     //add ajax function
     new Promise((resolve, reject) => {
