@@ -180,13 +180,12 @@ function renderQuestion(userID, sequence, duration) {
         var radio11 = document.getElementById('option11')
         var radio12 = document.getElementById('option12')
         var radio13 = document.getElementById('option13')
-        
         if (radio11.classList.contains('active') && rect.startX != null && rect.startY != null) {
-            q1 = 1
+            q1 = 1 //watch
         } else if (radio12.classList.contains('active') && rect.startX != null && rect.startY != null) {
-            q1 = 2
+            q1 = 2 //toothpaste
         } else if (radio13.classList.contains('active') && rect.startX != null && rect.startY != null) {
-            q1 = 0
+            q1 = 0 //none
         } else {
             q1 = -2
         }

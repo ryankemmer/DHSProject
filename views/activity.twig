@@ -63,14 +63,15 @@
 
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-secondary" id="option11">
-                            <input type="radio" name="q1" autocomplete="off"> Toothpaste
+                            <input type="radio" name="q3" autocomplete="off"> Watch
                         </label>
                         <label class="btn btn-secondary" id="option12">
-                            <input type="radio" name="q1" autocomplete="off"> Watch
+                            <input type="radio" name="q3" autocomplete="off"> Toothpaste
                         </label>
-                        <label class="btn btn-secondary" id="option12">
-                            <input type="radio" name="q1" autocomplete="off"> None of the target objects are present
+                        <label class="btn btn-secondary" id="option13">
+                            <input type="radio" name="q3" autocomplete="off"> None of the objects are present
                         </label>
+
                     </div>
 
                     <div id="popup" style="color: blue;"> </div>
@@ -152,9 +153,10 @@
 
 
     // Popup text when "Yes" selected
-    var yesWButon = document.getElementById("option11");
-    var yesTButon = document.getElementById("option12");
-    var noButton = document.getElementById("option13s");
+    var yesWButton = document.getElementById("option11");
+    var yesTButton = document.getElementById("option12");
+    var noButton = document.getElementById("option13");
+
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("img01");
 
@@ -169,16 +171,17 @@
     }
     var span = document.getElementsByClassName("close")[0];
     span.width = w
+
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
         modal.style.display = "none";
     }
 
-    yesTButon.onclick = function (){
-        document.getElementById("popup").innerText = "Please draw a bounding box on the image around the toothpaste.";
+    yesWButton.onclick = function (){
+        document.getElementById("popup").innerText = "Please draw a bounding box on the image around the object.";
     }
-    yesWButon.onclick = function (){
-        document.getElementById("popup").innerText = "Please draw a bounding box on the image around the watch.";
+    yesTButton.onclick = function (){
+        document.getElementById("popup").innerText = "Please draw a bounding box on the image around the object.";
     }
     noButton.onclick = function () {
       document.getElementById("popup").innerText = "Please draw a bounding box around the most ambiguous or challenging part of the image.";
