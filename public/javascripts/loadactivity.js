@@ -14,8 +14,6 @@ function rotateElem(){
 }
 
 // Mouse pointer location
-
-// Mouse pointer location
 var mouse_x = null;
 var mouse_y = null;
 
@@ -28,6 +26,7 @@ function drawCanvas(imageSource) {
     canvas.addEventListener('mousedown', mouseDown, false);
     canvas.addEventListener('mouseup', mouseUp, false);
     canvas.addEventListener('mousemove', mouseMove, false);
+    canvas.addEventListener('mousemove', function(e){trackMouse(duration,e)}, false);
 }
 function mouseDown(e) {
   rect.startX = e.offsetX;
@@ -40,9 +39,35 @@ function mouseUp() {
     drag = false;
 }
 
+//MOUSE TRACKING
+mouseArray = [];
+var timeChange2 = setInterval(function() {duration = Math.round((duration - .1) * 10) / 10}, 100);
+
+function trackMouse(duration,e) {
+  mouseArray.push([duration,e.offsetX,e.offsetY]);
+}
+
 function mouseMove(e) {
   mousex = e.offsetX;
   mousey = e.offsetY;
+
+  //zoom feature
+  if(e.offsetX > 100 && e.offsetX < 400 && e.offsetY > 100 && e.offsetY < 400)  //within main bounds
+    zoom_ctx.drawImage(canvas, e.offsetX-100, e.offsetY-100, 200, 200, 0, 0, 500, 500);
+  else if(e.offsetX < 100 && e.offsetY < 100)                                   //top left corner
+    zoom_ctx.drawImage(canvas, 0, 0, 200, 200, 0, 0, 500, 500);
+  else if(e.offsetX > 400 && e.offsetY > 400)                                   //bottom right corner
+    zoom_ctx.drawImage(canvas, 300, 300, 200, 200, 0, 0, 500, 500);
+  else if(e.offsetX < 100 && e.offsetY > 100 && e.offsetY < 400)                //left edge
+    zoom_ctx.drawImage(canvas, 0, e.offsetY-100, 200, 200, 0, 0, 500, 500);
+  else if(e.offsetY < 100 && e.offsetX > 100 && e.offsetX < 400)                //top edge
+    zoom_ctx.drawImage(canvas, e.offsetX-100, 0, 200, 200, 0, 0, 500, 500);
+  else if(e.offsetX > 400 && e.offsetY > 100 && e.offsetY < 400)                //right edge
+    zoom_ctx.drawImage(canvas, 300, e.offsetY-100, 200, 200, 0, 0, 500, 500);
+  else if(e.offsetY > 400 && e.offsetX > 100 && e.offsetX < 400)                //bottom edge
+    zoom_ctx.drawImage(canvas, e.offsetX-100, 300, 200, 200, 0, 0, 500, 500);
+
+
   if(drag){
       ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
       ctx.drawImage(imageObj, 0, 0, imgWidth, imgHeight);
@@ -57,18 +82,20 @@ function mouseMove(e) {
     $('#output').html('current: ' + mousex + ', ' + mousey + '<br/>last: ' + rect.startX + ', ' + rect.startY + '<br>height: ' + rect.h + ', width: ' + rect.w + '<br/>' + '<br/>mousedown: ' + drag + '<br>offset: ' + this.offsetLeft + ', ' + this.offsetTop + '</br>');
 }
 
-
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/set-c-10-90/img_" + sequence + ".png";
+
+    exercise_img_src = "/images/4_4_1/" + sequence + ".png";
+    obj_img = "/images/standardImages/bat-1.gif";
+
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/standardImages/bat-" + 1 + ".gif";
-        document.getElementById("img2find").width = "100"
 
         document.getElementById("img_ci").src = "/images/standardImages/img_ci" +".png";
-
+        document.getElementById("img2find").src = obj_img;
+        document.getElementById("img2find").width = "200"
     } else {
         document.getElementById("canvas").style.visibility = "hidden";
+        document.getElementById("zoomcanvas").style.visibility = "hidden";
         document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
         display.textContent = " 00:00";
     }
@@ -76,10 +103,19 @@ function renderQuestion(userID, sequence, duration) {
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("img01");
     var canvas = document.getElementById("canvas");
+    var zoomcanvas = document.getElementById("zoomcanvas");
 
     var w = window.innerWidth;
 
+
     // TODO: Add canvas in zoomed-in image
+
+    targetobjbutton.onclick = function () {
+
+      modal.style.display = "block";
+      modalImg.src = obj_img;
+      modalImg.width = '75%';
+    }
     canvas.ondblclick = function () {
         modal.style.display = "block";
         modalImg.src = exercise_img_src;
@@ -94,49 +130,48 @@ function renderQuestion(userID, sequence, duration) {
     }
 
 
-    //
-    //Slider
-    //
-    let sliderWidth = d3.select('#slider-simple').node().offsetWidth
-    var data = [0, .25, .50, .75, 1];
 
-    var sliderSimple = d3
-        .sliderHorizontal()
-        .min(d3.min(data))
-        .max(d3.max(data))
-        .width(sliderWidth / 1.2)
-        .tickFormat(d3.format('.0%'))
-        .ticks(9)
-        .step(.1)
-        .default(.5)
-        .on('onchange', val => {
-            d3.select('p#value-simple').text(d3.format('.0%')(val));
-        });
+        //
+        //Slider
+        //
+        let sliderWidth = d3.select('#slider-simple').node().offsetWidth
+        var data = [0, .25, .50, .75, 1];
 
-    d3.select('div#slider-simple')
-        .append('svg')
-        .attr('width', sliderWidth)
-        .attr('height', 70)
-        .append('g')
-        .attr('transform', 'translate(30,30)')
-        .call(sliderSimple);
+        var sliderSimple = d3
+            .sliderHorizontal()
+            .min(d3.min(data))
+            .max(d3.max(data))
+            .width(sliderWidth / 1.2)
+            .tickFormat(d3.format('.0%'))
+            .ticks(9)
+            .step(.1)
+            .default(.5)
+            .on('onchange', val => {
+                d3.select('p#value-simple').text(d3.format('.0%')(val));
+            });
 
-    d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
+        d3.select('div#slider-simple')
+            .append('svg')
+            .attr('width', sliderWidth)
+            .attr('height', 70)
+            .append('g')
+            .attr('transform', 'translate(30,30)')
+            .call(sliderSimple);
+
+        d3.select('p#value-simple').text(d3.format('.0%')(sliderSimple.value()));
 
     //
     //Button
     //
-
     d3.select(".btn-outline-success").on("click", function () {
-
-        var q1
+      console.log("BUTTON PRESSED");
+        var q1 = [];
         var q2
         var q3
 
         //
         //Get time
         //
-
         var timeLeft = document.getElementById("time").innerHTML
         console.log(timeLeft)
 
@@ -147,27 +182,32 @@ function renderQuestion(userID, sequence, duration) {
         //var endTime = new Date().getTime();
         //var time = endTime - startTime;
 
-        //
-        //Question 1
-        //
+          //
+         //Question 1
+         //
 
-        var radio11 = document.getElementById('option11')
-        var radio12 = document.getElementById('option12')
+         var radio11 = document.getElementById('option11')
+         var radio12 = document.getElementById('option12')
 
-        if (radio11.classList.contains('active') && rect.startX != null && rect.startY != null) {
-            q1 = 1
-        } else if (radio12.classList.contains('active') && rect.startX != null && rect.startY != null) {
-            q1 = 0
-        } else {
-            q1 = -2
-        }
-
+         if (radio11.classList.contains('active') && rect.startX != null && rect.startY != null) {
+             q1 = 1
+         } else if (radio12.classList.contains('active') && rect.startX != null && rect.startY != null) {
+             q1 = 0
+         } else {
+             q1 = -2
+         }
+        console.log(q1)
         //
         //Question 2
         //
 
 
         q2 = document.getElementById("value-simple").innerHTML
+        console.log(q2)
+
+        //
+        //Question 3
+        //
 
         var radio21 = document.getElementById('option21')
         var radio22 = document.getElementById('option22')
@@ -187,18 +227,18 @@ function renderQuestion(userID, sequence, duration) {
         }
 
 
-
-        sendData(userID, timeLeft, q1, q2, q3, rect);
+        sendData(userID, timeLeft, q1, q2, q3, rect, mouseArray);
 
     })
 }
 
-function sendData(userID, time, q1, q2, q3, bb) {
+
+function sendData(userID, time, q1, q2, q3, bb, array) {
     console.log("sending data")
 
     url2go = userID + "/data"
-    data2send = [time, q1, q2, q3, bb]
-    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " rectangle: {" + bb.startX + ", " + bb.startX + ", " + bb.w + ", " + bb.h + "}");
+    data2send = [time, q1, q2, q3, bb, array]
+    console.log("time: " + time + " q1: " + q1 + " q2: " + q2 + " q3: " + q3 + " rectangle: {" + bb.startX + ", " + bb.startX + ", " + bb.w + ", " + bb.h + "}" + " array: " + array);
 
     //add ajax function
     new Promise((resolve, reject) => {
@@ -223,8 +263,10 @@ function startTimer(duration, display, captionText, userID) {
             clearInterval(timeChange)
 
             //setTimeout(sendFunc, 1000)
-
+            document.getElementById("img2find_left").style.visibility = "hidden";
+            document.getElementById("img2find_right").style.visibility = "hidden";
             document.getElementById("canvas").style.visibility = "hidden";
+            document.getElementById("zoomcanvas").style.visibility = "hidden";
             document.getElementById("imgText").innerHTML = "Times up! Submit your answer.";
             display.textContent = " 00:00";
 

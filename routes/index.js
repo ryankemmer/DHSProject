@@ -9,11 +9,11 @@ const { response } = require('express');
 //var url = 'mongodb://localhost:27014/'; //for server tests
 var url = 'mongodb://localhost:27017/'; //for local tests
 
-var datab = 'C_Data_10-90'
+var datab = 'Test4_4_1'
 var userID = null
 let users = [];
 
-var totalQs = 40;
+var totalQs = 24;
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);

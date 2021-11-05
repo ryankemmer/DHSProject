@@ -11,37 +11,56 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <script src="https://d3js.org/d3.v6.js"></script>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://unpkg.com/d3-simple-slider"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css">
+
     <script type="text/javascript" src="/javascripts/loadactivity.js"></script>
+
     <link rel="stylesheet" href="/stylesheets/activity.scss">
 </head>
 
-<body>
+<body style="font-size: 18px;">
 <div class="activitypage">
-    <div class="container text-center mt-4" style="font-size: 20px;">
+    <div class="container text-center mt-6">
         <div class="d-flex justify-content-center py-2" id="userID">UserID:
             <div name="userID" style="display:inline" id="userID">{{ userID }}</div>
         </div>
-        <h1 class="py-2">Exercise {{ sequence }} of 40</h1>
-        <p class="py-2 text-danger" id="errorText1"> {{ error }} </p>
-        <p><b>Can you find this bat in the image below?</b></p>
-        <img id="img2find">
-        <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
-        <div class="container mainContainer">
-            <div class="row">
+        <h1 class="py-2">Exercise {{ sequence }} of 24</h1>
 
-                <div class="col-sm">
-                    <canvas id="canvas" style="cursor: crosshair;
-                         border: 1px solid #000000;"></canvas>
-                    <p id="imgText">Double click on the image to enlarge</p>
+        <p class="py-2 text-danger" id="errorText1"> {{ error }} </p>
+        <!---<p><b>Can you find one of the objects in the Top View image?</b></p>-->
+
+        <img id="img2find">
+
+
+        <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
+
+        <br>
+        <p><b>NOTE: Double click to enlarge images</b></p>
+        <div class="container mainContainer">
+
+            <div class="row">
+                <div class="d-flex justify-content-center">
+
+                  <div class="img-with-text">
+                    <canvas id="canvas" style="display:block;"></canvas>
+                    <p style="text-align:center;font-size:150%;"><b>Top View</b></p>
+                  </div>
+                  <img src="/images/objects/mid.png">
+                  <div class="img-with-text">
+                    <canvas id="zoomcanvas" style="display:block;"></canvas>
+                    <p style="text-align:center;font-size:150%;"><b>Zoomed-in View</b></p>
+                  </div>
                 </div>
+
                 <div class="col-sm answeractivity">
 
-                  <br>
-                    <p>(a) Is the bat in this image?</p>
-
+                    <p>(a) Which of the target objects are present in the Top View image?</p>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-secondary" id="option11">
                             <input type="radio" name="q1" autocomplete="off"> Yes
@@ -52,41 +71,38 @@
                     </div>
                     <div id="popup" style="color: blue;"> </div>
                     <br>
-                    <p>(b) Please rate the confidence in your decision:</p>
                     <br>
+                    <p>(b) Please rate the confidence in your decision:</p>
                     <button type="button" id="ci_button" class="btn btn-outline-secondary">Confidence Guide</button>
                     <img id="img_ci" width="500" height="200" style="display:none;">
                     <br>
                     <br>
                     <p id="value-simple"></p>
                     <div id="slider-simple"></div>
-
                     <br>
-                    <br>
-                    <p>(c) Please rate the difficulty of the image:</p>
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary" id="option21">
-                            <input type="radio" name="q3" autocomplete="off"> Not at all difficult
-                        </label>
-                        <label class="btn btn-secondary" id="option22">
-                            <input type="radio" name="q3" autocomplete="off"> Somewhat difficult
-                        </label>
-                        <label class="btn btn-secondary" id="option23">
-                            <input type="radio" name="q3" autocomplete="off"> Very difficult
-                        </label>
-                        <label class="btn btn-secondary" id="option24">
-                            <input type="radio" name="q3" autocomplete="off"> Extremely difficult
-                        </label>
-                    </div>
-                    <br>
-                    <br>
-
+                   <br>
+                   <p>(c) Please rate the difficulty of the image:</p>
+                   <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                       <label class="btn btn-secondary" id="option21">
+                           <input type="radio" name="q3" autocomplete="off"> Not at all difficult
+                       </label>
+                       <label class="btn btn-secondary" id="option22">
+                           <input type="radio" name="q3" autocomplete="off"> Somewhat difficult
+                       </label>
+                       <label class="btn btn-secondary" id="option23">
+                           <input type="radio" name="q3" autocomplete="off"> Very difficult
+                       </label>
+                       <label class="btn btn-secondary" id="option24">
+                           <input type="radio" name="q3" autocomplete="off"> Extremely difficult
+                       </label>
+                   </div>
+                    <form id="subForm" action="/activity/{{ userID }}/" method="POST">
+                        <p class="py-2 text-danger" id="errorText2"> {{ error }} </p>
+                        <input type="submit" class="btn btn-outline-success" id="submitButton" value="Submit">
+                    </form>
                 </div>
             </div>
-            <form id="subForm" action="/activity/{{ userID }}/" method="POST">
-                <p class="py-2 text-danger" id="errorText2"> {{ error }} </p>
-                <input type="submit" class="btn btn-outline-success" id="submitButton" value="Submit">
-            </form>
+
         </div>
 
     </div>
@@ -101,64 +117,77 @@
 </div>
 
 <script>
-var duration = '{{ time }}'
-  duration = duration - 1
-  var userID = '{{ userID }}';
-  var question = '{{ question }}';
-  display = document.querySelector('#time')
-  capText = document.getElementById("caption");
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
-  var imgWidth = 500;
-  var imgHeight = 500;
-  ctx.canvas.width = imgWidth;
-  ctx.canvas.height = imgHeight;
-  var rect = {}; // Properties: startX, startY, w, h
-  rect.startX = null;
-  rect.startY = null;
-  rect.w = null;
-  rect.h = null;
-  var drag = false;
-  var imageObj = null;
-  // Popup text when "Yes" selected
-  var yesButon = document.getElementById("option11");
-  var noButton = document.getElementById("option12");
-  var modal = document.getElementById("myModal");
-  var modalImg = document.getElementById("img01");
+    var duration = '{{ time }}'
+    duration = duration - 1
+    var userID = '{{ userID }}';
+    var question = '{{ question }}';
+    display = document.querySelector('#time')
+    capText = document.getElementById("caption");
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
 
-  var ci_button = document.getElementById("ci_button");
+    //zoom canvas
+    var zoomcanvas = document.getElementById('zoomcanvas');
+    var zoom_ctx = zoomcanvas.getContext('2d');
+    zoom_ctx.canvas.width = 500;
+    zoom_ctx.canvas.height = 500;
+    document.getElementById("zoomcanvas").style="border:1px solid #c3c3c3;"
 
-  var w = window.innerWidth;
+    var imgWidth = 500;
+    var imgHeight = 500;
+    ctx.canvas.width = imgWidth;
+    ctx.canvas.height = imgHeight;
+    var rect = {}; // Properties: startX, startY, w, h
+    rect.startX = null;
 
-  ci_button.onclick = function(){
-    modal.style.display = "block";
-    modalImg.src = "/images/standardImages/img_ci" +".png";
-    modalImg.width = '75%';
-  }
-  var span = document.getElementsByClassName("close")[0];
-  span.width = w
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
-      modal.style.display = "none";
-  }
+    rect.startY = null;
+    rect.w = null;
+    rect.h = null;
+    var drag = false;
+    var imageObj = null;
 
-  yesButon.onclick = function (){
-      document.getElementById("popup").innerText = "Please draw a bounding box on the image around the bat.";
-  }
-  noButton.onclick = function () {
-      document.getElementById("popup").innerText = "Please draw a bounding box on the part of the image that is most ambiguous and/or most challenging to you";
-      document.getElementById("output").innerText = "";
-  }
-  window.onload = function () {
-      if (duration <= 0) {
-          document.getElementById("popup").innerText = "";
-          duration = 1
-          renderQuestion(userID, question, duration);
-      } else {
-          renderQuestion(userID, question, duration);
-          startTimer(duration, display, capText, userID);
-      }
-  }
+
+    // Popup text when "Yes" selected
+    var yesButon = document.getElementById("option11");
+    var noButton = document.getElementById("option12");
+    var modal = document.getElementById("myModal");
+    var modalImg = document.getElementById("img01");
+
+    var ci_button = document.getElementById("ci_button");
+
+    var w = window.innerWidth;
+
+    ci_button.onclick = function(){
+      modal.style.display = "block";
+      modalImg.src = "/images/standardImages/img_ci" +".png";
+      modalImg.width = '75%';
+    }
+    var span = document.getElementsByClassName("close")[0];
+    span.width = w
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    yesButon.onclick = function (){
+        document.getElementById("popup").innerText = "Please draw a bounding box on the image around the object.";
+    }
+    noButton.onclick = function () {
+      document.getElementById("popup").innerText = "Please draw a bounding box around the most ambiguous or challenging part of the image.";
+
+    }
+    window.onload = function () {
+        if (duration <= 0) {
+            document.getElementById("popup").innerText = "";
+            duration = 1
+            renderQuestion(userID, question, duration);
+        } else {
+            renderQuestion(userID, question, duration);
+            startTimer(duration, display, capText, userID);
+            trackMouse(duration,e);
+        }
+
+    }
+
 
 </script>
 
