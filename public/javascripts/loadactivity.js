@@ -28,6 +28,7 @@ function drawCanvas(imageSource) {
     canvas.addEventListener('mousemove', mouseMove, false);
     canvas.addEventListener('mousemove', function(e){trackMouse(duration,e)}, false);
 }
+
 function mouseDown(e) {
   rect.startX = e.offsetX;
   rect.startY = e.offsetY;
@@ -188,19 +189,22 @@ function renderQuestion(userID, sequence, duration) {
 
          var radio11 = document.getElementById('option11')
          var radio12 = document.getElementById('option12')
+         var radio13 = document.getElementById('option13')
 
-         if (radio11.classList.contains('active') && rect.startX != null && rect.startY != null) {
+         if(radio11.classList.contains('active') && rect.startX != null && rect.startY != null) {
              q1 = 1
          } else if (radio12.classList.contains('active') && rect.startX != null && rect.startY != null) {
+             q1 = 2
+         } else if (radio13.classList.contains('active') && rect.startX != null && rect.startY != null) {
              q1 = 0
          } else {
              q1 = -2
          }
         console.log(q1)
+
         //
         //Question 2
         //
-
 
         q2 = document.getElementById("value-simple").innerHTML
         console.log(q2)

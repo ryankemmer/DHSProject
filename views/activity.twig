@@ -30,7 +30,7 @@
         <div class="d-flex justify-content-center py-2" id="userID">UserID:
             <div name="userID" style="display:inline" id="userID">{{ userID }}</div>
         </div>
-        <h1 class="py-2">Exercise {{ sequence }} of 24</h1>
+        <h1 class="py-2">Exercise {{ sequence }} of 36</h1>
 
         <p class="py-2 text-danger" id="errorText1"> {{ error }} </p>
         <!---<p><b>Can you find one of the objects in the Top View image?</b></p>-->
@@ -59,16 +59,20 @@
                 </div>
 
                 <div class="col-sm answeractivity">
-
                     <p>(a) Which of the target objects are present in the Top View image?</p>
+
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-secondary" id="option11">
-                            <input type="radio" name="q1" autocomplete="off"> Yes
+                            <input type="radio" name="q1" autocomplete="off"> Watch
                         </label>
                         <label class="btn btn-secondary" id="option12">
-                            <input type="radio" name="q1" autocomplete="off"> No
+                            <input type="radio" name="q1" autocomplete="off"> Toothpaste
+                        </label>
+                        <label class="btn btn-secondary" id="option12">
+                            <input type="radio" name="q1" autocomplete="off"> None of the target objects are present
                         </label>
                     </div>
+
                     <div id="popup" style="color: blue;"> </div>
                     <br>
                     <br>

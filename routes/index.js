@@ -13,7 +13,7 @@ var datab = 'Test4_4_1'
 var userID = null
 let users = [];
 
-var totalQs = 24;
+var totalQs = 36;
 
 //get user instance function
 let getUserInstance = uid => users.find(user => user.id === uid);
@@ -133,14 +133,14 @@ router.post('/activity/:userID/', function(req,res,next){
       }
       else{
         //change Ground Truth Array
-        var truth = [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //40 in length
+        var truth = [1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //36 in length
         var correct = []
 
         //get results
         for(i = 0; i < totalQs; i++){
-
           var response = yield responseCol.findOne({"user": currentUser.id, "question" : i+1})
           console.log(response)
+
           if (response == null){
             console.log('null response')
           }
@@ -149,6 +149,7 @@ router.post('/activity/:userID/', function(req,res,next){
           } else{
             correct.push(0)
           }
+          
         }
 
         var sum = 0
