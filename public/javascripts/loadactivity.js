@@ -181,9 +181,9 @@ function renderQuestion(userID, sequence, duration) {
         var radio12 = document.getElementById('option12')
         var radio13 = document.getElementById('option13')
         if (radio11.classList.contains('active') && rect.startX != null && rect.startY != null) {
-            q1 = 1 //watch
+            q1 = 2 //watch
         } else if (radio12.classList.contains('active') && rect.startX != null && rect.startY != null) {
-            q1 = 2 //toothpaste
+            q1 = 1 //toothpaste
         } else if (radio13.classList.contains('active') && rect.startX != null && rect.startY != null) {
             q1 = 0 //none
         } else {
