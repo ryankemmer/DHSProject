@@ -133,7 +133,7 @@ router.post('/activity/:userID/', function(req,res,next){
       }
       else{
         //change Ground Truth Array
-        var truth = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2] //36 in length
+        var truth = [0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2] //36 in length
         var correct = []
 
         //get results
