@@ -1,8 +1,4 @@
-!pip install opencv-python
-!apt update && apt install -y libsm6 libxext6
-!apt-get install -y libxrender-dev
-
-import cv2.cv as cv
+import cv2
 
 mouseinfo = [[52.7, 487, 454], [52.5, 443, 368], [52.4, 327, 230], [52.2, 303, 216], [52, 305, 250], [51.8, 305, 256]]
 for mi in mouseinfo:

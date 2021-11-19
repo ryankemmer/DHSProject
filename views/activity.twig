@@ -34,8 +34,9 @@
 
         <p class="py-2 text-danger" id="errorText1"> {{ error }} </p>
         <p><b>Target Objects</b></p>
+        <button type="button" id="target_button" class="btn btn-outline-secondary">Target Objects</button>
 
-        <img id="img2find">
+
 
 
         <p class="text-danger">Time remaining: <span id="time"> 00:{{ time }}</span></p>
@@ -161,12 +162,28 @@
     var modalImg = document.getElementById("img01");
 
     var ci_button = document.getElementById("ci_button");
+    var target_button = document.getElementById("target_button");
 
     var w = window.innerWidth;
 
     ci_button.onclick = function(){
       modal.style.display = "block";
       modalImg.src = "/images/standardImages/img_ci" +".png";
+      modalImg.width = '75%';
+    }
+    var span = document.getElementsByClassName("close")[0];
+    span.width = w
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    var w = window.innerWidth;
+
+    target_button.onclick = function(){
+      modal.style.display = "block";
+      modalImg.src = "/images/standardImages/obj-xray" +".png";
       modalImg.width = '75%';
     }
     var span = document.getElementsByClassName("close")[0];

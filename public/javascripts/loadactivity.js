@@ -88,8 +88,9 @@ function renderQuestion(userID, sequence, duration) {
     exercise_img_src = "/images/4_4_1/img-" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
-        document.getElementById("img2find").src = "/images/standardImages/object.png";
-        document.getElementById("img2find").width = "200"
+        //document.getElementById("img2find").src = "/images/standardImages/obj-xray.png";
+        //document.getElementById("img2find").width = "200"
+        //document.getElementById("img_ci").src = "/images/standardImages/img_ci" +".png";
 
         document.getElementById("img_ci").src = "/images/standardImages/img_ci" +".png";
 
