@@ -9,7 +9,7 @@ const { response } = require('express');
 //var url = 'mongodb://localhost:27014/'; //for server tests
 var url = 'mongodb://localhost:27017/'; //for local tests
 
-var datab = 'C_Data_10-90'
+var datab = 'C_Data_10-90_v2'
 var userID = null
 let users = [];
 
@@ -133,7 +133,7 @@ router.post('/activity/:userID/', function(req,res,next){
       }
       else{
         //change Ground Truth Array
-        var truth = [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //40 in length
+        var truth = [1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] //40 in length
         var correct = []
 
         //get results
