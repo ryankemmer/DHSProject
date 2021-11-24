@@ -16,7 +16,7 @@ responsesCol = db['responses']
 completed_users = []
 userRemove = 0
 args = len(sys.argv) - 1
-
+spammerCount = 0;
 for user in usersCol.find():
 
     key2pay = user["key2pay"]
@@ -36,7 +36,14 @@ for user in usersCol.find():
             if(sys.argv[2] == "delete"):
                 responsesCol.delete_many({'user' : userName})
                 usersCol.delete_one({'user' : userName})
+            for res in responsesCol.find({'user' : userName}):
+                if(res["time"] < 15 and nCorrect == 36):
+                    timeCount = timeCount+1
+                if(timeCount >= 20):
+                    spammerCount = spammerCount+1
+                print("SPAMMER: ",userName)
 
+print("Total Spammers:",spammerCount)
 
 print("Completed Users: " + str(len(completed_users)))
 print("Users Removed: " + str(userRemove))
