@@ -37,9 +37,9 @@ for user in usersCol.find():
                 responsesCol.delete_many({'user' : userName})
                 usersCol.delete_one({'user' : userName})
             for res in responsesCol.find({'user' : userName}):
-                if(res["time"] < 15 and nCorrect == 36):
+                if(res["time"] < 10 or  nCorrect == 32):
                     timeCount = timeCount+1
-                if(timeCount >= 20):
+                if(timeCount >= 36):
                     spammerCount = spammerCount+1
                 print("SPAMMER: ",userName)
 
