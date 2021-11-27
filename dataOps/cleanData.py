@@ -39,7 +39,7 @@ for user in usersCol.find():
             for res in responsesCol.find({'user' : userName}):
                 if(res["time"] < 10 or  nCorrect == 32):
                     timeCount = timeCount+1
-                if(timeCount >= 36):
+                if(timeCount >= 30):
                     spammerCount = spammerCount+1
                 print("SPAMMER: ",userName)
 
