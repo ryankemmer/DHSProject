@@ -59,7 +59,7 @@ function mouseMove(e) {
 
 
 function renderQuestion(userID, sequence, duration) {
-    exercise_img_src = "/images/set-c-v3-20-80/img-" + sequence + ".png";
+    exercise_img_src = "/images/set-c-v3-10-90/img-" + sequence + ".png";
     if (duration > 0) {
         drawCanvas(exercise_img_src);
         document.getElementById("img2find").src = "/images/standardImages/bat-" + 1 + ".gif";
