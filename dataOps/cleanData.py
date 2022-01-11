@@ -27,7 +27,7 @@ for user in usersCol.find():
 
     print(userName + ": " + str(responseCount) + "  correct: " + str(nCorrect))
 
-    if(responseCount == 36):
+    if(responseCount == 30):
         completed_users.append(userName)
     else:
         userRemove += 1
